@@ -37,4 +37,5 @@ build/
 
 .DS_STORE
 .cppcheck
-assembly_info.cpp
+properties/
+reference_guide/
