@@ -1,18 +1,10 @@
-#include <xtd/xtd>
+#include "main_form.h"
 
-using namespace xtd;
-using namespace xtd::forms;
-
-class jimo_form : public form
-{
-    public:
-        jimo_form() {
-        }
-};
+using namespace jimo_sdr;
 
 int main()
 {
-    jimo_form form1 {};
-    application::run(form1);
+    main_form form1 {};
+    xtd::forms::application::run(form1);
     return EXIT_SUCCESS;
 }
