@@ -11,4 +11,4 @@ else()
     add_compile_options(-W -Wall -Werror)
 endif()
 
-add_subdirectory(src)
+add_subdirectory(jimoSDR)
