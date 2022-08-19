@@ -34,3 +34,7 @@
 .vscode/
 build/
 *.plist
+
+.DS_STORE
+.cppcheck
+assembly_info.cpp
