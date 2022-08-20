@@ -5,7 +5,9 @@ project(jimoSDR)
 add_sources(
     src/jimoSDR.cpp
     src/main_form.cpp
+    src/properties_panel.cpp
     include/main_form.h
+    include/properties_panel.h
     )
 
 

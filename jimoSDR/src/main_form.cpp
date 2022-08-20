@@ -13,23 +13,21 @@ namespace jimo_sdr
         start_position(xtd::forms::form_start_position::center_screen);
         auto_size(false);
 
-        create_left_panel();
+        create_properties_panel();
         create_right_panel();
     }
 
-    void main_form::create_left_panel()
+    void main_form::create_properties_panel()
     {
-        _left_panel.location({0, 0});
-        auto& main_form_client_rect = client_size();
-        _left_panel.size({200, main_form_client_rect.height()});
-        _left_panel.back_color(left_panel_background);
-        *this << _left_panel;
+        _props_panel.location({0, 0});
+        _props_panel.size({200, client_size().height()});
+        *this << _props_panel;
     }
 
     void main_form::create_right_panel()
     {
         auto& main_form_client_rect = client_size();
-        auto left_panel_size = _left_panel.size();
+        auto left_panel_size = _props_panel.size();
         _right_panel.location({left_panel_size.width(), 0});
         _right_panel.size({main_form_client_rect.width() - left_panel_size.width(),
             main_form_client_rect.height()});
