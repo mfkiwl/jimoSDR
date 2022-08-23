@@ -18,6 +18,7 @@ namespace soapy
             device& operator=(const device&) = delete;
             device&& operator=(device&&) = delete;
             const std::string operator[](const std::string& key) const;
+            operator std::map<std::string, std::string>() { return _properties; }
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
