@@ -11,4 +11,5 @@ else()
     add_compile_options(-W -Wall -Werror)
 endif()
 
+add_subdirectory(soapy)
 add_subdirectory(jimoSDR)
