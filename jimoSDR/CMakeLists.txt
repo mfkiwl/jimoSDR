@@ -1,8 +1,10 @@
 find_package(xtd REQUIRED)
 
-project(jimoSDR)
+find_package(SoapySDR REQUIRED)
 
-add_sources(
+#project(jimoSDR)
+
+add_executable(jimoSDR
     src/jimoSDR.cpp
     src/main_form.cpp
     src/properties_panel.cpp
@@ -12,8 +14,14 @@ add_sources(
     include/source_panel.h
     )
 
+target_include_directories(jimoSDR
+    PUBLIC 
+    include
+    ${SoapySDR_SOURCE_DIR}/include)
 
-target_type(GUI_APPLICATION)
+target_link_libraries(jimoSDR
+    PRIVATE
+    SoapySDR
+    xtd)
 
-target_include_directories(jimoSDR PRIVATE include)
 target_compile_features(jimoSDR PRIVATE cxx_std_20)

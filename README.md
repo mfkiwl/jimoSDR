@@ -20,9 +20,15 @@ git clone https://github.com/gammasoft71/xtd.git
 cd xtd
 ./install
 ```
-wxWidgets will be installed during the installation of xtd.
+If not already on your system, wxWidgets will be installed during the installation of xtd.
 
-4. Download and build jimoSDR:
+4. Additional libraries:
+ ```
+brew install SoapySDR
+brew install SoapyRTLSDR
+```
+
+5. Download and build jimoSDR:
 ```
 cd <your-root-projects-directory>
 git clone https://github.com/jimorc/jimoSDR.git

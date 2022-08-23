@@ -12,4 +12,5 @@ else()
 endif()
 
 add_subdirectory(soapy)
+add_subdirectory(SDREnumerator)
 add_subdirectory(jimoSDR)

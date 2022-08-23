@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-find_package(SoapySDR)
+find_package(SoapySDR REQUIRED)
 
 add_library(soapy
     SHARED 
@@ -12,7 +12,7 @@ add_library(soapy
     target_include_directories(soapy
         PUBLIC
         include
-        ${SoapySDR_SOURCE_DIR}/include)
+        ${SoapySDR_INCLUDE_DIRS})
 
     target_link_libraries(soapy
         PRIVATE
