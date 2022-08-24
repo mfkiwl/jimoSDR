@@ -38,4 +38,9 @@ namespace soapy
     {
         return _device->getDriverKey();
     }
+
+    const std::string device::hardware_key() const
+    {
+        return _device->getHardwareKey();
+    }
 }
