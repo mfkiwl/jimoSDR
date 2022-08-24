@@ -53,4 +53,9 @@ namespace soapy
     {
         return _device->getFrontendMapping(static_cast<int>(dir));
     }
+
+    size_t device::number_of_channels(const direction dir) const
+    {
+        return _device->getNumChannels(static_cast<int>(dir));
+    }
 }

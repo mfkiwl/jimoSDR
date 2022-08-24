@@ -30,6 +30,7 @@ namespace soapy
             const std::string hardware_key() const;
             const std::map<std::string, std::string> hardware_info() const;
             const std::string frontend_mapping(const direction dir) const;
+            size_t number_of_channels(const direction dir) const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;

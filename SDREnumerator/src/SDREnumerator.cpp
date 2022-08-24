@@ -32,6 +32,8 @@ int main()
         print::print_string_map(dev.hardware_info(), 8);
         cout << "    RX Frontend Mapping: " 
             << dev.frontend_mapping(device::direction::RX) << '\n';
+        cout << "    Number of RX Channels: "
+             << dev.number_of_channels(device::direction::RX) << '\n';
     }
 
     return EXIT_SUCCESS;
