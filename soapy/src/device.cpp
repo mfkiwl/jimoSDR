@@ -43,4 +43,9 @@ namespace soapy
     {
         return _device->getHardwareKey();
     }
+
+    const std::map<std::string, std::string> device::hardware_info() const
+    {
+        return _device->getHardwareInfo();
+    }
 }

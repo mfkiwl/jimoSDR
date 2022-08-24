@@ -21,6 +21,7 @@ namespace soapy
             operator std::map<std::string, std::string>() { return _properties; }
             const std::string driver_key() const;
             const std::string hardware_key() const;
+            const std::map<std::string, std::string> hardware_info() const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
