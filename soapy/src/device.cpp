@@ -48,4 +48,9 @@ namespace soapy
     {
         return _device->getHardwareInfo();
     }
+
+    const std::string device::frontend_mapping(const direction dir) const
+    {
+        return _device->getFrontendMapping(static_cast<int>(dir));
+    }
 }
