@@ -31,9 +31,24 @@ int main()
         cout << "    Hardware Info:\n";
         print::print_string_map(dev.hardware_info(), 8);
         cout << "    RX Frontend Mapping: " 
-            << dev.frontend_mapping(device::direction::RX) << '\n';
+            << dev.frontend_mapping(device::direction::rx) << '\n';
+        auto number_of_rx_channels = dev.number_of_channels(device::direction::rx);
         cout << "    Number of RX Channels: "
-             << dev.number_of_channels(device::direction::RX) << '\n';
+             << number_of_rx_channels << '\n';
+        for(size_t channel = 0; channel <number_of_rx_channels; ++channel)
+        {
+            cout << "    RX Channel Info for Channel " << channel << ":\n";
+            auto channel_info = dev.channel_info(device::direction::rx, channel);
+            if(channel_info.size() == 0)
+            {
+                cout << "        None\n";
+            }
+            else
+            {
+               print::print_string_map(channel_info, 8);
+
+            }
+         }
     }
 
     return EXIT_SUCCESS;

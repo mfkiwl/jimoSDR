@@ -13,8 +13,8 @@ namespace soapy
         public:
             enum class direction
             {
-                RX = SOAPY_SDR_RX,
-                TX = SOAPY_SDR_TX
+                rx = SOAPY_SDR_RX,
+                tx = SOAPY_SDR_TX
             };
 
             device() = delete;
@@ -31,6 +31,8 @@ namespace soapy
             const std::map<std::string, std::string> hardware_info() const;
             const std::string frontend_mapping(const direction dir) const;
             size_t number_of_channels(const direction dir) const;
+            std::map<std::string, std::string> channel_info(const direction dir, 
+                const size_t channel) const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;

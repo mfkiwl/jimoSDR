@@ -58,4 +58,10 @@ namespace soapy
     {
         return _device->getNumChannels(static_cast<int>(dir));
     }
+
+    std::map<std::string, std::string> device::channel_info(const direction dir, 
+                const size_t channel) const
+    {
+        return _device->getChannelInfo(static_cast<int>(dir), channel);
+    }
 }
