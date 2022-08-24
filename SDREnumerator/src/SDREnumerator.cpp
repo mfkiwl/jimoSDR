@@ -16,6 +16,23 @@ class print
                 cout << indent << key << ": " << value << '\n';
             }
         }
+
+        static void print_strings(const vector<string>& strings,
+            const uint32_t indent_spaces)
+        {
+            string indent(indent_spaces, ' ');
+            if(strings.size() == 0)
+            {
+                cout << indent << "None\n";
+            }
+            else
+            {
+                for(const auto& str : strings)
+                {
+                    cout << indent << str << '\n';
+                }
+            }
+        }
 };
 
 int main()
@@ -39,15 +56,12 @@ int main()
         {
             cout << "    RX Channel Info for Channel " << channel << ":\n";
             auto channel_info = dev.channel_info(device::direction::rx, channel);
-            if(channel_info.size() == 0)
-            {
-                cout << "        None\n";
-            }
-            else
-            {
-               print::print_string_map(channel_info, 8);
-
-            }
+            print::print_string_map(channel_info, 8);
+            cout << (dev.full_duplex(device::direction::rx, channel)
+                ? "        Full Duplex\n" : "        Half Duplex\n");
+            const auto stream_formats = dev.stream_formats(device::direction::rx, channel);
+            cout << "        Stream Formats:\n";
+            print::print_strings(stream_formats, 12);
          }
     }
 

@@ -33,6 +33,9 @@ namespace soapy
             size_t number_of_channels(const direction dir) const;
             std::map<std::string, std::string> channel_info(const direction dir, 
                 const size_t channel) const;
+            bool full_duplex(const direction dir, const size_t channel) const;
+            const std::vector<std::string> stream_formats(const direction dir,
+                const size_t channel) const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;

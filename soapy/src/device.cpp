@@ -64,4 +64,16 @@ namespace soapy
     {
         return _device->getChannelInfo(static_cast<int>(dir), channel);
     }
+
+    bool device::full_duplex(const direction dir, const size_t channel) const
+    {
+        return _device->getFullDuplex(static_cast<int>(dir), channel);
+    }
+
+    const std::vector<std::string> device::stream_formats(const direction dir,
+                const size_t channel) const
+                {
+                    return _device->getStreamFormats(static_cast<int>(dir), channel);
+                }
+
 }
