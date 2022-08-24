@@ -26,6 +26,7 @@ int main()
     {
         cout << "SDR = " << dev["label"] << '\n';    
         print::print_string_map(dev, 4);
+        cout << "    driver_key: " << dev.driver_key() << '\n';
     }
 
     return EXIT_SUCCESS;

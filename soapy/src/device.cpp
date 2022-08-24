@@ -33,4 +33,9 @@ namespace soapy
             return "not found";
         }
     }
+
+    const std::string device::driver_key() const
+    {
+        return _device->getDriverKey();
+    }
 }
