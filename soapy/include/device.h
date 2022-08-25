@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 #include "types.h"
 
 namespace soapy
@@ -21,7 +22,7 @@ namespace soapy
             device() = delete;
             device(const SoapySDR::Kwargs& kwargs);
             device(const device&) = delete;
-            device(device&&);
+            device(device&&) = delete;
             ~device() noexcept; 
             device& operator=(const device&) = delete;
             device&& operator=(device&&) = delete;

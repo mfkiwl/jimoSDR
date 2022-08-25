@@ -80,37 +80,37 @@ class print
 
 int main()
 {
-    std::vector<device> devs = devices::get_devices();
+    devices devs;
     cout << "Number of SDR devices found = " << devs.size() << '\n';
     for (auto& dev : devs)
     {
-        cout << "SDR = " << dev["label"] << '\n';    
-        print::print_string_map(dev, 4);
-        cout << "    driver_key: " << dev.driver_key() << '\n';
-        cout << "    hardware_key: " << dev.hardware_key() << '\n';
+        cout << "SDR = " << (*dev)["label"] << '\n';    
+        print::print_string_map(*dev, 4);
+        cout << "    driver_key: " << dev->driver_key() << '\n';
+        cout << "    hardware_key: " << dev->hardware_key() << '\n';
         cout << "    Hardware Info:\n";
-        print::print_string_map(dev.hardware_info(), 8);
+        print::print_string_map(dev->hardware_info(), 8);
         cout << "    RX Frontend Mapping: " 
-            << dev.frontend_mapping(device::direction::rx) << '\n';
-        auto number_of_rx_channels = dev.number_of_channels(device::direction::rx);
+            << dev->frontend_mapping(device::direction::rx) << '\n';
+        auto number_of_rx_channels = dev->number_of_channels(device::direction::rx);
         cout << "    Number of RX Channels: "
              << number_of_rx_channels << '\n';
         for(size_t channel = 0; channel <number_of_rx_channels; ++channel)
         {
             cout << "    RX Channel Info for Channel " << channel << ":\n";
-            auto channel_info = dev.channel_info(device::direction::rx, channel);
+            auto channel_info = dev->channel_info(device::direction::rx, channel);
             print::print_string_map(channel_info, 8);
-            cout << (dev.full_duplex(device::direction::rx, channel)
+            cout << (dev->full_duplex(device::direction::rx, channel)
                 ? "        Full Duplex\n" : "        Half Duplex\n");
-            const auto stream_formats = dev.stream_formats(device::direction::rx, channel);
+            const auto stream_formats = dev->stream_formats(device::direction::rx, channel);
             cout << "        Stream Formats:\n";
             print::print_strings(stream_formats, 12);
-            auto [format, fullScale] = dev.native_stream_format(
+            auto [format, fullScale] = dev->native_stream_format(
                 device::direction::rx, channel);
             cout << "        Native Stream Format:\n";
             cout << "            Format:" << format <<'\n';
             cout << "            Full scale: " << fullScale << '\n';
-            print::print_stream_args_info(dev.stream_args_info(device::direction::rx,
+            print::print_stream_args_info(dev->stream_args_info(device::direction::rx,
                 channel), 12);
          }
     }

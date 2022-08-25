@@ -1,3 +1,4 @@
+#include <iostream>
 #include "device.h"
 
 namespace soapy
@@ -5,12 +6,6 @@ namespace soapy
     device::device(const SoapySDR::Kwargs& kwargs) : _properties(kwargs)
     {
         _device = SoapySDR::Device::make(kwargs);
-    }
-
-    device::device(device&& dev) : _properties(dev._properties)
-    {
-        _device = dev._device;
-        dev._device = nullptr;
     }
 
     device::~device() noexcept
