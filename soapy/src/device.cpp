@@ -72,8 +72,16 @@ namespace soapy
 
     const std::vector<std::string> device::stream_formats(const direction dir,
                 const size_t channel) const
-                {
-                    return _device->getStreamFormats(static_cast<int>(dir), channel);
-                }
+    {
+        return _device->getStreamFormats(static_cast<int>(dir), channel);
+    }
 
+    const std::tuple<std::string, double> device::native_stream_format(
+                const direction dir, const size_t channel) const
+    {
+        double fullScale;
+        auto format = _device->getNativeStreamFormat(static_cast<int>(dir), channel,
+            fullScale);
+        return std::make_tuple(format, fullScale);
+    }
 }

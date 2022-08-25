@@ -62,6 +62,11 @@ int main()
             const auto stream_formats = dev.stream_formats(device::direction::rx, channel);
             cout << "        Stream Formats:\n";
             print::print_strings(stream_formats, 12);
+            auto [format, fullScale] = dev.native_stream_format(
+                device::direction::rx, channel);
+            cout << "        Native Stream Format:\n";
+            cout << "            Format:" << format <<'\n';
+            cout << "            Full scale: " << fullScale << '\n';
          }
     }
 

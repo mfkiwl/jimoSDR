@@ -36,6 +36,8 @@ namespace soapy
             bool full_duplex(const direction dir, const size_t channel) const;
             const std::vector<std::string> stream_formats(const direction dir,
                 const size_t channel) const;
+            const std::tuple<std::string, double> native_stream_format(
+                const direction dir, const size_t channel) const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
