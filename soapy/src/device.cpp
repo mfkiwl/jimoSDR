@@ -84,4 +84,17 @@ namespace soapy
             fullScale);
         return std::make_tuple(format, fullScale);
     }
+
+    std::vector<sdr_arg_info> device::stream_args_info(const direction dir,
+                const size_t channel) const
+    {
+        std::vector<sdr_arg_info> infos;
+        std::vector<SoapySDR::ArgInfo> soapy_infos = _device->getStreamArgsInfo(
+            static_cast<int>(dir), channel);
+        for(auto& soapy_info : soapy_infos)
+        {
+            infos.push_back(soapy_info);
+        }
+        return infos;
+    }
 }

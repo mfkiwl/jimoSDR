@@ -6,8 +6,10 @@ add_library(soapy
     SHARED 
     src/device.cpp
     src/devices.cpp
+    src/types.cpp
     include/device.h
-    include/devices.h)
+    include/devices.h
+    include/types.h)
 
     target_include_directories(soapy
         PUBLIC

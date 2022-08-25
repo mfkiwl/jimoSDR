@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "types.h"
 
 namespace soapy
 {
@@ -38,6 +39,9 @@ namespace soapy
                 const size_t channel) const;
             const std::tuple<std::string, double> native_stream_format(
                 const direction dir, const size_t channel) const;
+            std::vector<sdr_arg_info> stream_args_info(const direction dir,
+                const size_t channel) const;
+            
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
