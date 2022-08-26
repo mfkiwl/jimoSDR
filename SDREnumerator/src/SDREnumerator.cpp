@@ -1,5 +1,10 @@
 #include "devices.h"
 #include <iostream>
+#ifdef _WIN32
+    #include <Windows.h>
+#else
+    #include <unistd.h>
+#endif
 
 using namespace std;
 using namespace soapy;
@@ -114,6 +119,9 @@ int main()
                 channel), 12);
          }
     }
-
+    cout << "In next 5 seconds, add or remove receivers\n";
+    usleep(5000000);
+    devs.refresh();
+    cout << "After refresh, number of devices = " << devs.size() << '\n';
     return EXIT_SUCCESS;
 }

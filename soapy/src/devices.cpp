@@ -17,4 +17,10 @@ namespace soapy
             _devices.push_back(std::make_shared<device>(dev));
         }
     }
+
+    void devices::refresh()
+    {
+        _devices.clear();
+        _attached_devices();
+    }
 }

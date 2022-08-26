@@ -22,6 +22,7 @@ namespace soapy
             const_iterator cbegin() { return _devices.cbegin(); }
             const_iterator cend() { return _devices.cend(); }
             size_t size() { return _devices.size(); }
+            void refresh();
         private:
             void _attached_devices();
 
