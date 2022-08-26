@@ -1,6 +1,7 @@
 #pragma once
 
 #include <xtd/xtd>
+#include "devices.h"
 #include "properties_panel.h"
 
 using namespace xtd::drawing;
@@ -12,7 +13,7 @@ namespace jimo_sdr
     class main_form : public xtd::forms::form
     {
         public:
-            main_form();
+            main_form(soapy::devices& soapy_devices);
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) 
                 override {
@@ -27,5 +28,5 @@ namespace jimo_sdr
 
             properties_panel _props_panel;
             xtd::forms::panel _right_panel;
-    };
+   };
 }

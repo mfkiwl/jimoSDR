@@ -6,7 +6,8 @@ using namespace xtd::drawing;
 
 namespace jimo_sdr
 {
-    main_form::main_form()
+    main_form::main_form(soapy::devices& soapy_devices)
+        : _props_panel(soapy_devices)
     {
         create_properties_panel();
         create_right_panel();

@@ -2,7 +2,8 @@
 
 namespace jimo_sdr
 {
-    properties_panel::properties_panel()
+    properties_panel::properties_panel(soapy::devices& soapy_devices)
+        : _source_panel(soapy_devices)
     {
         auto_scroll(true);
         auto_size_mode(auto_size_mode::grow_and_shrink);
