@@ -117,6 +117,12 @@ int main()
             cout << "            Full scale: " << fullScale << '\n';
             print::print_stream_args_info(dev->stream_args_info(device::direction::rx,
                 channel), 12);
+            cout << "        Sample Rates:\n";
+            auto rates = dev->sample_rates(device::direction::rx, channel);
+            for(auto rate : rates)
+            {
+                cout << "            " << rate << '\n';
+            }
          }
     }
     cout << "In next 5 seconds, add or remove receivers\n";

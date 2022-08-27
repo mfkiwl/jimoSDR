@@ -92,4 +92,11 @@ namespace soapy
         }
         return infos;
     }
+
+    std::vector<double> device::sample_rates(const direction dir,
+                const size_t channel) const
+    {
+        return _device->listSampleRates(
+            static_cast<int>(dir), channel);
+    }
 }
