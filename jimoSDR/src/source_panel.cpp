@@ -9,20 +9,21 @@ namespace jimo_sdr
     {
         anchor(anchor_styles::top | anchor_styles::left | anchor_styles::right);
         text("Source");
+        *this << _layout;
 
-
-        *this << radio_source;
-        radio_source.drop_down_style(combo_box_style::drop_down_list);
-        radio_source.anchor(anchor_styles::top | anchor_styles::left |
+       _radio_source.drop_down_style(combo_box_style::drop_down_list);
+        _radio_source.anchor(anchor_styles::top | anchor_styles::left |
             anchor_styles::right);
         for(auto& pdev : soapy_devices)
         {
-            radio_source.items().push_back((*pdev)["driver"]);
+            _radio_source.items().push_back((*pdev)["driver"]);
         }
         // if only one item, select it
-        if(radio_source.items().size() == 1)
+        if(_radio_source.items().size() == 1)
         {
-            radio_source.selected_index(0);
+            _radio_source.selected_index(0);
         }
+
+        _layout.controls().push_back_range({_radio_source, _rtlsdr_box});
     }
 }

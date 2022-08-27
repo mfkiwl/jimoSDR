@@ -9,9 +9,11 @@ add_executable(jimoSDR
     src/main_form.cpp
     src/properties_panel.cpp
     src/source_panel.cpp
+    src/rtlsdr_group_box.cpp
     include/main_form.h
     include/properties_panel.h
     include/source_panel.h
+    include/rtlsdr_group_box.h
     )
 
 target_include_directories(jimoSDR
