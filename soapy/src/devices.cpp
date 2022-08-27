@@ -23,4 +23,10 @@ namespace soapy
         _devices.clear();
         _attached_devices();
     }
+
+    void devices::remove_all_except(std::shared_ptr<device>& pdev)
+    {
+        _devices.clear();
+        _devices.push_back(pdev);
+    }
 }
