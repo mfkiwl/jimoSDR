@@ -123,6 +123,16 @@ int main()
             {
                 cout << "            " << rate << '\n';
             }
+            cout << "        Current Sample Rate: " << dev->sample_rate(
+                device::direction::rx, channel) << '\n';
+            cout << "        Exercise device::sample_rate:\n";
+            for(auto rate : rates)
+            {
+                cout << "            Setting sample rate to: " << rate;
+                dev->sample_rate(device::direction::rx, channel, rate);
+                cout << " Sample rate is now: " << dev->sample_rate(
+                    device::direction::rx, channel) << '\n';
+            }
          }
     }
     cout << "In next 5 seconds, add or remove receivers\n";

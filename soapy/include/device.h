@@ -42,7 +42,9 @@ namespace soapy
                 const direction dir, const size_t channel) const;
             std::vector<sdr_arg_info> stream_args_info(const direction dir,
                 const size_t channel) const;
-
+            double sample_rate(const direction dir, const size_t channel) const;
+            void sample_rate(const direction dir, const size_t channel,
+                const double rate);
             std::vector<double> sample_rates(const direction dir,
                 const size_t channel) const;
         private:

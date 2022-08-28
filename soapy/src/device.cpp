@@ -93,6 +93,17 @@ namespace soapy
         return infos;
     }
 
+    double device::sample_rate(const direction dir, const size_t channel) const
+    {
+        return _device->getSampleRate(static_cast<int>(dir), channel);
+    }
+
+    void device::sample_rate(const direction dir, const size_t channel,
+                const double rate)
+    {
+        _device->setSampleRate(static_cast<int>(dir), channel, rate);
+    }
+
     std::vector<double> device::sample_rates(const direction dir,
                 const size_t channel) const
     {
