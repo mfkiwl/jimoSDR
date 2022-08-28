@@ -21,7 +21,7 @@ namespace jimo_sdr
     void main_form::create_properties_panel()
     {
         _props_panel.location({0, 0});
-        _props_panel.size({200, client_size().height()});
+        _props_panel.size({300, client_size().height()});
         *this << _props_panel;
     }
 
