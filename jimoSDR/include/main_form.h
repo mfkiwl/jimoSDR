@@ -4,6 +4,7 @@
 #include "devices.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
+#include "source_dialog.h"
 
 using namespace xtd::drawing;
 
@@ -15,6 +16,7 @@ namespace jimo_sdr
     {
         public:
             main_form(soapy::devices& soapy_devices);
+            void show_source_dlg() { _source_dlg.show_dialog(*this); }
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) 
                 override {
@@ -23,6 +25,7 @@ namespace jimo_sdr
                         "Close Form", xtd::forms::message_box_buttons::yes_no, 
                         xtd::forms::message_box_icon::question) == 
                             xtd::forms::dialog_result::no);};
+
         private:
             void create_properties_panel();
             void create_right_panel();
@@ -33,5 +36,7 @@ namespace jimo_sdr
             properties_panel _props_panel;
             xtd::forms::panel _right_panel;
             properties_button _props_button;
+
+            source_dialog _source_dlg;
    };
 }
