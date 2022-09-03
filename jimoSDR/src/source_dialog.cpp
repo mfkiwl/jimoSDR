@@ -7,7 +7,9 @@ namespace jimo_sdr
 {
     source_dialog::source_dialog()
     {
-        _device_label.text("Device:");
+        text("SDR Device");
+
+        _device_label.text("Device");
         _device_label.anchor(anchor_styles::top | anchor_styles::left | anchor_styles::bottom);
         _device_label.text_align(content_alignment::middle_left);
 
