@@ -3,6 +3,7 @@
 #include <xtd/xtd>
 #include "devices.h"
 #include "properties_panel.h"
+#include "user_draw_buttons.h"
 
 using namespace xtd::drawing;
 
@@ -26,7 +27,11 @@ namespace jimo_sdr
             void create_properties_panel();
             void create_right_panel();
 
+            xtd::forms::vertical_layout_panel _vlp;
+            xtd::forms::horizontal_layout_panel _controls_panel;
+            xtd::forms::horizontal_layout_panel _main_panel;
             properties_panel _props_panel;
             xtd::forms::panel _right_panel;
+            properties_button _props_button;
    };
 }
