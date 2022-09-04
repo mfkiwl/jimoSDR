@@ -1,7 +1,7 @@
 #pragma once
 
 #include <xtd/xtd>
-#include "devices.h"
+#include "device.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
 #include "source_dialog.h"
@@ -15,7 +15,7 @@ namespace jimo_sdr
     class main_form : public xtd::forms::form
     {
         public:
-            main_form(soapy::devices& soapy_devices);
+            main_form();
             void show_source_dlg() { _source_dlg.show_dialog(*this); }
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) 
@@ -30,6 +30,7 @@ namespace jimo_sdr
             void create_properties_panel();
             void create_right_panel();
 
+            std::shared_ptr<soapy::device> _device;
             xtd::forms::vertical_layout_panel _vlp;
             xtd::forms::horizontal_layout_panel _controls_panel;
             xtd::forms::horizontal_layout_panel _main_panel;

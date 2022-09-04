@@ -7,7 +7,7 @@ soapy::devices soapy_devices;
 
 int main()
 {
-    main_form form1 {soapy_devices};
+    main_form form1;
     form1.show();
     form1.show_source_dlg();
     xtd::forms::application::run(form1);

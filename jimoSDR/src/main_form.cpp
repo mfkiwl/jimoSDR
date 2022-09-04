@@ -6,8 +6,8 @@ using namespace xtd::drawing;
 
 namespace jimo_sdr
 {
-    main_form::main_form(soapy::devices& soapy_devices)
-        : _props_panel(soapy_devices)
+    main_form::main_form()
+        : _props_panel()
     {
         text("jimoSDR");
         size({1000, 800});

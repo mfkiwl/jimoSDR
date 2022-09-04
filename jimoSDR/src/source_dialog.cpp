@@ -24,8 +24,17 @@ namespace jimo_sdr
         _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});
 
         _device_combo_box.anchor(anchor_styles::left | anchor_styles::right);
-
-
+        soapy::devices soapy_devices;
+        for(auto& pdev : soapy_devices)
+        {
+            _device_combo_box.items().push_back((*pdev)["driver"]);
+        }
+        // if only one item, select it
+        if(_device_combo_box.items().size() == 1)
+        {
+            _device_combo_box.selected_index(0);
+        }
+ 
         _vert_dialog_panel.anchor(anchor_styles::all);
         _vert_dialog_panel << _device_panel << _device_combo_box;
         _vert_dialog_panel.control_layout_style(_device_panel, {size_type::auto_size, true});
@@ -36,10 +45,6 @@ namespace jimo_sdr
 
         _device_combo_box.height(_device_label.height());
 
-
-
         *this << _vert_dialog_panel;
-
-    
     }
 }
