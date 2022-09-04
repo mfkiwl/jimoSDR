@@ -24,8 +24,22 @@ namespace jimo_sdr
         _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});
 
         _device_combo_box.anchor(anchor_styles::left | anchor_styles::right);
-        soapy::devices soapy_devices;
-        for(auto& pdev : soapy_devices)
+        _device_combo_box.selected_index_changed += xtd::event_handler(
+            *this, &source_dialog::_on_device_source_selected);
+ 
+        _vert_dialog_panel.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
+        _vert_dialog_panel << _device_panel << _device_combo_box;
+        _vert_dialog_panel.control_layout_style(_device_panel, {size_type::auto_size, true});
+        _vert_dialog_panel.control_layout_style(_device_combo_box, {size_type::auto_size, true});
+        _device_label.height(22);
+        _hardware_key_label.height(_device_label.height());
+        _device_panel.height(_device_label.height());
+        _device_combo_box.height(_device_label.height());
+
+        *this << _vert_dialog_panel;
+
+        // must populate _device_combo_box after _vert_dialog_panel is added to this
+        for(auto& pdev : _soapy_devices)
         {
             _device_combo_box.items().push_back((*pdev)["driver"]);
         }
@@ -34,17 +48,21 @@ namespace jimo_sdr
         {
             _device_combo_box.selected_index(0);
         }
- 
-        _vert_dialog_panel.anchor(anchor_styles::all);
-        _vert_dialog_panel << _device_panel << _device_combo_box;
-        _vert_dialog_panel.control_layout_style(_device_panel, {size_type::auto_size, true});
-        _vert_dialog_panel.control_layout_style(_device_combo_box, {size_type::auto_size, true});
-        _device_label.height(22);
-        _hardware_key_label.height(_device_label.height());
-        _device_panel.height(_device_label.height());
+   }
 
-        _device_combo_box.height(_device_label.height());
+    void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
+    {
+        _device = _soapy_devices[_device_combo_box.selected_index()];
+        _show_device_properties();
+    }
 
-        *this << _vert_dialog_panel;
+    void source_dialog::_show_device_properties()
+    {
+        if((*_device)["driver"] == "rtlsdr")
+        {
+            _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device);
+            _vert_dialog_panel << *_rtlsdr_props_panel;
+            _vert_dialog_panel.control_layout_style(*_rtlsdr_props_panel, {size_type::auto_size, true});
+        }
     }
 }
