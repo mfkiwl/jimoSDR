@@ -2,7 +2,6 @@
 
 #include <xtd/xtd>
 #include "device.h"
-#include "source_panel.h"
 
 using namespace xtd;
 using namespace xtd::forms;
