@@ -23,6 +23,17 @@ namespace jimo_sdr
             ss << rate / 1'000'000 << " MHz";
             _sample_rate_combo_box.items().push_back(ss.str());
         }
+        auto current_rate = _soapy_device->sample_rate(soapy::device::direction::rx, 0);
+        std::stringstream ss;
+        ss << current_rate / 1'000'000 << " MHz";
+        std::string rate = ss.str();
+        auto items = _sample_rate_combo_box.items();
+        auto end_it = items.cend();
+        auto it = find(items.cbegin(), end_it, list_control::item(rate));
+        if(it != end_it)
+        {
+            _sample_rate_combo_box.selected_item(*it);
+        }
 
         anchor(anchor_styles::left | anchor_styles::bottom | anchor_styles::right);
         *this << _sample_rate_label << _sample_rate_combo_box;
