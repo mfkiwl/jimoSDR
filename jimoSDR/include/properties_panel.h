@@ -16,6 +16,6 @@ namespace jimo_sdr
             void source(const std::string& src) noexcept;
         private:
             xtd::forms::group_box _source_box;
-            xtd::forms::label _source_label;
+            xtd::forms::button _source_button;
     };
 }
