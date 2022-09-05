@@ -42,7 +42,7 @@ namespace jimo_sdr
         // must populate _device_combo_box after _vert_dialog_panel is added to this
         for(auto& pdev : _soapy_devices)
         {
-            _device_combo_box.items().push_back((*pdev)["driver"]);
+            _device_combo_box.items().push_back(pdev->driver_key());
         }
         // if only one item, select it
         if(_device_combo_box.items().size() == 1)
