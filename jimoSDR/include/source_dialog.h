@@ -2,6 +2,7 @@
 
 #include <xtd/xtd>
 #include "devices.h"
+#include "device_properties.h"
 #include "rtlsdr_properties_panel.h"
 
 namespace jimo_sdr
@@ -9,7 +10,7 @@ namespace jimo_sdr
     class source_dialog : public xtd::forms::form
     {
         public:
-            source_dialog();
+            source_dialog(device_properties& device_properties);
         private:
             void _on_device_source_selected(object& sender, const xtd::event_args& e);
             void _show_device_properties();
@@ -19,9 +20,9 @@ namespace jimo_sdr
             xtd::forms::label _device_label;
             xtd::forms::label _hardware_key_label;
             xtd::forms::combo_box _device_combo_box;
-            std::unique_ptr<rtlsdr_properties_panel> _rtlsdr_props_panel;
 
             soapy::devices _soapy_devices;
-            std::shared_ptr<soapy::device> _device;
+            device_properties& _device_props;
+            std::unique_ptr<rtlsdr_properties_panel> _rtlsdr_props_panel;
     };
 }

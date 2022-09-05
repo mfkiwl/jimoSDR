@@ -5,7 +5,8 @@ using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    source_dialog::source_dialog()
+    source_dialog::source_dialog(device_properties& device_properties)
+        : _device_props(device_properties)
     {
         text("SDR Device");
 
@@ -52,15 +53,15 @@ namespace jimo_sdr
 
     void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
     {
-        _device = _soapy_devices[_device_combo_box.selected_index()];
+        _device_props.device(_soapy_devices[_device_combo_box.selected_index()]);
         _show_device_properties();
     }
 
     void source_dialog::_show_device_properties()
     {
-        if((*_device)["driver"] == "rtlsdr")
+        if((*_device_props.device())["driver"] == "rtlsdr")
         {
-            _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device);
+            _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device_props);
             _vert_dialog_panel << *_rtlsdr_props_panel;
             _vert_dialog_panel.control_layout_style(*_rtlsdr_props_panel, {size_type::auto_size, true});
         }

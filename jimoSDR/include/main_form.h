@@ -5,6 +5,7 @@
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
 #include "source_dialog.h"
+#include "device_properties.h"
 
 using namespace xtd::drawing;
 
@@ -16,7 +17,7 @@ namespace jimo_sdr
     {
         public:
             main_form();
-            void show_source_dlg() { _source_dlg.show_dialog(*this); }
+            void show_source_dlg();
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) 
                 override {
@@ -38,6 +39,6 @@ namespace jimo_sdr
             xtd::forms::panel _right_panel;
             properties_button _props_button;
 
-            source_dialog _source_dlg;
+            device_properties _device_props;
    };
 }

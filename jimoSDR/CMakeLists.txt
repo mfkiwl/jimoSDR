@@ -11,11 +11,13 @@ add_executable(jimoSDR
     src/user_draw_buttons.cpp
     src/source_dialog.cpp
     src/rtlsdr_properties_panel.cpp
+    src/device_properties.cpp
     include/main_form.h
     include/properties_panel.h
     include/user_draw_buttons.h
     include/source_dialog.h
     include/rtlsdr_properties_panel.h
+    include/device_properties.h
     )
 
 target_include_directories(jimoSDR

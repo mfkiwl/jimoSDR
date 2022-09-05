@@ -5,15 +5,15 @@ using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    rtlsdr_properties_panel::rtlsdr_properties_panel(std::shared_ptr<soapy::device>& soapy_device)
-        : _soapy_device(soapy_device)
+    rtlsdr_properties_panel::rtlsdr_properties_panel(device_properties& device_props)
+            : _dev_props(device_props)
     {
         _sample_rate_label.text("Sample Rate");
         _sample_rate_label.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
         _sample_rate_label.text_align(content_alignment::middle_left);
 
         _sample_rate_combo_box.anchor(anchor_styles::left | anchor_styles::right);
-        auto rates = _soapy_device->sample_rates(soapy::device::direction::rx, 0);
+        auto rates = _dev_props.device()->sample_rates(soapy::device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
         for(auto rate : rates)
         {
@@ -23,7 +23,7 @@ namespace jimo_sdr
             ss << rate / 1'000'000 << " MHz";
             _sample_rate_combo_box.items().push_back(ss.str());
         }
-        auto current_rate = _soapy_device->sample_rate(soapy::device::direction::rx, 0);
+        auto current_rate = _dev_props.device()->sample_rate(soapy::device::direction::rx, 0);
         std::stringstream ss;
         ss << current_rate / 1'000'000 << " MHz";
         std::string rate = ss.str();

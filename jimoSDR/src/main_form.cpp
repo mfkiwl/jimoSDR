@@ -63,4 +63,10 @@ namespace jimo_sdr
         _right_panel.anchor(anchor_styles::top | anchor_styles::right | 
             anchor_styles:: bottom | anchor_styles::left);
     }
+
+    void main_form::show_source_dlg()
+    {
+        source_dialog sdlg(_device_props);
+        sdlg.show_dialog(*this);
+    }
 }
