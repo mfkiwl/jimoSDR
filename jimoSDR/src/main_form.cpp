@@ -25,7 +25,7 @@ namespace jimo_sdr
         create_properties_panel();
         create_right_panel();
         _main_panel << _props_panel << _right_panel;
-        _main_panel.control_layout_style(_props_panel, {500,
+        _main_panel.control_layout_style(_props_panel, {300,
             size_type::absolute, true});
         _main_panel.control_layout_style(_right_panel, {size_type::auto_size,
             true});
@@ -48,7 +48,7 @@ namespace jimo_sdr
     void main_form::create_properties_panel()
     {
         _props_panel.location({0, 0});
-        _props_panel.size({500, client_size().height()});
+        _props_panel.size({300, client_size().height()});
         _props_panel.back_color(color::light_gray);
     }
 
@@ -68,5 +68,6 @@ namespace jimo_sdr
     {
         source_dialog sdlg(_device_props);
         sdlg.show_dialog(*this);
+        _props_panel.source(_device_props.device()->driver_key());
     }
 }

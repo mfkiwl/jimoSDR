@@ -13,6 +13,9 @@ namespace jimo_sdr
     {
         public:
             properties_panel();
+            void source(const std::string& src) noexcept;
         private:
+            xtd::forms::group_box _source_box;
+            xtd::forms::label _source_label;
     };
 }
