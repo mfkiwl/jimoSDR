@@ -1,10 +1,12 @@
 #include "properties_panel.h"
+#include "main_form.h"
 
 using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    properties_panel::properties_panel()
+    properties_panel::properties_panel(main_form& f)
+        : _main_form(f)
     {
         auto_scroll(true);
         auto_size_mode(auto_size_mode::grow_and_shrink);
@@ -13,6 +15,8 @@ namespace jimo_sdr
         _source_button.text("None");
         _source_button.anchor(anchor_styles::all);
         _source_button.text_align(content_alignment::middle_center);
+        _source_button.click += xtd::event_handler(
+            _main_form, &main_form::on_source_button_click);
         
         _source_box.text("Source");
         _source_box.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);

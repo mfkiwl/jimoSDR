@@ -18,6 +18,7 @@ namespace jimo_sdr
         public:
             main_form();
             void show_source_dlg();
+            void on_source_button_click(xtd::object& sender, const xtd::event_args& e);
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) 
                 override {

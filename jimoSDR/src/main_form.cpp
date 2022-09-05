@@ -7,12 +7,11 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     main_form::main_form()
-        : _props_panel()
+        : _props_panel(*this)
     {
         text("jimoSDR");
         size({1000, 800});
         start_position(xtd::forms::form_start_position::center_screen);
-//        auto_size(false);
 
         _controls_panel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);
@@ -69,5 +68,10 @@ namespace jimo_sdr
         source_dialog sdlg(_device_props);
         sdlg.show_dialog(*this);
         _props_panel.source(_device_props.device()->driver_key());
+    }
+
+    void main_form::on_source_button_click(xtd::object& sender, const xtd::event_args& e)
+    {
+        show_source_dlg();
     }
 }
