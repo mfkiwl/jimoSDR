@@ -48,6 +48,17 @@ namespace jimo_sdr
         {
             _device_combo_box.selected_index(0);
         }
+        else if(_device_props.device() != nullptr)
+        {
+            auto device = _device_props.device()->driver_key();
+            auto devices = _device_combo_box.items();
+            auto end_it = devices.cend();
+            auto it = find(devices.cbegin(), end_it, list_control::item(device));
+            if(it != end_it)
+            {
+                _device_combo_box.selected_item(*it);
+            }
+        }
    }
 
     void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
