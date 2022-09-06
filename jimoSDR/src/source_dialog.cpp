@@ -14,7 +14,6 @@ namespace jimo_sdr
         _device_label.anchor(anchor_styles::top | anchor_styles::left | anchor_styles::bottom);
         _device_label.text_align(content_alignment::middle_left);
 
-        _hardware_key_label.text("R820T");
         _hardware_key_label.anchor(anchor_styles::top | anchor_styles::right | anchor_styles::left);
         _hardware_key_label.text_align(content_alignment::middle_center);
 
@@ -59,6 +58,7 @@ namespace jimo_sdr
 
     void source_dialog::_show_device_properties()
     {
+        _hardware_key_label.text(_device_props.device()->hardware_key());
         if((*_device_props.device())["driver"] == "rtlsdr")
         {
             _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device_props);
