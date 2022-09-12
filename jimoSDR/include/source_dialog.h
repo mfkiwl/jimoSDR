@@ -11,6 +11,7 @@ namespace jimo_sdr
     {
         public:
             source_dialog(device_properties& device_properties);
+            void ok_clicked(const object& sender, const xtd::event_args& e);
         private:
             void _on_device_source_selected(object& sender, const xtd::event_args& e);
             void _show_device_properties();
@@ -21,7 +22,9 @@ namespace jimo_sdr
             xtd::forms::label _hardware_key_label;
             xtd::forms::combo_box _device_combo_box;
 
-            soapy::devices _soapy_devices;
+            xtd::forms::button _ok_button;
+
+            std::unique_ptr<soapy::devices> _soapy_devices;
             device_properties& _device_props;
             std::unique_ptr<rtlsdr_properties_panel> _rtlsdr_props_panel;
     };
