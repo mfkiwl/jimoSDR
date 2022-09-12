@@ -9,7 +9,6 @@ namespace jimo_sdr
     class device_properties
     {
         public:
-//            device_properties();
             device_properties(std::shared_ptr<soapy::device> device = nullptr);
             device_properties(const device_properties&) = delete;
             device_properties(device_properties&&) = delete;

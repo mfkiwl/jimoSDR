@@ -67,7 +67,10 @@ namespace jimo_sdr
     {
         source_dialog sdlg(_device_props);
         sdlg.show_dialog(*this);
-        _props_panel.source(_device_props.device()->driver_key());
+        if(_device_props.device())
+        {
+            _props_panel.source(_device_props.device()->driver_key());
+        }
     }
 
     void main_form::on_source_button_click(xtd::object& sender, const xtd::event_args& e)
