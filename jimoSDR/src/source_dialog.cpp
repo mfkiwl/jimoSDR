@@ -12,15 +12,12 @@ namespace jimo_sdr
         text("SDR Device");
 
         _build_device_panel();
-
-
         _device_combo_box.selected_index_changed += xtd::event_handler(
             *this, &source_dialog::_on_device_source_selected);
  
         _vert_dialog_panel.dock(dock_style::top);
         _vert_dialog_panel << _device_panel << _device_combo_box;
         _vert_dialog_panel.control_layout_style(_device_panel, {22, size_type::absolute, false});
-        _vert_dialog_panel.back_color(drawing::color::light_green);
 
         _retrieve_attached_sdrs();
         _populate_device_combo_box();
