@@ -15,6 +15,7 @@ namespace jimo_sdr
         private:
             void _on_device_source_selected(object& sender, const xtd::event_args& e);
             void _show_device_properties();
+            void _build_device_panel();
             xtd::forms::vertical_layout_panel _vert_dialog_panel;
             xtd::forms::horizontal_layout_panel _device_panel;
             xtd::forms::label _device_label;

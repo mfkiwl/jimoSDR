@@ -10,14 +10,8 @@ namespace jimo_sdr
     {
         text("SDR Device");
 
-        _device_label.text("Device");
-        _device_label.text_align(content_alignment::middle_left);
+        _build_device_panel();
 
-        _hardware_key_label.text_align(content_alignment::middle_center);
-
-        _device_panel << _device_label << _hardware_key_label ;
-        _device_panel.control_layout_style(_device_label, {.5f, size_type::percent, true});
-        _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});
 
         _device_combo_box.selected_index_changed += xtd::event_handler(
             *this, &source_dialog::_on_device_source_selected);
@@ -103,5 +97,17 @@ namespace jimo_sdr
             _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device_props);
             _vert_dialog_panel << *_rtlsdr_props_panel;
         }
+    }
+
+    void source_dialog::_build_device_panel()
+    {
+        _device_label.text("Device");
+        _device_label.text_align(content_alignment::middle_left);
+
+        _hardware_key_label.text_align(content_alignment::middle_center);
+
+        _device_panel << _device_label << _hardware_key_label ;
+        _device_panel.control_layout_style(_device_label, {.5f, size_type::percent, true});
+        _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});        
     }
 }
