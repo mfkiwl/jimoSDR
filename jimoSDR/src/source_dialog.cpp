@@ -9,6 +9,7 @@ namespace jimo_sdr
     source_dialog::source_dialog(device_properties& device_properties)
         : _device_props(device_properties)
     {
+        start_position(xtd::forms::form_start_position::center_parent);
         text("SDR Device");
         close_box(false);
         maximize_box(false);
