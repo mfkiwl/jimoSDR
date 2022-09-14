@@ -22,49 +22,9 @@ namespace jimo_sdr
         _vert_dialog_panel.control_layout_style(_device_panel, {22, size_type::absolute, false});
         _vert_dialog_panel.back_color(drawing::color::light_green);
 
-        _soapy_devices = std::make_unique<soapy::devices>();
-        while(_soapy_devices->cbegin() == _soapy_devices->cend())
-        {
-            message_dialog msg_dlg;
-            msg_dlg.buttons(message_dialog_buttons::ok_cancel);
-            std::string message("There are no SDRs attached.\nAttach one, then click OK\n" +
-                std::string("or click Cancel to close jimoSDR"));
-            msg_dlg.message(message);
-            msg_dlg.text("No SDRs Found");
-            auto res = msg_dlg.show_dialog(*this);
-            if(res == dialog_result::cancel)
-            {
-                throw no_sdrs_exception();
-            }
-            else
-            {
-                _soapy_devices.reset();
-                _soapy_devices = std::make_unique<soapy::devices>();
-            }
-        }
-        for(auto& pdev : *_soapy_devices)
-        {
-            _device_combo_box.items().push_back(pdev->driver_key());
-        }
-        // if only one item, select it
-        if(_device_combo_box.items().size() == 1)
-        {
-            _device_combo_box.selected_index(0);
-        }
-        else if(_device_combo_box.items().size() == 0)
-        {
-        }
-        else if(_device_props.device() != nullptr)
-        {
-            auto device = _device_props.device()->driver_key();
-            auto devices = _device_combo_box.items();
-            auto end_it = devices.cend();
-            auto it = find(devices.cbegin(), end_it, list_control::item(device));
-            if(it != end_it)
-            {
-                _device_combo_box.selected_item(*it);
-            }
-        }
+        _retrieve_attached_sdrs();
+        _populate_device_combo_box();
+        _select_appropriate_device();
 
         *this << _vert_dialog_panel;
 
@@ -113,5 +73,58 @@ namespace jimo_sdr
         _buttons_panel.control_layout_style(_filler_label, {size_type::auto_size, true});
         _buttons_panel.height(45);
         _buttons_panel.padding(10);
+    }
+
+    void source_dialog::_retrieve_attached_sdrs()
+    {
+        _soapy_devices = std::make_unique<soapy::devices>();
+        while(_soapy_devices->cbegin() == _soapy_devices->cend())
+        {
+            message_dialog msg_dlg;
+            msg_dlg.buttons(message_dialog_buttons::ok_cancel);
+            std::string message("There are no SDRs attached.\nAttach one, then click OK\n" +
+                std::string("or click Cancel to close jimoSDR"));
+            msg_dlg.message(message);
+            msg_dlg.text("No SDRs Found");
+            auto res = msg_dlg.show_dialog(*this);
+            if(res == dialog_result::cancel)
+            {
+                throw no_sdrs_exception();
+            }
+            else
+            {
+                _soapy_devices.reset();
+                _soapy_devices = std::make_unique<soapy::devices>();
+            }
+        }
+    }
+
+    void source_dialog::_populate_device_combo_box()
+    {
+        for(auto& pdev : *_soapy_devices)
+        {
+            _device_combo_box.items().push_back(pdev->driver_key());
+        }
+    }
+
+    void source_dialog::_select_appropriate_device()
+    {
+        // if only one item, select it
+        if(_device_combo_box.items().size() == 1)
+        {
+            _device_combo_box.selected_index(0);
+        }
+        // else select previously selected device
+        else if(_device_props.device() != nullptr)
+        {
+            auto device = _device_props.device()->driver_key();
+            auto devices = _device_combo_box.items();
+            auto end_it = devices.cend();
+            auto it = find(devices.cbegin(), end_it, list_control::item(device));
+            if(it != end_it)
+            {
+                _device_combo_box.selected_item(*it);
+            }
+        }
     }
 }
