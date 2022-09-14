@@ -18,6 +18,7 @@ add_executable(jimoSDR
     include/source_dialog.h
     include/rtlsdr_properties_panel.h
     include/device_properties.h
+    include/exceptions.h
     )
 
 target_include_directories(jimoSDR

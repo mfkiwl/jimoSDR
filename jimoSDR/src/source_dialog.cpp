@@ -1,4 +1,5 @@
 #include "source_dialog.h"
+#include "exceptions.h"
 
 using namespace xtd;
 using namespace xtd::forms;
@@ -33,14 +34,13 @@ namespace jimo_sdr
             auto res = msg_dlg.show_dialog(*this);
             if(res == dialog_result::cancel)
             {
-                close();
+                throw no_sdrs_exception();
             }
             else
             {
                 _soapy_devices.reset();
                 _soapy_devices = std::make_unique<soapy::devices>();
             }
-
         }
         for(auto& pdev : *_soapy_devices)
         {
