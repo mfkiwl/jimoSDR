@@ -17,11 +17,12 @@ namespace jimo_sdr
             void _show_device_properties();
             xtd::forms::vertical_layout_panel _vert_dialog_panel;
             xtd::forms::horizontal_layout_panel _device_panel;
-            xtd::forms::horizontal_layout_panel _sample_rate_panel;
             xtd::forms::label _device_label;
             xtd::forms::label _hardware_key_label;
             xtd::forms::combo_box _device_combo_box;
 
+            xtd::forms::horizontal_layout_panel _buttons_panel;
+            xtd::forms::label _filler_label;
             xtd::forms::button _ok_button;
 
             std::unique_ptr<soapy::devices> _soapy_devices;

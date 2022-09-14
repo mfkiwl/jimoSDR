@@ -15,32 +15,18 @@ namespace jimo_sdr
 
         _hardware_key_label.text_align(content_alignment::middle_center);
 
-        _device_panel.padding(2);
         _device_panel << _device_label << _hardware_key_label ;
         _device_panel.control_layout_style(_device_label, {.5f, size_type::percent, true});
         _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});
 
-        _device_combo_box.anchor(anchor_styles::left | anchor_styles::right);
         _device_combo_box.selected_index_changed += xtd::event_handler(
             *this, &source_dialog::_on_device_source_selected);
  
-        _vert_dialog_panel.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
+        _vert_dialog_panel.dock(dock_style::top);
         _vert_dialog_panel << _device_panel << _device_combo_box;
-        _vert_dialog_panel.control_layout_style(_device_panel, {size_type::auto_size, true});
-        _vert_dialog_panel.control_layout_style(_device_combo_box, {size_type::auto_size, true});
-        *this << _vert_dialog_panel;
+        _vert_dialog_panel.control_layout_style(_device_panel, {22, size_type::absolute, false});
+        _vert_dialog_panel.back_color(drawing::color::light_green);
 
-        _ok_button.text("Ok");
-        _ok_button.dialog_result(dialog_result::ok);
-        accept_button(_ok_button);
-        client_size(_vert_dialog_panel.size() + _ok_button.size());
-        client_size(drawing::size::add(client_size(), {7, 7}));
-        auto dialog_size = client_size();
-        auto bsize = _ok_button.size();
-        _ok_button.location({dialog_size.width() - bsize.width() - 5,
-            dialog_size.height() - bsize.height() - 5});
-        *this << _ok_button;
-        // must populate _device_combo_box after _vert_dialog_panel is added to this
         _soapy_devices = std::make_unique<soapy::devices>();
         while(_soapy_devices->cbegin() == _soapy_devices->cend())
         {
@@ -85,6 +71,22 @@ namespace jimo_sdr
                 _device_combo_box.selected_item(*it);
             }
         }
+
+        *this << _vert_dialog_panel;
+
+        _ok_button.text("Ok");
+        _ok_button.dialog_result(dialog_result::ok);
+        accept_button(_ok_button);
+
+        _buttons_panel.dock(dock_style::bottom);
+        _buttons_panel << _filler_label << _ok_button;
+        _buttons_panel.control_layout_style(_ok_button, {_ok_button.width(), size_type::absolute, false});
+        _buttons_panel.control_layout_style(_filler_label, {size_type::auto_size, true});
+        _buttons_panel.back_color(drawing::color::light_green);
+        _buttons_panel.height(45);
+        _buttons_panel.padding(10);
+        *this << _buttons_panel;
+
    }
 
     void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
@@ -100,7 +102,6 @@ namespace jimo_sdr
         {
             _rtlsdr_props_panel = std::make_unique<rtlsdr_properties_panel>(_device_props);
             _vert_dialog_panel << *_rtlsdr_props_panel;
-            _vert_dialog_panel.control_layout_style(*_rtlsdr_props_panel, {size_type::auto_size, true});
         }
     }
 }

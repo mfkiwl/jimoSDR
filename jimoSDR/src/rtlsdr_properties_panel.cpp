@@ -9,10 +9,8 @@ namespace jimo_sdr
             : _dev_props(device_props)
     {
         _sample_rate_label.text("Sample Rate");
-        _sample_rate_label.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
         _sample_rate_label.text_align(content_alignment::middle_left);
 
-        _sample_rate_combo_box.anchor(anchor_styles::left | anchor_styles::right);
         auto rates = _dev_props.device()->sample_rates(soapy::device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
         for(auto rate : rates)
@@ -35,11 +33,6 @@ namespace jimo_sdr
             _sample_rate_combo_box.selected_item(*it);
         }
 
-        anchor(anchor_styles::left | anchor_styles::bottom | anchor_styles::right);
         *this << _sample_rate_label << _sample_rate_combo_box;
-        control_layout_style(_sample_rate_label, {size_type::auto_size, true});
-        control_layout_style(_sample_rate_combo_box, {size_type::auto_size, true});
-        _sample_rate_label.height(220);
-        _sample_rate_combo_box.height(_sample_rate_label.height());
     }
 }
