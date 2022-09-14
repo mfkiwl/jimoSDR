@@ -68,17 +68,7 @@ namespace jimo_sdr
 
         *this << _vert_dialog_panel;
 
-        _ok_button.text("Ok");
-        _ok_button.dialog_result(dialog_result::ok);
-        accept_button(_ok_button);
-
-        _buttons_panel.dock(dock_style::bottom);
-        _buttons_panel << _filler_label << _ok_button;
-        _buttons_panel.control_layout_style(_ok_button, {_ok_button.width(), size_type::absolute, false});
-        _buttons_panel.control_layout_style(_filler_label, {size_type::auto_size, true});
-        _buttons_panel.back_color(drawing::color::light_green);
-        _buttons_panel.height(45);
-        _buttons_panel.padding(10);
+        _build_buttons_panel();
         *this << _buttons_panel;
 
    }
@@ -109,5 +99,19 @@ namespace jimo_sdr
         _device_panel << _device_label << _hardware_key_label ;
         _device_panel.control_layout_style(_device_label, {.5f, size_type::percent, true});
         _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});        
+    }
+
+    void source_dialog::_build_buttons_panel()
+    {
+        _ok_button.text("Ok");
+        _ok_button.dialog_result(dialog_result::ok);
+        accept_button(_ok_button);
+
+        _buttons_panel.dock(dock_style::bottom);
+        _buttons_panel << _filler_label << _ok_button;
+        _buttons_panel.control_layout_style(_ok_button, {_ok_button.width(), size_type::absolute, false});
+        _buttons_panel.control_layout_style(_filler_label, {size_type::auto_size, true});
+        _buttons_panel.height(45);
+        _buttons_panel.padding(10);
     }
 }
