@@ -10,6 +10,11 @@ namespace jimo_sdr
         : _device_props(device_properties)
     {
         text("SDR Device");
+        close_box(false);
+        maximize_box(false);
+        minimize_box(false);
+        maximum_size(size());
+        minimum_size(size());
 
         _build_device_panel();
         _device_combo_box.selected_index_changed += xtd::event_handler(
