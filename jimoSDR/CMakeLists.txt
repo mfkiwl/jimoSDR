@@ -12,6 +12,7 @@ add_executable(jimoSDR
     src/source_dialog.cpp
     src/rtlsdr_properties_panel.cpp
     src/device_properties.cpp
+    src/sampling_mode.cpp
     include/main_form.h
     include/properties_panel.h
     include/user_draw_buttons.h
@@ -19,6 +20,7 @@ add_executable(jimoSDR
     include/rtlsdr_properties_panel.h
     include/device_properties.h
     include/exceptions.h
+    include/sampling_mode.h
     )
 
 target_include_directories(jimoSDR

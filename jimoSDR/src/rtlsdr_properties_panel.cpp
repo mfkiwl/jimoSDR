@@ -1,4 +1,5 @@
 #include "rtlsdr_properties_panel.h"
+#include "sampling_mode.h"
 
 using namespace xtd;
 using namespace xtd::forms;
@@ -16,11 +17,12 @@ namespace jimo_sdr
         _sampling_mode_label.text("Sampling Mode");
         _sampling_mode_label.text_align(content_alignment::middle_left);
 
-        _sampling_mode_combo_box.items().push_back_range({"Quadrature", "Direct (I Branch)", "Direct (Q Branch)"});
-        _sampling_mode_combo_box.selected_index_changed += xtd::event_handler(
-            *this, &rtlsdr_properties_panel::_on_sampling_mode_selected);
-        _set_sampling_mode();
-
+        _sampling_mode_combo_box.items().push_back_range(sampling_mode::names());
+        _sampling_mode_combo_box.selected_index(_dev_props.sampling_mode().mode_as_int());
+        // note: we set mode before adding event handler because the event will save the
+        // mode in the same place that we retrieved the mode from
+        _sampling_mode_combo_box.selected_index_changed += [&] () 
+            {  _dev_props.sampling_mode().mode(_sampling_mode_combo_box.selected_index()); };
 
         *this << _sampling_mode_label << _sampling_mode_combo_box;
     }
@@ -49,37 +51,4 @@ namespace jimo_sdr
             _sample_rate_combo_box.selected_item(*it);
         }
     }
-
-        void rtlsdr_properties_panel::_on_sampling_mode_selected(object& sender, const xtd::event_args& e)
-        {
-            switch(_sampling_mode_combo_box.selected_index())
-            {
-                case 0:
-                    _dev_props.sampling_mode(device_properties::sampling_mode::quadrature);
-                    break;
-                case 1:
-                    _dev_props.sampling_mode(device_properties::sampling_mode::i_branch);
-                    break;  
-                case 2:
-                    _dev_props.sampling_mode(device_properties::sampling_mode::q_branch);
-                    break;
-            }
-        }
-
-        void rtlsdr_properties_panel::_set_sampling_mode()
-        {
-            switch(_dev_props.sampling_mode())
-            {
-                case device_properties::sampling_mode::quadrature:
-                    _sampling_mode_combo_box.selected_index(0);
-                    break;
-                case device_properties::sampling_mode::i_branch:
-                    _sampling_mode_combo_box.selected_index(1);
-                    break;
-                case device_properties::sampling_mode::q_branch:
-                    _sampling_mode_combo_box.selected_index(2);
-                    break;
-            }
-        }
-
 }
