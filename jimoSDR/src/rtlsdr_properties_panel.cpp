@@ -56,8 +56,7 @@ namespace jimo_sdr
 
     void rtlsdr_properties_panel::_on_sample_rate_changed(object& sender,  const xtd::event_args& e)
     {
-        std::stringstream ss;
-        ss << _sample_rate_combo_box.selected_item().to_string();
+        std::stringstream ss(_sample_rate_combo_box.selected_item().to_string());
         double rate;
         ss >> rate;
         rate *= 1'000'000.;
