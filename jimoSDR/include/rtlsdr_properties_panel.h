@@ -13,6 +13,7 @@ namespace jimo_sdr
         private:
             void _populate_sample_rate_combo_box();
             void _on_sampling_mode_selected(object& sender, const xtd::event_args& e);
+            void _on_sample_rate_changed(object& sender,  const xtd::event_args& e);
             void _set_sampling_mode();
 
             xtd::forms::label _sample_rate_label;

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "rtlsdr_properties_panel.h"
 #include "sampling_mode.h"
 
@@ -12,6 +13,7 @@ namespace jimo_sdr
         _sample_rate_label.text("Sample Rate");
         _sample_rate_label.text_align(content_alignment::middle_left);
         _populate_sample_rate_combo_box();
+        _sample_rate_combo_box.selected_index_changed += event_handler(*this, &rtlsdr_properties_panel::_on_sample_rate_changed);
         *this << _sample_rate_label << _sample_rate_combo_box;
 
         _sampling_mode_label.text("Sampling Mode");
@@ -50,5 +52,16 @@ namespace jimo_sdr
         {
             _sample_rate_combo_box.selected_item(*it);
         }
+    }
+
+    void rtlsdr_properties_panel::_on_sample_rate_changed(object& sender,  const xtd::event_args& e)
+    {
+        std::stringstream ss;
+        ss << _sample_rate_combo_box.selected_item().to_string();
+        double rate;
+        ss >> rate;
+        rate *= 1'000'000.;
+        _dev_props.sample_rate(rate);
+        _dev_props.device()->sample_rate(soapy::device::direction::rx, 0, rate);
     }
 }

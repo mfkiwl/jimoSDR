@@ -17,7 +17,7 @@ namespace jimo_sdr
             device_properties&& operator=(device_properties&&) = delete;
             std::shared_ptr<soapy::device> device() { return _device; }
             void device(std::shared_ptr<soapy::device> dev) { _device = dev; }
-            double sample_rate() { return _sample_rate; }
+            double& sample_rate() { return _sample_rate; }
             void sample_rate(double rate) { _sample_rate = rate; }
             sampling_mode& sampling_mode() { return _sampling_mode; }
             void sampling_mode(class sampling_mode mode) { _sampling_mode = mode; }
