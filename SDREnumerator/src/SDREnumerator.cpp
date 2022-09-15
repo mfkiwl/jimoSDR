@@ -135,6 +135,9 @@ int main()
             }
             cout << "    GPIO Banks:\n";
             print::print_strings(dev->gpio_banks(), 8);
+
+            cout << "    Register Interfaces:\n";
+            print::print_strings(dev->register_interfaces(), 8);
          }
     }
     cout << "In next 5 seconds, add or remove receivers\n";

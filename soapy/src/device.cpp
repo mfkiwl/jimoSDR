@@ -115,4 +115,9 @@ namespace soapy
     {
         return _device->listGPIOBanks();
     }
+
+    std::vector<std::string> device::register_interfaces() const
+    {
+        return _device->listRegisterInterfaces();
+    }
 }
