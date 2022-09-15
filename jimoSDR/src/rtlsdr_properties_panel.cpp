@@ -33,14 +33,11 @@ namespace jimo_sdr
     {
         auto rates = _dev_props.device()->sample_rates(soapy::device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
-        for(auto rate : rates)
-        {
-            // std::format is not in the standard clang++ library, so we
-            // use stringstream here.
-            std::stringstream ss;
-            ss << rate / 1'000'000 << " MHz";
-            _sample_rate_combo_box.items().push_back(ss.str());
-        }
+        std::transform(rates.cbegin(), rates.cend(), std::back_inserter(_sample_rate_combo_box.items()),
+            [] (double rate) {
+                    std::stringstream ss;
+                    ss << rate / 1'000'000 << " MHz";
+                    return ss.str(); });
         auto current_rate = _dev_props.device()->sample_rate(soapy::device::direction::rx, 0);
         std::stringstream ss;
         ss << current_rate / 1'000'000 << " MHz";
