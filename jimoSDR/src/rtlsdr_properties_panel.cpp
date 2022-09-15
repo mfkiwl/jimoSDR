@@ -11,6 +11,13 @@ namespace jimo_sdr
         _sample_rate_label.text("Sample Rate");
         _sample_rate_label.text_align(content_alignment::middle_left);
 
+        _populate_sample_rate_combo_box();
+
+        *this << _sample_rate_label << _sample_rate_combo_box;
+    }
+
+    void rtlsdr_properties_panel::_populate_sample_rate_combo_box()
+    {
         auto rates = _dev_props.device()->sample_rates(soapy::device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
         for(auto rate : rates)
@@ -32,7 +39,5 @@ namespace jimo_sdr
         {
             _sample_rate_combo_box.selected_item(*it);
         }
-
-        *this << _sample_rate_label << _sample_rate_combo_box;
     }
 }

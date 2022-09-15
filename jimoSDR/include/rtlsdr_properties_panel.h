@@ -12,6 +12,7 @@ namespace jimo_sdr
             rtlsdr_properties_panel(device_properties& device_props);
 //            std::optional<std::unique_ptr<device_properties>>& properties() { return _dev_props;}
         private:
+            void _populate_sample_rate_combo_box();
             xtd::forms::label _sample_rate_label;
             xtd::forms::combo_box _sample_rate_combo_box;
 
