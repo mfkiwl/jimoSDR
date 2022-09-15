@@ -105,10 +105,8 @@ namespace jimo_sdr
 
     void source_dialog::_populate_device_combo_box()
     {
-        for(auto& pdev : *_soapy_devices)
-        {
-            _device_combo_box.items().push_back(pdev->driver_key());
-        }
+        std::transform(_soapy_devices->cbegin(), _soapy_devices->cend(), std::back_inserter(_device_combo_box.items()),
+            [] (std::shared_ptr<soapy::device> dev) { return dev->driver_key(); });
     }
 
     void source_dialog::_select_appropriate_device()
