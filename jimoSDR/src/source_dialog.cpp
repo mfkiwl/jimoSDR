@@ -30,6 +30,7 @@ namespace jimo_sdr
         _select_appropriate_device();
 
         *this << _vert_dialog_panel;
+        _vert_dialog_panel.height(200);
 
         _build_buttons_panel();
         *this << _buttons_panel;
@@ -41,7 +42,7 @@ namespace jimo_sdr
         _device_props.device((*_soapy_devices)[_device_combo_box.selected_index()]);
         _show_device_properties();
     }
-
+    
     void source_dialog::_show_device_properties()
     {
         _hardware_key_label.text(_device_props.device()->hardware_key());
