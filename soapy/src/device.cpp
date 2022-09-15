@@ -110,4 +110,9 @@ namespace soapy
         return _device->listSampleRates(
             static_cast<int>(dir), channel);
     }
+
+    std::vector<std::string> device::gpio_banks() const
+    {
+        return _device->listGPIOBanks();
+    }
 }

@@ -47,6 +47,7 @@ namespace soapy
                 const double rate);
             std::vector<double> sample_rates(const direction dir,
                 const size_t channel) const;
+            std::vector<std::string> gpio_banks() const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
