@@ -1,7 +1,7 @@
 #include <memory>
 #include "devices.h"
 
-namespace soapy
+namespace sdr
 {
     devices::devices()
     {
@@ -30,7 +30,7 @@ namespace soapy
         _devices.push_back(pdev);
     }
 
-    const std::shared_ptr<soapy::device>& devices::operator[](size_t index) const
+    const std::shared_ptr<sdr::device>& devices::operator[](size_t index) const
     {
         return _devices[index];
     }

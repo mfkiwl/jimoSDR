@@ -1,6 +1,6 @@
 #include "types.h"
 
-namespace soapy
+namespace sdr
 {
     sdr_range::sdr_range(const SoapySDR::Range& range)
         : _minimum(range.minimum()), _maximum(range.maximum()), _step(range.step()) {}

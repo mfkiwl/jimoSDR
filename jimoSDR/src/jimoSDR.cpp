@@ -6,7 +6,7 @@
 using namespace jimo_sdr;
 using namespace xtd::forms;
 
-soapy::devices soapy_devices;
+sdr::devices sdr_devices;
 
 int main()
 {

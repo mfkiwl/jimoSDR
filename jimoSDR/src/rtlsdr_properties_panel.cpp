@@ -31,14 +31,14 @@ namespace jimo_sdr
 
     void rtlsdr_properties_panel::_populate_sample_rate_combo_box()
     {
-        auto rates = _dev_props.device()->sample_rates(soapy::device::direction::rx, 0);
+        auto rates = _dev_props.device()->sample_rates(sdr::device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
         std::transform(rates.cbegin(), rates.cend(), std::back_inserter(_sample_rate_combo_box.items()),
             [] (double rate) {
                     std::stringstream ss;
                     ss << rate / 1'000'000 << " MHz";
                     return ss.str(); });
-        auto current_rate = _dev_props.device()->sample_rate(soapy::device::direction::rx, 0);
+        auto current_rate = _dev_props.device()->sample_rate(sdr::device::direction::rx, 0);
         std::stringstream ss;
         ss << current_rate / 1'000'000 << " MHz";
         std::string rate = ss.str();
@@ -58,6 +58,6 @@ namespace jimo_sdr
         ss >> rate;
         rate *= 1'000'000.;
         _dev_props.sample_rate(rate);
-        _dev_props.device()->sample_rate(soapy::device::direction::rx, 0, rate);
+        _dev_props.device()->sample_rate(sdr::device::direction::rx, 0, rate);
     }
 }

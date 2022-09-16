@@ -8,7 +8,7 @@
 #include <memory>
 #include "types.h"
 
-namespace soapy
+namespace sdr
 {
     class device
     {

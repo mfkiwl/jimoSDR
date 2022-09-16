@@ -7,7 +7,7 @@
 #endif
 
 using namespace std;
-using namespace soapy;
+using namespace sdr;
 
 class print
 {

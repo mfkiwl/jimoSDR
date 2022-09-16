@@ -30,7 +30,7 @@ namespace jimo_sdr
             xtd::forms::label _filler_label;
             xtd::forms::button _ok_button;
 
-            std::unique_ptr<soapy::devices> _soapy_devices;
+            std::unique_ptr<sdr::devices> _sdr_devices;
             device_properties& _device_props;
             std::unique_ptr<rtlsdr_properties_panel> _rtlsdr_props_panel;
     };

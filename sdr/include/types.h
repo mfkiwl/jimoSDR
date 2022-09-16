@@ -5,7 +5,7 @@
 #include <variant>
 #include "SoapySDR/Types.hpp"
 
-namespace soapy
+namespace sdr
 {
     class sdr_range
     {

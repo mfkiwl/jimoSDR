@@ -32,7 +32,7 @@ namespace jimo_sdr
             void create_properties_panel();
             void create_right_panel();
 
-            std::shared_ptr<soapy::device> _device;
+            std::shared_ptr<sdr::device> _device;
             xtd::forms::vertical_layout_panel _vlp;
             xtd::forms::horizontal_layout_panel _controls_panel;
             xtd::forms::horizontal_layout_panel _main_panel;

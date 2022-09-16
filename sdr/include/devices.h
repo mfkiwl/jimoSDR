@@ -4,7 +4,7 @@
 #include <iterator>
 #include "device.h"
 
-namespace soapy
+namespace sdr
 {
     class devices
     {
@@ -23,7 +23,7 @@ namespace soapy
             const_iterator cend() { return _devices.cend(); }
             size_t size() { return _devices.size(); }
             void refresh();
-            const std::shared_ptr<soapy::device>& operator[](size_t index) const;
+            const std::shared_ptr<sdr::device>& operator[](size_t index) const;
             void remove_all_except(std::shared_ptr<device>& pdev);
         private:
             void _attached_devices();

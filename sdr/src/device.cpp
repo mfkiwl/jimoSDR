@@ -1,7 +1,7 @@
 #include <iostream>
 #include "device.h"
 
-namespace soapy
+namespace sdr
 {
     device::device(const SoapySDR::Kwargs& kwargs) : _properties(kwargs)
     {

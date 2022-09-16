@@ -39,7 +39,7 @@ namespace jimo_sdr
 
     void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
     {
-        _device_props.device((*_soapy_devices)[_device_combo_box.selected_index()]);
+        _device_props.device((*_sdr_devices)[_device_combo_box.selected_index()]);
         _show_device_properties();
     }
     
@@ -81,8 +81,8 @@ namespace jimo_sdr
 
     void source_dialog::_retrieve_attached_sdrs()
     {
-        _soapy_devices = std::make_unique<soapy::devices>();
-        while(_soapy_devices->cbegin() == _soapy_devices->cend())
+        _sdr_devices = std::make_unique<sdr::devices>();
+        while(_sdr_devices->cbegin() == _sdr_devices->cend())
         {
             message_dialog msg_dlg;
             msg_dlg.buttons(message_dialog_buttons::ok_cancel);
@@ -97,16 +97,16 @@ namespace jimo_sdr
             }
             else
             {
-                _soapy_devices.reset();
-                _soapy_devices = std::make_unique<soapy::devices>();
+                _sdr_devices.reset();
+                _sdr_devices = std::make_unique<sdr::devices>();
             }
         }
     }
 
     void source_dialog::_populate_device_combo_box()
     {
-        std::transform(_soapy_devices->cbegin(), _soapy_devices->cend(), std::back_inserter(_device_combo_box.items()),
-            [] (std::shared_ptr<soapy::device> dev) { return dev->driver_key(); });
+        std::transform(_sdr_devices->cbegin(), _sdr_devices->cend(), std::back_inserter(_device_combo_box.items()),
+            [] (std::shared_ptr<sdr::device> dev) { return dev->driver_key(); });
     }
 
     void source_dialog::_select_appropriate_device()
