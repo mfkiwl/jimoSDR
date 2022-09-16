@@ -120,4 +120,9 @@ namespace sdr
     {
         return _device->listRegisterInterfaces();
     }
+
+    double device::center_frequency(const direction dir, const size_t channel) const
+    {
+        return _device->getFrequency(static_cast<int>(dir), channel);
+    }
 }
