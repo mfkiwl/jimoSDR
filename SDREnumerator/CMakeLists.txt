@@ -8,10 +8,10 @@ add_executable(SDREnumerator
     target_include_directories(SDREnumerator
     PUBLIC     
     ${SoapySDR_INCLUDE_DIRS}
-    soapy/include)
+    sdr/include)
 
 target_link_libraries(SDREnumerator
     PRIVATE
-    soapy)
+    sdr)
 
 target_compile_features(SDREnumerator PRIVATE cxx_std_20)

@@ -26,12 +26,12 @@ add_executable(jimoSDR
 target_include_directories(jimoSDR
     PUBLIC 
     include
-    ../soapy/include
+    ../set_directory_properties()/include
     ${SoapySDR_SOURCE_DIR}/include)
 
 target_link_libraries(jimoSDR
     PRIVATE
-    soapy
+    sdr
     SoapySDR
     xtd)
 

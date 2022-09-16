@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 find_package(SoapySDR REQUIRED)
 
-add_library(soapy
+add_library(sdr
     SHARED 
     src/device.cpp
     src/devices.cpp
@@ -11,13 +11,13 @@ add_library(soapy
     include/devices.h
     include/types.h)
 
-    target_include_directories(soapy
+    target_include_directories(sdr
         PUBLIC
         include
         ${SoapySDR_INCLUDE_DIRS})
 
-    target_link_libraries(soapy
+    target_link_libraries(sdr
         PRIVATE
         SoapySDR)
 
-    target_compile_features(soapy PRIVATE cxx_std_20)
+    target_compile_features(sdr PRIVATE cxx_std_20)
