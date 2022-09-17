@@ -13,14 +13,7 @@ namespace jimo_sdr
         size({1000, 800});
         start_position(xtd::forms::form_start_position::center_screen);
 
-        _controls_panel.anchor(anchor_styles::left | anchor_styles::top
-            | anchor_styles::right);
-        _controls_panel.back_color(drawing::color::black);
-        _controls_panel << _props_button;
-        _controls_panel.control_layout_style(_props_button,
-            {_props_button.width(),size_type::absolute, true});
-        _controls_panel.padding(1);
-
+        _create_controls_panel();
         create_properties_panel();
         create_right_panel();
         _main_panel << _props_panel << _right_panel;
@@ -77,4 +70,16 @@ namespace jimo_sdr
     {
         show_source_dlg();
     }
+
+    void main_form::_create_controls_panel()
+    {
+        _controls_panel.anchor(anchor_styles::left | anchor_styles::top
+            | anchor_styles::right);
+        _controls_panel.back_color(drawing::color::black);
+        _controls_panel << _props_button;
+        _controls_panel.control_layout_style(_props_button,
+            {_props_button.width(),size_type::absolute, true});
+        _controls_panel.padding(1);        
+    }
+
 }

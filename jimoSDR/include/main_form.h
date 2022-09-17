@@ -31,6 +31,7 @@ namespace jimo_sdr
         private:
             void create_properties_panel();
             void create_right_panel();
+            void _create_controls_panel();
 
             std::shared_ptr<sdr::device> _device;
             xtd::forms::vertical_layout_panel _vlp;
