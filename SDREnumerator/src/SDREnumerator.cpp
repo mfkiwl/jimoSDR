@@ -117,8 +117,16 @@ int main()
             cout << "            Full scale: " << fullScale << '\n';
             print::print_stream_args_info(dev->stream_args_info(device::direction::rx,
                 channel), 12);
-            cout << "        Center Frequency = " << dev->center_frequency(device::direction::rx,
-                channel) << '\n';
+            double center_frequency = dev->center_frequency(device::direction::rx, channel);
+            cout << "        Center Frequency = " << center_frequency << '\n';
+            dev->center_frequency(device::direction::rx, channel, 50'000'000);
+            cout << "        Setting center frequency to 50 MHz. Center frequency is now ";
+            cout << dev->center_frequency(device::direction::rx, channel) << '\n';
+            dev->center_frequency(device::direction::rx, channel, center_frequency);
+            cout << "Resetting center frequency to " << center_frequency << ". Center_frequency is ";
+            cout << dev->center_frequency(device::direction::rx, channel) << '\n';
+            // Setting a center_frequency before getting sample rates prevents "PLL not locked" message,
+            // at least for RTLSDRs
             cout << "        Sample Rates:\n";
             auto rates = dev->sample_rates(device::direction::rx, channel);
             for(auto rate : rates)
