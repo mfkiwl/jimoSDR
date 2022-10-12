@@ -5,7 +5,7 @@
 using namespace xtd;
 using namespace xtd::forms;
 
-namespace jimo::jxtd
+namespace jimo_sdr
 {
     const xtd::drawing::size digit_incrementer_minimum_size(11, 16);
     const xtd::drawing::size digit_incrementer_maximum_size(66, 96);

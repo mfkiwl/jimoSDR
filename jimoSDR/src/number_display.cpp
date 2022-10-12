@@ -1,6 +1,6 @@
 #include "number_display.h"
 
-namespace jimo::jxtd
+namespace jimo_sdr
 {
     constexpr uint32_t maximum_number_of_digits = 15;
     constexpr uint32_t maximum_number_of_decimals = 3;
