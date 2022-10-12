@@ -6,6 +6,7 @@
 #include "user_draw_buttons.h"
 #include "source_dialog.h"
 #include "device_properties.h"
+#include "number_display.h"
 
 using namespace xtd::drawing;
 
@@ -40,6 +41,8 @@ namespace jimo_sdr
             properties_panel _props_panel;
             xtd::forms::panel _right_panel;
             properties_button _props_button;
+            xtd::forms::label _center_frequency_label;
+            number_display _center_frequency_display;
 
             device_properties _device_props;
    };

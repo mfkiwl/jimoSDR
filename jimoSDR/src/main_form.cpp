@@ -7,7 +7,7 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     main_form::main_form()
-        : _props_panel(*this)
+        : _props_panel(*this), _center_frequency_display(10)
     {
         text("jimoSDR");
         size({1000, 800});
@@ -76,7 +76,12 @@ namespace jimo_sdr
         _controls_panel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);
         _controls_panel.back_color(drawing::color::black);
-        _controls_panel << _props_button;
+        _center_frequency_label.text("Center:");
+        _center_frequency_label.text_align(content_alignment::middle_center);
+        _center_frequency_label.fore_color(drawing::color::white);
+        _center_frequency_label.size( {20, 35} );
+        _controls_panel << _props_button << _center_frequency_label << _center_frequency_display;
+        _props_button.size( {_props_button.height(), _props_button.height()} );
         _controls_panel.control_layout_style(_props_button,
             {_props_button.width(),size_type::absolute, true});
         _controls_panel.padding(1);        
