@@ -37,6 +37,15 @@ namespace jimo_sdr
         *this << _vlp;
     }
 
+    void MainForm::on_form_closing(xtd::forms::form_closing_event_args& e)
+    {
+        enum dialog_result close = xtd::forms::message_box::show(*this, 
+            "Are you sure you want exit?", 
+            "Close jimoSDR", xtd::forms::message_box_buttons::yes_no, 
+            xtd::forms::message_box_icon::question);
+        e.cancel(close == xtd::forms::dialog_result::no);
+    }
+
     void MainForm::create_properties_panel()
     {
         _props_panel.location({0, 0});

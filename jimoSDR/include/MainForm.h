@@ -23,27 +23,8 @@ namespace jimo_sdr
             void show_source_dlg();
             void on_source_button_click(xtd::object& sender, const xtd::event_args& e);
         protected:
-            void on_form_closing(xtd::forms::form_closing_event_args& e) override
-            {
-                enum dialog_result close = xtd::forms::message_box::show(*this, 
-                    "Are you sure you want exit?", 
-                    "Close jimoSDR", xtd::forms::message_box_buttons::yes_no, 
-                    xtd::forms::message_box_icon::question);
-                if (close == xtd::forms::dialog_result::yes)
-                {
-                    ReceiverAction exit { ReceiverTask::exit, nullptr, nullptr };
-                    RadioReceiver::GetInstance().QueueTask(exit);
-                }
-                else
-                {
-                    e.cancel(true);
-                }
-            }
-            void ExitProgram(ReceiverAction a)
-            {
-                close();
-            }
-        private:
+            void on_form_closing(xtd::forms::form_closing_event_args& e) override;
+       private:
             void create_properties_panel();
             void create_right_panel();
             void _create_controls_panel();
