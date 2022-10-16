@@ -1,6 +1,6 @@
 #include <sstream>
 #include "devices.h"
-#include "main_form.h"
+#include "MainForm.h"
 #include "exceptions.h"
 
 using namespace jimo_sdr;
@@ -10,7 +10,7 @@ sdr::devices sdr_devices;
 
 int main()
 {
-    main_form form1;
+    MainForm form1;
     form1.show();
     try
     {

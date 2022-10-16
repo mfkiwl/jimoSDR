@@ -6,7 +6,7 @@ find_package(SoapySDR REQUIRED)
 
 add_executable(jimoSDR
     src/jimoSDR.cpp
-    src/main_form.cpp
+    src/MainForm.cpp
     src/properties_panel.cpp
     src/user_draw_buttons.cpp
     src/source_dialog.cpp
@@ -15,7 +15,8 @@ add_executable(jimoSDR
     src/sampling_mode.cpp
     src/digit_incrementer.cpp
     src/number_display.cpp
-    include/main_form.h
+    src/RadioReceiver.cpp
+    include/MainForm.h
     include/properties_panel.h
     include/user_draw_buttons.h
     include/source_dialog.h
@@ -25,6 +26,9 @@ add_executable(jimoSDR
     include/sampling_mode.h
     include/digit_incrementer.h
     include/number_display.h
+    include/ReceiverAction.h
+    include/ReceiverTask.h
+    include/RadioReceiver.h
     )
 
 target_include_directories(jimoSDR

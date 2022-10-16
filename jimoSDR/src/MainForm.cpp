@@ -1,4 +1,4 @@
-#include "main_form.h"
+#include "MainForm.h"
 
 using namespace xtd;
 using namespace xtd::forms;
@@ -6,7 +6,7 @@ using namespace xtd::drawing;
 
 namespace jimo_sdr
 {
-    main_form::main_form()
+    MainForm::MainForm()
         : _props_panel(*this), _center_frequency_display(10)
     {
         text("jimoSDR");
@@ -37,14 +37,14 @@ namespace jimo_sdr
         *this << _vlp;
     }
 
-    void main_form::create_properties_panel()
+    void MainForm::create_properties_panel()
     {
         _props_panel.location({0, 0});
         _props_panel.size({300, client_size().height()});
         _props_panel.back_color(color::light_gray);
     }
 
-    void main_form::create_right_panel()
+    void MainForm::create_right_panel()
     {
         auto& main_form_client_rect = client_size();
         auto left_panel_size = _props_panel.size();
@@ -56,7 +56,7 @@ namespace jimo_sdr
             anchor_styles:: bottom | anchor_styles::left);
     }
 
-    void main_form::show_source_dlg()
+    void MainForm::show_source_dlg()
     {
         source_dialog sdlg(_device_props);
         sdlg.show_dialog(*this);
@@ -66,12 +66,12 @@ namespace jimo_sdr
         }
     }
 
-    void main_form::on_source_button_click(xtd::object& sender, const xtd::event_args& e)
+    void MainForm::on_source_button_click(xtd::object& sender, const xtd::event_args& e)
     {
         show_source_dlg();
     }
 
-    void main_form::_create_controls_panel()
+    void MainForm::_create_controls_panel()
     {
         _controls_panel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);

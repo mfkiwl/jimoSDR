@@ -7,6 +7,8 @@
 #include "source_dialog.h"
 #include "device_properties.h"
 #include "number_display.h"
+#include "ReceiverAction.h"
+#include "RadioReceiver.h"
 
 using namespace xtd::drawing;
 
@@ -14,21 +16,33 @@ namespace jimo_sdr
 {
     const color right_panel_background = color::from_argb(0xFF202020);
 
-    class main_form : public xtd::forms::form
+    class MainForm : public xtd::forms::form
     {
         public:
-            main_form();
+            MainForm();
             void show_source_dlg();
             void on_source_button_click(xtd::object& sender, const xtd::event_args& e);
         protected:
-            void on_form_closing(xtd::forms::form_closing_event_args& e) 
-                override {
-                    e.cancel(xtd::forms::message_box::show(*this, 
-                        "Are you sure you want exit?", 
-                        "Close Form", xtd::forms::message_box_buttons::yes_no, 
-                        xtd::forms::message_box_icon::question) == 
-                            xtd::forms::dialog_result::no);};
-
+            void on_form_closing(xtd::forms::form_closing_event_args& e) override
+            {
+                enum dialog_result close = xtd::forms::message_box::show(*this, 
+                    "Are you sure you want exit?", 
+                    "Close jimoSDR", xtd::forms::message_box_buttons::yes_no, 
+                    xtd::forms::message_box_icon::question);
+                if (close == xtd::forms::dialog_result::yes)
+                {
+                    ReceiverAction exit { ReceiverTask::exit, nullptr, nullptr };
+                    RadioReceiver::GetInstance().QueueTask(exit);
+                }
+                else
+                {
+                    e.cancel(true);
+                }
+            }
+            void ExitProgram(ReceiverAction a)
+            {
+                close();
+            }
         private:
             void create_properties_panel();
             void create_right_panel();
