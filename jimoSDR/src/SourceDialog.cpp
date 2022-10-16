@@ -1,4 +1,4 @@
-#include "source_dialog.h"
+#include "SourceDialog.h"
 #include "exceptions.h"
 
 using namespace xtd;
@@ -6,7 +6,7 @@ using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    source_dialog::source_dialog(device_properties& device_properties)
+    SourceDialog::SourceDialog(device_properties& device_properties)
         : _device_props(device_properties)
     {
         start_position(xtd::forms::form_start_position::center_parent);
@@ -19,7 +19,7 @@ namespace jimo_sdr
 
         _build_device_panel();
         _device_combo_box.selected_index_changed += xtd::event_handler(
-            *this, &source_dialog::_on_device_source_selected);
+            *this, &SourceDialog::_on_device_source_selected);
  
         _vert_dialog_panel.dock(dock_style::top);
         _vert_dialog_panel << _device_panel << _device_combo_box;
@@ -37,13 +37,13 @@ namespace jimo_sdr
 
    }
 
-    void source_dialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
+    void SourceDialog::_on_device_source_selected(object& sender, const xtd::event_args& e)
     {
         _device_props.device((*_sdr_devices)[_device_combo_box.selected_index()]);
         _show_device_properties();
     }
     
-    void source_dialog::_show_device_properties()
+    void SourceDialog::_show_device_properties()
     {
         _hardware_key_label.text(_device_props.device()->hardware_key());
         if((*_device_props.device())["driver"] == "rtlsdr")
@@ -53,7 +53,7 @@ namespace jimo_sdr
         }
     }
 
-    void source_dialog::_build_device_panel()
+    void SourceDialog::_build_device_panel()
     {
         _device_label.text("Device");
         _device_label.text_align(content_alignment::middle_left);
@@ -65,7 +65,7 @@ namespace jimo_sdr
         _device_panel.control_layout_style(_hardware_key_label, {size_type::auto_size, true});        
     }
 
-    void source_dialog::_build_buttons_panel()
+    void SourceDialog::_build_buttons_panel()
     {
         _ok_button.text("Ok");
         _ok_button.dialog_result(dialog_result::ok);
@@ -79,7 +79,7 @@ namespace jimo_sdr
         _buttons_panel.padding(10);
     }
 
-    void source_dialog::_retrieve_attached_sdrs()
+    void SourceDialog::_retrieve_attached_sdrs()
     {
         _sdr_devices = std::make_unique<sdr::devices>();
         while(_sdr_devices->cbegin() == _sdr_devices->cend())
@@ -103,13 +103,13 @@ namespace jimo_sdr
         }
     }
 
-    void source_dialog::_populate_device_combo_box()
+    void SourceDialog::_populate_device_combo_box()
     {
         std::transform(_sdr_devices->cbegin(), _sdr_devices->cend(), std::back_inserter(_device_combo_box.items()),
             [] (std::shared_ptr<sdr::device> dev) { return dev->driver_key(); });
     }
 
-    void source_dialog::_select_appropriate_device()
+    void SourceDialog::_select_appropriate_device()
     {
         // if only one item, select it
         if(_device_combo_box.items().size() == 1)

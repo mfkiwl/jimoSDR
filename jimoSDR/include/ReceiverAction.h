@@ -11,7 +11,7 @@ namespace jimo_sdr
     struct ReceiverAction
     {
         ReceiverTask task;
-        std::function<void(std::any)> callback;
+        std::function<void(ReceiverAction)> callback;
         std::any m_data;
     };
 }

@@ -58,7 +58,7 @@ namespace jimo_sdr
 
     void MainForm::show_source_dlg()
     {
-        source_dialog sdlg(_device_props);
+        SourceDialog sdlg(_device_props);
         sdlg.show_dialog(*this);
         if(_device_props.device())
         {

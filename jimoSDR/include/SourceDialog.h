@@ -7,10 +7,10 @@
 
 namespace jimo_sdr
 {
-    class source_dialog : public xtd::forms::form
+    class SourceDialog : public xtd::forms::form
     {
         public:
-            source_dialog(device_properties& device_properties);
+            SourceDialog(device_properties& device_properties);
             void ok_clicked(const object& sender, const xtd::event_args& e);
         private:
             void _on_device_source_selected(object& sender, const xtd::event_args& e);
