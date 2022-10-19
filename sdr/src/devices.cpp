@@ -1,5 +1,5 @@
 #include <memory>
-#include "devices.h"
+#include "Devices.h"
 
 namespace sdr
 {
@@ -16,6 +16,11 @@ namespace sdr
         {
             _devices.push_back(std::make_shared<device>(dev));
         }
+    }
+
+    void devices::clear()
+    {
+        _devices.clear();
     }
 
     void devices::refresh()

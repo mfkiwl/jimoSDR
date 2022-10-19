@@ -13,14 +13,15 @@ namespace sdr
             using iterator = typename container::iterator;
             using const_iterator = typename container::const_iterator;
             devices();
-            devices(const devices&) = delete;
-            devices(devices&&) = delete;
+            devices(const devices&) = default;
+            devices(devices&&) = default;
             devices& operator=(const devices&) = delete;
-            devices&& operator=(devices&&) = delete;
+            devices& operator=(devices&&) = default;
             iterator begin() { return _devices.begin(); }
             iterator end() { return _devices.end(); }
             const_iterator cbegin() { return _devices.cbegin(); }
             const_iterator cend() { return _devices.cend(); }
+            void clear();
             size_t size() { return _devices.size(); }
             void refresh();
             const std::shared_ptr<sdr::device>& operator[](size_t index) const;

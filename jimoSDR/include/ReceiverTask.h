@@ -7,6 +7,6 @@ namespace jimo_sdr
 {
     enum class ReceiverTask
     {
-        exit,       // terminate receiver
+        getReceivers,       // get all attached receivers
     };
 }

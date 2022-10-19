@@ -1,4 +1,4 @@
-#include "devices.h"
+#include "Devices.h"
 #include <iostream>
 #ifdef _WIN32
     #include <Windows.h>

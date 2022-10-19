@@ -25,6 +25,7 @@ namespace jimo_sdr
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) override;
        private:
+            void VisibleChanged(xtd::object& sender, const xtd::event_args& e);
             void create_properties_panel();
             void create_right_panel();
             void _create_controls_panel();
@@ -39,6 +40,8 @@ namespace jimo_sdr
             xtd::forms::label _center_frequency_label;
             number_display _center_frequency_display;
 
+            bool m_starting;
+            GuiNotifier m_notifier;
             device_properties _device_props;
    };
 }

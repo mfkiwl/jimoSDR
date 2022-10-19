@@ -7,7 +7,7 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     MainForm::MainForm()
-        : _props_panel(*this), _center_frequency_display(10)
+        : _props_panel(*this), _center_frequency_display(10), m_starting(true), m_notifier(*this)
     {
         text("jimoSDR");
         size({1000, 800});
@@ -35,6 +35,8 @@ namespace jimo_sdr
         _vlp.width(client_size().width());
         _vlp.height(client_size().height());
         *this << _vlp;
+
+        visible_changed += xtd::event_handler(*this, &MainForm::VisibleChanged);
     }
 
     void MainForm::on_form_closing(xtd::forms::form_closing_event_args& e)
@@ -67,7 +69,7 @@ namespace jimo_sdr
 
     void MainForm::show_source_dlg()
     {
-        SourceDialog sdlg(_device_props);
+        SourceDialog sdlg(m_notifier, _device_props);
         sdlg.show_dialog(*this);
         if(_device_props.device())
         {
@@ -96,4 +98,13 @@ namespace jimo_sdr
         _controls_panel.padding(1);        
     }
 
+    void MainForm::VisibleChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        if (m_starting)
+        {
+            show_source_dlg();
+            m_starting = false;
+            visible_changed -= xtd::event_handler(*this, &MainForm::VisibleChanged);
+        }
+    }
 }

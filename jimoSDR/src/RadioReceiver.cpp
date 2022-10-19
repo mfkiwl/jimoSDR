@@ -1,4 +1,5 @@
 #include "RadioReceiver.h"
+#include "Devices.h"
 #include <iostream>
 #include <chrono>
 
@@ -42,7 +43,7 @@ namespace jimo_sdr
         {
             std::unique_lock<std::mutex> lock(m_queueMutex);
             lock.unlock();
-            while (!m_runReceive)
+            while (!m_runReceive && m_queue.empty())
             {
                 lock.lock();
                 m_entryInQueue.wait(lock);
@@ -64,8 +65,10 @@ namespace jimo_sdr
                     lock.unlock();
                     switch (action.task)
                     {
-                        case ReceiverTask::exit:
-                            return;
+                        case ReceiverTask::getReceivers:
+                            std::this_thread::sleep_for(1s);
+                            std::invoke(action.callback, sdr::devices());
+                            break;
                     }
                 }
             }
