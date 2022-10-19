@@ -16,6 +16,7 @@ add_executable(jimoSDR
     src/digit_incrementer.cpp
     src/number_display.cpp
     src/RadioReceiver.cpp
+    src/SourcePanel.cpp
     include/MainForm.h
     include/properties_panel.h
     include/user_draw_buttons.h
@@ -29,6 +30,7 @@ add_executable(jimoSDR
     include/ReceiverAction.h
     include/ReceiverTask.h
     include/RadioReceiver.h
+    include/SourcePanel.h
     )
 
 target_include_directories(jimoSDR

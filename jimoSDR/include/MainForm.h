@@ -20,16 +20,14 @@ namespace jimo_sdr
     {
         public:
             MainForm();
-            void show_source_dlg();
-            void on_source_button_click(xtd::object& sender, const xtd::event_args& e);
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) override;
        private:
-            void VisibleChanged(xtd::object& sender, const xtd::event_args& e);
             void create_properties_panel();
             void create_right_panel();
             void _create_controls_panel();
 
+            GuiNotifier m_notifier;
             std::shared_ptr<sdr::device> _device;
             xtd::forms::vertical_layout_panel _vlp;
             xtd::forms::horizontal_layout_panel _controls_panel;
@@ -40,8 +38,6 @@ namespace jimo_sdr
             xtd::forms::label _center_frequency_label;
             number_display _center_frequency_display;
 
-            bool m_starting;
-            GuiNotifier m_notifier;
             device_properties _device_props;
    };
 }

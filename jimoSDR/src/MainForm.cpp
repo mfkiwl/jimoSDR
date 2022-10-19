@@ -7,10 +7,11 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     MainForm::MainForm()
-        : _props_panel(*this), _center_frequency_display(10), m_starting(true), m_notifier(*this)
+        :m_notifier(*this), _props_panel(*this, m_notifier), _center_frequency_display(10)
     {
         text("jimoSDR");
         size({1000, 800});
+        minimum_size({1000, 800});
         start_position(xtd::forms::form_start_position::center_screen);
 
         _create_controls_panel();
@@ -35,8 +36,6 @@ namespace jimo_sdr
         _vlp.width(client_size().width());
         _vlp.height(client_size().height());
         *this << _vlp;
-
-        visible_changed += xtd::event_handler(*this, &MainForm::VisibleChanged);
     }
 
     void MainForm::on_form_closing(xtd::forms::form_closing_event_args& e)
@@ -67,21 +66,6 @@ namespace jimo_sdr
             anchor_styles:: bottom | anchor_styles::left);
     }
 
-    void MainForm::show_source_dlg()
-    {
-        SourceDialog sdlg(m_notifier, _device_props);
-        sdlg.show_dialog(*this);
-        if(_device_props.device())
-        {
-            _props_panel.source(_device_props.device()->driver_key());
-        }
-    }
-
-    void MainForm::on_source_button_click(xtd::object& sender, const xtd::event_args& e)
-    {
-        show_source_dlg();
-    }
-
     void MainForm::_create_controls_panel()
     {
         _controls_panel.anchor(anchor_styles::left | anchor_styles::top
@@ -96,15 +80,5 @@ namespace jimo_sdr
         _controls_panel.control_layout_style(_props_button,
             {_props_button.width(),size_type::absolute, true});
         _controls_panel.padding(1);        
-    }
-
-    void MainForm::VisibleChanged(xtd::object& sender, const xtd::event_args& e)
-    {
-        if (m_starting)
-        {
-            show_source_dlg();
-            m_starting = false;
-            visible_changed -= xtd::event_handler(*this, &MainForm::VisibleChanged);
-        }
     }
 }

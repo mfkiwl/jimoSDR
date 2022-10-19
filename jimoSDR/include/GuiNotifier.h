@@ -15,20 +15,20 @@ namespace jimo_sdr
         public:
             GuiNotifier(xtd::forms::control& synchronizer) : m_synchronizer(synchronizer) {}
             // Events
-            xtd::event<GuiNotifier, xtd::event_handler> got_receivers;
+            xtd::event<GuiNotifier, xtd::event_handler> gotReceivers;
             // event raised when receivers are retrieved via Devices constructor
-            void on_got_receivers(const std::vector<std::any>& args)
+            void OnGotReceivers(const std::vector<std::any>& args)
             {
                 auto devices = any_cast<sdr::devices>(args[0]);
                 GotReceiversEventArgs e(devices);
-                got_receivers.invoke(*this, e);
+                gotReceivers.invoke(*this, e);
             }
 
-            void notify_got_receivers(const std::any devices)
+            void NotifyGotReceivers(const std::any devices)
             {
                 std::vector<std::any> args;
                 args.push_back(devices);
-                m_synchronizer.begin_invoke({ *this, &GuiNotifier::on_got_receivers }, args);
+                m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotReceivers }, args);
             }
         private:
             xtd::forms::control& m_synchronizer;
