@@ -13,6 +13,7 @@ namespace jimo_sdr
             void SourcesDropDown(xtd::object& sender, const xtd::event_args& e);
             void GetReceivers();
             void GotReceivers(xtd::object& sender, const xtd::event_args& e);
+            void GotDriverKey(xtd::object& sender, const xtd::event_args& e);
             xtd::forms::combo_box m_sources;
 
             GuiNotifier& m_notifier;

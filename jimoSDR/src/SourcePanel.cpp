@@ -2,6 +2,7 @@
 #include "ReceiverAction.h"
 #include "RadioReceiver.h"
 #include "GotReceiversEventArgs.h"
+#include "GotDeviceDriverKeyEventArgs.h"
 #include "exceptions.h"
 
 
@@ -15,6 +16,7 @@ namespace jimo_sdr
         text("Source");
         anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
+        m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
 
         m_sources.drop_down_style(combo_box_style::drop_down_list);
         m_sources.anchor(anchor_styles::left | anchor_styles::top);
@@ -56,9 +58,19 @@ namespace jimo_sdr
         else
         {
             m_sources.items().clear();
-            std::transform(devices.cbegin(), devices.cend(),
-                std::back_inserter(m_sources.items()),
-                [] (std::shared_ptr<sdr::device> dev) { return dev->driver_key(); });
-        }
+            for (auto device : devices)
+            {
+                ReceiverAction getDriverKey({ ReceiverTask::getDriverKey,
+                    std::bind(&GuiNotifier::NotifyGotDeviceDriverKey, &m_notifier, _1), device} );
+                RadioReceiver::GetInstance().QueueTask(getDriverKey);
+            }
+       }
+    }
+
+    void SourcePanel::GotDriverKey(xtd::object& sender, const xtd::event_args& e)
+    {
+        const auto& args = dynamic_cast<const GotDeviceDriverKeyEventArgs&>(e);
+        auto key = args.DriverKey();
+        m_sources.items().push_back(key);
     }
 }

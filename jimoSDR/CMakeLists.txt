@@ -29,6 +29,8 @@ add_executable(jimoSDR
     include/ReceiverTask.h
     include/RadioReceiver.h
     include/SourcePanel.h
+    include/GotReceiversEventArgs.h
+    include/GotDeviceDriverKeyEventArgs.h
     )
 
 target_include_directories(jimoSDR

@@ -69,6 +69,11 @@ namespace jimo_sdr
                             std::this_thread::sleep_for(1s);
                             std::invoke(action.callback, sdr::devices());
                             break;
+                        case ReceiverTask::getDriverKey:
+                            auto device = any_cast<std::shared_ptr<sdr::device>>(action.m_data);
+                            std::string key = device->driver_key();
+                            std::invoke(action.callback, key);
+                            break;
                     }
                 }
             }
