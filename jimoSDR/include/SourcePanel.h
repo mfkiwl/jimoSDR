@@ -5,12 +5,12 @@
 
 namespace jimo_sdr
 {
-    class SourcePanel : public xtd::forms::collapsible_panel
+    class SourcePanel : public xtd::forms::group_box
     {
         public:
             SourcePanel(GuiNotifier& notifier);
         private:
-            void ExpandedChanged(xtd::object& sender, const xtd::event_args& e);
+            void SourcesDropDown(xtd::object& sender, const xtd::event_args& e);
             void GetReceivers();
             void GotReceivers(xtd::object& sender, const xtd::event_args& e);
             xtd::forms::combo_box m_sources;

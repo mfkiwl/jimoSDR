@@ -4,7 +4,6 @@
 #include "device.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
-#include "SourceDialog.h"
 #include "device_properties.h"
 #include "number_display.h"
 #include "ReceiverAction.h"

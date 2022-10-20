@@ -14,21 +14,18 @@ namespace jimo_sdr
     {
         text("Source");
         anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
-        expanded_changed += xtd::event_handler(*this, &SourcePanel::ExpandedChanged);
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
 
         m_sources.drop_down_style(combo_box_style::drop_down_list);
         m_sources.anchor(anchor_styles::left | anchor_styles::top);
         m_sources.items().push_back("None");
+        m_sources.drop_down += xtd::event_handler(*this, &SourcePanel::SourcesDropDown);
         *this << m_sources;
     }
 
-    void SourcePanel::ExpandedChanged(xtd::object& sender, const xtd::event_args& e)
+    void SourcePanel::SourcesDropDown(xtd::object& sender, const xtd::event_args& e)
     {
-        if (expanded())
-        {
             GetReceivers();
-        }
     }
 
     void SourcePanel::GetReceivers()
