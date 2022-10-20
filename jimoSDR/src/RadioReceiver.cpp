@@ -66,7 +66,6 @@ namespace jimo_sdr
                     switch (action.task)
                     {
                         case ReceiverTask::getReceivers:
-                            std::this_thread::sleep_for(1s);
                             std::invoke(action.callback, sdr::devices());
                             break;
                         case ReceiverTask::getDriverKey:
