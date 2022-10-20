@@ -9,7 +9,6 @@ add_executable(jimoSDR
     src/MainForm.cpp
     src/properties_panel.cpp
     src/user_draw_buttons.cpp
-    src/SourceDialog.cpp
     src/rtlsdr_properties_panel.cpp
     src/device_properties.cpp
     src/sampling_mode.cpp
@@ -20,7 +19,6 @@ add_executable(jimoSDR
     include/MainForm.h
     include/properties_panel.h
     include/user_draw_buttons.h
-    include/SourceDialog.h
     include/rtlsdr_properties_panel.h
     include/device_properties.h
     include/exceptions.h
@@ -36,7 +34,6 @@ add_executable(jimoSDR
 target_include_directories(jimoSDR
     PUBLIC 
     include
-    ../set_directory_properties()/include
     ${SoapySDR_SOURCE_DIR}/include)
 
 target_link_libraries(jimoSDR
