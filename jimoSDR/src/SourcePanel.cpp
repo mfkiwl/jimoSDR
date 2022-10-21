@@ -11,7 +11,8 @@ using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    SourcePanel::SourcePanel(GuiNotifier& notifier) : m_notifier(notifier)
+    SourcePanel::SourcePanel(device_properties& deviceProps, GuiNotifier& notifier) 
+        : m_notifier(notifier), m_deviceProps(deviceProps)
     {
         text("Source");
         anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
@@ -19,9 +20,10 @@ namespace jimo_sdr
         m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
 
         m_sources.drop_down_style(combo_box_style::drop_down_list);
-        m_sources.anchor(anchor_styles::left | anchor_styles::top);
+        m_sources.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
         m_sources.items().push_back("None");
         m_sources.drop_down += xtd::event_handler(*this, &SourcePanel::SourcesDropDown);
+        m_sources.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SourceValueChanged);
         *this << m_sources;
     }
 
@@ -40,8 +42,8 @@ namespace jimo_sdr
     void SourcePanel::GotReceivers(xtd::object& sender, const xtd::event_args& e)
     {
         const auto& args = dynamic_cast<const GotReceiversEventArgs&>(e);
-        sdr::devices devices = args.Devices();
-        if (devices.cbegin() == devices.cend())
+        m_devices = args.Devices();
+        if (m_devices.cbegin() == m_devices.cend())
         {
             message_dialog msgDialog;
             msgDialog.buttons(message_dialog_buttons::ok_cancel);
@@ -58,7 +60,7 @@ namespace jimo_sdr
         else
         {
             m_sources.items().clear();
-            for (auto device : devices)
+            for (auto device : m_devices)
             {
                 ReceiverAction getDriverKey({ ReceiverTask::getDriverKey,
                     std::bind(&GuiNotifier::NotifyGotDeviceDriverKey, &m_notifier, _1), device} );
@@ -72,5 +74,11 @@ namespace jimo_sdr
         const auto& args = dynamic_cast<const GotDeviceDriverKeyEventArgs&>(e);
         auto key = args.DriverKey();
         m_sources.items().push_back(key);
+    }
+
+    void SourcePanel::SourceValueChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        auto index = m_sources.selected_index();
+        m_deviceProps.device(m_devices[index]);
     }
 }

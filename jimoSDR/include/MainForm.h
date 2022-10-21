@@ -2,9 +2,9 @@
 
 #include <xtd/xtd>
 #include "device.h"
+#include "device_properties.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
-#include "device_properties.h"
 #include "number_display.h"
 #include "ReceiverAction.h"
 #include "RadioReceiver.h"
@@ -37,6 +37,6 @@ namespace jimo_sdr
             xtd::forms::label _center_frequency_label;
             number_display _center_frequency_display;
 
-            device_properties _device_props;
+            device_properties m_deviceProps;
    };
 }

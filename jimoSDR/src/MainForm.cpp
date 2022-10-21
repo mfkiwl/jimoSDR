@@ -7,7 +7,7 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     MainForm::MainForm()
-        :m_notifier(*this), _props_panel(*this, m_notifier), _center_frequency_display(10)
+        :m_notifier(*this), _props_panel(*this, m_deviceProps, m_notifier), _center_frequency_display(10)
     {
         text("jimoSDR");
         size({1000, 800});
