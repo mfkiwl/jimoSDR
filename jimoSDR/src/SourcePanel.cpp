@@ -74,6 +74,12 @@ namespace jimo_sdr
         const auto& args = dynamic_cast<const GotDeviceDriverKeyEventArgs&>(e);
         auto key = args.DriverKey();
         m_sources.items().push_back(key);
+        // If there is only one device, we select it now. No point in waiting for the user
+        // to select it.
+        if (m_devices.size() == 1)
+        {
+            m_sources.selected_index(0);
+        }
     }
 
     void SourcePanel::SourceValueChanged(xtd::object& sender, const xtd::event_args& e)
