@@ -1,4 +1,5 @@
 #include "user_draw_buttons.h"
+#include "ControlSizes.h"
 
 using namespace xtd::forms;
 using namespace xtd::drawing;
@@ -7,8 +8,8 @@ namespace jimo_sdr
 {
     user_draw_button::user_draw_button()
     {
-        width(35);
-        height(35);
+        width(defaultUserDrawButtonWidth);
+        height(defaultUserDrawButtonHeight);
     }
 
     void properties_button::on_paint(paint_event_args& e)

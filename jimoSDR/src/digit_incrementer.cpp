@@ -1,4 +1,5 @@
 #include "digit_incrementer.h"
+#include "ControlSizes.h"
 #include <sstream>
 #include <iostream>
 
@@ -7,8 +8,8 @@ using namespace xtd::forms;
 
 namespace jimo_sdr
 {
-    const xtd::drawing::size digit_incrementer_minimum_size(11, 16);
-    const xtd::drawing::size digit_incrementer_maximum_size(66, 96);
+    const xtd::drawing::size digit_incrementer_minimum_size(digitIncrementerMinimumWidth, digitIncrementerMinimumHeight);
+    const xtd::drawing::size digit_incrementer_maximum_size(digitIncrementerMaximumWidth, digitIncrementerMaximumHeight);
     const xtd::drawing::point digit_origin(0, 0);
     const xtd::drawing::point upper_panel_origin(digit_origin);
     const xtd::forms::padding margin_size(0);

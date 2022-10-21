@@ -1,4 +1,5 @@
 #include "SourcePanel.h"
+#include "ControlSizes.h"
 #include "ReceiverAction.h"
 #include "RadioReceiver.h"
 #include "GotReceiversEventArgs.h"
@@ -29,10 +30,10 @@ namespace jimo_sdr
         m_sampleRatesLabel.text("Sample Rate: ");
         m_sampleRatesLabel.text_align(content_alignment::middle_right);
         m_sampleRatesLabel.dock(dock_style::left);
-        m_sampleRatesLabel.width(150);
+        m_sampleRatesLabel.width(propertiesPanelWidth / 2);
 
         m_sampleRates.dock(dock_style::right);
-        m_sampleRates.width(150);
+        m_sampleRates.width(propertiesPanelWidth / 2);
 
         m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
 
@@ -43,10 +44,10 @@ namespace jimo_sdr
         m_groupBoxPanel << m_spaceLabel1 << m_sources << m_spaceLabel2 << m_sampleRatesPanel;
         m_groupBoxPanel.back_color(drawing::color::pink);
 
-        m_groupBoxPanel.control_layout_style(m_sources, {20, size_type::absolute, true});
-        m_groupBoxPanel.control_layout_style(m_spaceLabel1, { 3, size_type::absolute, true});
-        m_groupBoxPanel.control_layout_style(m_sampleRatesPanel, {20, size_type::absolute, true});
-        m_groupBoxPanel.control_layout_style(m_spaceLabel2, { 3, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_sources, {defaultControlHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_spaceLabel1, { defaultSpacerHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_sampleRatesPanel, {defaultControlHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_spaceLabel2, { defaultSpacerHeight, size_type::absolute, true});
 
         *this << m_panelLabel << m_groupBoxPanel;
     }
