@@ -14,17 +14,41 @@ namespace jimo_sdr
     SourcePanel::SourcePanel(device_properties& deviceProps, GuiNotifier& notifier) 
         : m_notifier(notifier), m_deviceProps(deviceProps)
     {
-        text("Source");
-        anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
+        width(300);
+        m_panelLabel.text("    Source");
+        m_panelLabel.dock(dock_style::top);
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
         m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
 
         m_sources.drop_down_style(combo_box_style::drop_down_list);
-        m_sources.anchor(anchor_styles::left | anchor_styles::top | anchor_styles::right);
+        m_sources.dock(dock_style::top);
         m_sources.items().push_back("None");
         m_sources.drop_down += xtd::event_handler(*this, &SourcePanel::SourcesDropDown);
         m_sources.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SourceValueChanged);
-        *this << m_sources;
+
+        m_sampleRatesLabel.text("Sample Rate: ");
+        m_sampleRatesLabel.text_align(content_alignment::middle_right);
+        m_sampleRatesLabel.dock(dock_style::left);
+        m_sampleRatesLabel.width(150);
+
+        m_sampleRates.dock(dock_style::right);
+        m_sampleRates.width(150);
+
+        m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
+
+        m_spaceLabel1.dock(dock_style::top);
+        m_spaceLabel2.dock(dock_style::top);
+
+        m_groupBoxPanel.dock(dock_style::top);
+        m_groupBoxPanel << m_spaceLabel1 << m_sources << m_spaceLabel2 << m_sampleRatesPanel;
+        m_groupBoxPanel.back_color(drawing::color::pink);
+
+        m_groupBoxPanel.control_layout_style(m_sources, {20, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_spaceLabel1, { 3, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_sampleRatesPanel, {20, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_spaceLabel2, { 3, size_type::absolute, true});
+
+        *this << m_panelLabel << m_groupBoxPanel;
     }
 
     void SourcePanel::SourcesDropDown(xtd::object& sender, const xtd::event_args& e)
