@@ -21,11 +21,21 @@ namespace jimo_sdr
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
         m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
 
+        m_deviceLabel.text("Device: ");
+        m_deviceLabel.text_align(content_alignment::middle_right);
+        m_deviceLabel.dock(dock_style::left);
+        m_deviceLabel.width(propertiesPanelWidth / 2);
+
         m_sources.drop_down_style(combo_box_style::drop_down_list);
-        m_sources.dock(dock_style::top);
+        m_sources.dock(dock_style::right);
+        m_sources.width(propertiesPanelWidth / 2);
         m_sources.items().push_back("None");
         m_sources.drop_down += xtd::event_handler(*this, &SourcePanel::SourcesDropDown);
         m_sources.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SourceValueChanged);
+
+        m_devicePanel << m_deviceLabel << m_sources;
+        m_devicePanel.dock(dock_style::top);
+        m_devicePanel.width(propertiesPanelWidth);
 
         m_sampleRatesLabel.text("Sample Rate: ");
         m_sampleRatesLabel.text_align(content_alignment::middle_right);
@@ -41,10 +51,10 @@ namespace jimo_sdr
         m_spaceLabel2.dock(dock_style::top);
 
         m_groupBoxPanel.dock(dock_style::top);
-        m_groupBoxPanel << m_spaceLabel1 << m_sources << m_spaceLabel2 << m_sampleRatesPanel;
+        m_groupBoxPanel<< m_devicePanel << m_spaceLabel1 << m_sampleRatesPanel << m_spaceLabel2;
         m_groupBoxPanel.back_color(drawing::color::pink);
 
-        m_groupBoxPanel.control_layout_style(m_sources, {defaultControlHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_devicePanel, {defaultControlHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_spaceLabel1, { defaultSpacerHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_sampleRatesPanel, {defaultControlHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_spaceLabel2, { defaultSpacerHeight, size_type::absolute, true});
