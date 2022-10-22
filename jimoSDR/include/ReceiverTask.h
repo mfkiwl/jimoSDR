@@ -9,5 +9,6 @@ namespace jimo_sdr
     {
         getReceivers,       // get all attached receivers
         getDriverKey,       // get device driver key
+        getSampleRates,     // get sample rates
     };
 }

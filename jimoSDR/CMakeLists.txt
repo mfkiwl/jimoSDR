@@ -32,6 +32,7 @@ add_executable(jimoSDR
     include/SourcePanel.h
     include/GotReceiversEventArgs.h
     include/GotDeviceDriverKeyEventArgs.h
+    include/GotSampleRatesEventArgs.h
     )
 
 target_include_directories(jimoSDR

@@ -20,6 +20,7 @@ namespace jimo_sdr
         m_panelLabel.dock(dock_style::top);
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
         m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
+        m_notifier.gotSampleRates += xtd::event_handler(*this, &SourcePanel::GotSampleRates);
 
         m_deviceLabel.text("Device: ");
         m_deviceLabel.text_align(content_alignment::middle_right);
@@ -121,5 +122,21 @@ namespace jimo_sdr
     {
         auto index = m_sources.selected_index();
         m_deviceProps.device(m_devices[index]);
+        ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
+            std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
+        RadioReceiver::GetInstance().QueueTask(getSampleRates);
+    }
+
+    void SourcePanel::GotSampleRates(xtd::object& sender, const xtd::event_args& e)
+    {
+
+        const auto& args = dynamic_cast<const GotSampleRatesEventArgs&>(e);
+        auto rates = args.Rates();
+        m_sampleRates.items().clear();
+        std::transform(rates.cbegin(), rates.cend(), std::back_inserter(m_sampleRates.items()),
+            [] (double rate) {
+                    std::stringstream ss;
+                    ss << rate / 1'000'000 << " MHz";
+                    return ss.str(); });
     }
 }

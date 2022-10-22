@@ -5,6 +5,7 @@
 #include <any>
 #include "GotReceiversEventArgs.h"
 #include "GotDeviceDriverKeyEventArgs.h"
+#include "GotSampleRatesEventArgs.h"
 #include "Devices.h"
 
 using namespace std::placeholders;
@@ -18,6 +19,7 @@ namespace jimo_sdr
             // Events
             xtd::event<GuiNotifier, xtd::event_handler> gotReceivers;
             xtd::event<GuiNotifier, xtd::event_handler> gotDriverKey;
+            xtd::event<GuiNotifier, xtd::event_handler> gotSampleRates;
             // event raised when receivers are retrieved via Devices constructor
             void OnGotReceivers(const std::vector<std::any>& args)
             {
@@ -33,6 +35,13 @@ namespace jimo_sdr
                 gotDriverKey.invoke(*this, e);
             }
 
+            void OnGotSampleRates(const std::vector<std::any>& args)
+            {
+                auto rates = any_cast<std::vector<double>>(args[0]);
+                GotSampleRatesEventArgs e(rates);
+                gotSampleRates.invoke(*this, e);
+            }
+
             void NotifyGotReceivers(const std::any devices)
             {
                 std::vector<std::any> args;
@@ -45,6 +54,13 @@ namespace jimo_sdr
                 std::vector<std::any> args;
                 args.push_back(key);
                 m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotDeviceDriverKey }, args);
+            }
+
+            void NotifyGotSampleRates(const std::any rates)
+            {
+                std::vector<std::any> args;
+                args.push_back(rates);
+                m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotSampleRates }, args);
             }
         private:
             xtd::forms::control& m_synchronizer;

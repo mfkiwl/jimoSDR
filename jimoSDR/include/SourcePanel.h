@@ -17,6 +17,7 @@ namespace jimo_sdr
             void GetReceivers();
             void GotReceivers(xtd::object& sender, const xtd::event_args& e);
             void GotDriverKey(xtd::object& sender, const xtd::event_args& e);
+            void GotSampleRates(xtd::object& sender, const xtd::event_args& e);
             xtd::forms::label m_panelLabel;
             xtd::forms::horizontal_layout_panel m_devicePanel;
             xtd::forms::label m_deviceLabel;
