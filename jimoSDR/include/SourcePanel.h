@@ -29,6 +29,10 @@ namespace jimo_sdr
             xtd::forms::label m_sampleRatesLabel;
             xtd::forms::combo_box m_sampleRates;
             xtd::forms::label m_spaceLabel2;
+            xtd::forms::horizontal_layout_panel m_samplingModePanel;
+            xtd::forms::label m_samplingModeLabel;
+            xtd::forms::combo_box m_samplingModes;
+            xtd::forms::label m_spaceLabel3;
 
             GuiNotifier& m_notifier;
             device_properties& m_deviceProps;

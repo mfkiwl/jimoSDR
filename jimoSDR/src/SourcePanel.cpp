@@ -7,6 +7,7 @@
 #include "GotSampleRatesEventArgs.h"
 #include "GotCurrentSampleRateEventArgs.h"
 #include "exceptions.h"
+#include "sampling_mode.h"
 
 
 using namespace xtd;
@@ -51,18 +52,35 @@ namespace jimo_sdr
         m_sampleRates.width(propertiesPanelWidth / 2);
 
         m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
+        m_sampleRatesPanel.width(propertiesPanelWidth);
+
+        m_samplingModeLabel.text("Sampling Mode: ");
+        m_samplingModeLabel.text_align(content_alignment::middle_right);
+        m_samplingModeLabel.dock(dock_style::left);
+
+        m_samplingModes.dock(dock_style::right);
+        m_samplingModes.width(propertiesPanelWidth / 2);
+        m_samplingModes.items().push_back_range(sampling_mode::names());
+
+        m_samplingModePanel << m_samplingModeLabel << m_samplingModes;
 
         m_spaceLabel1.dock(dock_style::top);
         m_spaceLabel2.dock(dock_style::top);
+        m_spaceLabel3.dock(dock_style::top);
 
         m_groupBoxPanel.dock(dock_style::top);
-        m_groupBoxPanel<< m_devicePanel << m_spaceLabel1 << m_sampleRatesPanel << m_spaceLabel2;
+        m_groupBoxPanel << m_devicePanel << m_spaceLabel1 << m_sampleRatesPanel << m_spaceLabel2;
+        m_groupBoxPanel << m_samplingModePanel << m_spaceLabel3;
+        m_groupBoxPanel.width(propertiesPanelWidth);
+
         m_groupBoxPanel.back_color(drawing::color::pink);
 
         m_groupBoxPanel.control_layout_style(m_devicePanel, {defaultControlHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_spaceLabel1, { defaultSpacerHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_sampleRatesPanel, {defaultControlHeight, size_type::absolute, true});
         m_groupBoxPanel.control_layout_style(m_spaceLabel2, { defaultSpacerHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_samplingModePanel, {defaultControlHeight, size_type::absolute, true});
+        m_groupBoxPanel.control_layout_style(m_spaceLabel3, { defaultSpacerHeight, size_type::absolute, true});
 
         *this << m_panelLabel << m_groupBoxPanel;
     }
