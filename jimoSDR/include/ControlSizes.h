@@ -23,5 +23,5 @@ namespace jimo_sdr
     
     // general sizes
     constexpr float defaultControlHeight = 20;
-    constexpr float defaultSpacerHeight = 3;
+    constexpr float defaultSpacerHeight = 5;
 }
