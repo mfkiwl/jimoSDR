@@ -11,6 +11,7 @@
 
 using namespace xtd;
 using namespace xtd::forms;
+using namespace std::placeholders;
 
 namespace jimo_sdr
 {

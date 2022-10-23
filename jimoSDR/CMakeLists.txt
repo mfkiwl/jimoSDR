@@ -16,6 +16,7 @@ add_executable(jimoSDR
     src/number_display.cpp
     src/RadioReceiver.cpp
     src/SourcePanel.cpp
+    src/GuiNotifier.cpp
     include/ControlSizes.h
     include/MainForm.h
     include/properties_panel.h
@@ -34,6 +35,7 @@ add_executable(jimoSDR
     include/GotDeviceDriverKeyEventArgs.h
     include/GotSampleRatesEventArgs.h
     include/GotCurrentSampleRateEventArgs.h
+    include/GuiNotifier.h
     )
 
 target_include_directories(jimoSDR
