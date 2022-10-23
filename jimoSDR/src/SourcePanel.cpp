@@ -4,6 +4,8 @@
 #include "RadioReceiver.h"
 #include "GotReceiversEventArgs.h"
 #include "GotDeviceDriverKeyEventArgs.h"
+#include "GotSampleRatesEventArgs.h"
+#include "GotCurrentSampleRateEventArgs.h"
 #include "exceptions.h"
 
 
@@ -21,6 +23,7 @@ namespace jimo_sdr
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
         m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
         m_notifier.gotSampleRates += xtd::event_handler(*this, &SourcePanel::GotSampleRates);
+        m_notifier.gotCurrentSampleRate += xtd::event_handler(*this, &SourcePanel::GotCurrentSampleRate);
 
         m_deviceLabel.text("Device: ");
         m_deviceLabel.text_align(content_alignment::middle_right);
@@ -125,6 +128,12 @@ namespace jimo_sdr
         ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
             std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
         RadioReceiver::GetInstance().QueueTask(getSampleRates);
+        if (m_deviceProps.sample_rate() == 0.)
+        {
+            ReceiverAction getCurrentSampleRate({ ReceiverTask::getCurrentSampleRate,
+                std::bind(&GuiNotifier::NotifyGotCurrentSampleRate, &m_notifier, _1), m_devices[index] });
+            RadioReceiver::GetInstance().QueueTask(getCurrentSampleRate);
+        }
     }
 
     void SourcePanel::GotSampleRates(xtd::object& sender, const xtd::event_args& e)
@@ -138,5 +147,21 @@ namespace jimo_sdr
                     std::stringstream ss;
                     ss << rate / 1'000'000 << " MHz";
                     return ss.str(); });
+    }
+
+    void SourcePanel::GotCurrentSampleRate(xtd::object& sender, const xtd::event_args& e)
+    {
+        const auto& args = dynamic_cast<const GotCurrentSampleRateEventArgs&>(e);
+        auto currentRate = args.Rate();    
+        std::stringstream ss;
+        ss << currentRate / 1'000'000. << " MHz";
+        std::string rate = ss.str();
+        auto items = m_sampleRates.items();
+        auto end_it = items.cend();
+        auto it = find(items.cbegin(), end_it, list_control::item(rate));
+        if (it != end_it)
+        {
+            m_sampleRates.selected_item(*it);
+        }
     }
 }

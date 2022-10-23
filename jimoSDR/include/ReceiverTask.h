@@ -7,8 +7,9 @@ namespace jimo_sdr
 {
     enum class ReceiverTask
     {
-        getReceivers,       // get all attached receivers
-        getDriverKey,       // get device driver key
-        getSampleRates,     // get sample rates
+        getReceivers,           // get all attached receivers
+        getDriverKey,           // get device driver key
+        getSampleRates,         // get sample rates
+        getCurrentSampleRate,   // get the current sample rate
     };
 }

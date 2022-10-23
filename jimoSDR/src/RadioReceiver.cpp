@@ -84,6 +84,14 @@ namespace jimo_sdr
                                 std::invoke(action.callback, rates);
                             }
                             break;
+                        case ReceiverTask::getCurrentSampleRate:
+                            {
+                                device = any_cast<std::shared_ptr<sdr::device>>(action.m_data);
+                                double rate = device->sample_rate(
+                                    sdr::device::direction::rx, 0);
+                                std::invoke(action.callback, rate);
+                            }
+                            break;
                     }
                 }
             }
