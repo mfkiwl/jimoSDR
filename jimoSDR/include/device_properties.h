@@ -15,6 +15,7 @@ namespace jimo_sdr
             device_properties(device_properties&&) = delete;
             device_properties& operator=(const device_properties) = delete;
             device_properties&& operator=(device_properties&&) = delete;
+            void clear() noexcept;
             std::shared_ptr<sdr::device> device() { return _device; }
             void device(std::shared_ptr<sdr::device> dev) { _device = dev; }
             double& sample_rate() { return _sample_rate; }

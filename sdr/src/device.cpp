@@ -107,8 +107,14 @@ namespace sdr
     std::vector<double> device::sample_rates(const direction dir,
                 const size_t channel) const
     {
-        return _device->listSampleRates(
-            static_cast<int>(dir), channel);
+        if (_device != nullptr)
+        {
+            return _device->listSampleRates(static_cast<int>(dir), channel);
+        }
+        else 
+        {
+            return std::vector<double>();
+        }
     }
 
     std::vector<std::string> device::gpio_banks() const

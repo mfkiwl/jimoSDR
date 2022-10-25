@@ -117,6 +117,7 @@ namespace jimo_sdr
         }
         else
         {
+            m_deviceProps.clear();
             m_sources.items().clear();
             for (auto device : m_devices)
             {
@@ -143,15 +144,19 @@ namespace jimo_sdr
     void SourcePanel::SourceValueChanged(xtd::object& sender, const xtd::event_args& e)
     {
         auto index = m_sources.selected_index();
-        m_deviceProps.device(m_devices[index]);
-        ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
-            std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
-        RadioReceiver::GetInstance().QueueTask(getSampleRates);
-        if (m_deviceProps.sample_rate() == 0.)
+        // if m_sources is empty, then index is invalid
+        if (index >= 0 && index < m_devices.size())
         {
-            ReceiverAction getCurrentSampleRate({ ReceiverTask::getCurrentSampleRate,
-                std::bind(&GuiNotifier::NotifyGotCurrentSampleRate, &m_notifier, _1), m_devices[index] });
-            RadioReceiver::GetInstance().QueueTask(getCurrentSampleRate);
+            m_deviceProps.device(m_devices[index]);
+            ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
+                std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
+            RadioReceiver::GetInstance().QueueTask(getSampleRates);
+            if (m_deviceProps.sample_rate() == 0.)
+            {
+                ReceiverAction getCurrentSampleRate({ ReceiverTask::getCurrentSampleRate,
+                    std::bind(&GuiNotifier::NotifyGotCurrentSampleRate, &m_notifier, _1), m_devices[index] });
+                RadioReceiver::GetInstance().QueueTask(getCurrentSampleRate);
+            }
         }
     }
 
