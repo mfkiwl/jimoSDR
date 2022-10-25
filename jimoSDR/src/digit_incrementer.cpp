@@ -1,7 +1,6 @@
 #include "digit_incrementer.h"
 #include "ControlSizes.h"
 #include <sstream>
-#include <iostream>
 
 using namespace xtd;
 using namespace xtd::forms;
@@ -200,7 +199,6 @@ namespace jimo_sdr
             parent = (dynamic_cast<xtd::forms::control&>(parent.value().get())).parent();
             background_color = (dynamic_cast<xtd::forms::control&>(parent.value().get())).back_color();;
         }
-        std::cout << background_color.is_dark() << '\n';
         if (background_color.is_dark())
         {
             panel_background = xtd::drawing::color::from_argb(63, xtd::drawing::color::white);
