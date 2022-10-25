@@ -117,8 +117,8 @@ namespace jimo_sdr
         }
         else
         {
-            m_deviceProps.clear();
             m_sources.items().clear();
+
             for (auto device : m_devices)
             {
                 ReceiverAction getDriverKey({ ReceiverTask::getDriverKey,
@@ -139,6 +139,17 @@ namespace jimo_sdr
         {
             m_sources.selected_index(0);
         }
+        else if ((m_devices.size() == m_sources.items().size()) && (m_deviceProps.device() != nullptr)) 
+        {
+            std::string driverKey = m_deviceProps.device()->driver_key();
+            auto items = m_sources.items();
+            auto end_it = items.cend();
+            auto it = find(items.cbegin(), end_it, list_control::item(driverKey));
+            if (it != end_it)
+            {
+                m_sources.selected_item(*it);
+            }
+        }
     }
 
     void SourcePanel::SourceValueChanged(xtd::object& sender, const xtd::event_args& e)
@@ -147,6 +158,7 @@ namespace jimo_sdr
         // if m_sources is empty, then index is invalid
         if (index >= 0 && index < m_devices.size())
         {
+            m_deviceProps.clear();
             m_deviceProps.device(m_devices[index]);
             ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
                 std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
