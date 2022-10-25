@@ -23,7 +23,6 @@ namespace jimo_sdr
         m_panelLabel.text("    Source");
         m_panelLabel.dock(dock_style::top);
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
-        m_notifier.gotDriverKey += xtd::event_handler(*this, &SourcePanel::GotDriverKey);
         m_notifier.gotSampleRates += xtd::event_handler(*this, &SourcePanel::GotSampleRates);
         m_notifier.gotCurrentSampleRate += xtd::event_handler(*this, &SourcePanel::GotCurrentSampleRate);
 
@@ -121,35 +120,27 @@ namespace jimo_sdr
 
             for (auto device : m_devices)
             {
-                ReceiverAction getDriverKey({ ReceiverTask::getDriverKey,
-                    std::bind(&GuiNotifier::NotifyGotDeviceDriverKey, &m_notifier, _1), device} );
-                RadioReceiver::GetInstance().QueueTask(getDriverKey);
+                // change this to get "label" when combo_box is sized large enough.
+                // xtd version 0.3.0?
+                std::string devName = "RTL: " + (*device)["serial"];
+                m_sources.items().push_back(devName);
+            }
+            if (m_sources.items().size() == 1)
+            {
+                m_sources.selected_index(0);
+            }
+            else if (m_deviceProps.device() != nullptr)
+            {
+                std::string deviceLabel = "RTL: " + (*m_deviceProps.device())["serial"];
+                auto items = m_sources.items();
+                auto end_it = items.cend();
+                auto it = find(items.cbegin(), end_it, list_control::item(deviceLabel));
+                if (it != end_it)
+                {
+                    m_sources.selected_item(*it);
+                }
             }
        }
-    }
-
-    void SourcePanel::GotDriverKey(xtd::object& sender, const xtd::event_args& e)
-    {
-        const auto& args = dynamic_cast<const GotDeviceDriverKeyEventArgs&>(e);
-        auto key = args.DriverKey();
-        m_sources.items().push_back(key);
-        // If there is only one device, we select it now. No point in waiting for the user
-        // to select it.
-        if (m_devices.size() == 1)
-        {
-            m_sources.selected_index(0);
-        }
-        else if ((m_devices.size() == m_sources.items().size()) && (m_deviceProps.device() != nullptr)) 
-        {
-            std::string driverKey = m_deviceProps.device()->driver_key();
-            auto items = m_sources.items();
-            auto end_it = items.cend();
-            auto it = find(items.cbegin(), end_it, list_control::item(driverKey));
-            if (it != end_it)
-            {
-                m_sources.selected_item(*it);
-            }
-        }
     }
 
     void SourcePanel::SourceValueChanged(xtd::object& sender, const xtd::event_args& e)
