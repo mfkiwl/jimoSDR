@@ -1,7 +1,7 @@
 #pragma once
 
 #include <xtd/xtd>
-#include "device.h"
+#include "Device.h"
 #include "SourcePanel.h"
 #include "properties_panel.h"
 #include "device_properties.h"

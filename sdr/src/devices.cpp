@@ -14,7 +14,7 @@ namespace sdr
         _devices.reserve(kList.size());
         for(auto& dev : kList)
         {
-            _devices.push_back(std::make_shared<device>(dev));
+            _devices.push_back(std::make_shared<Device>(dev));
         }
     }
 
@@ -29,13 +29,13 @@ namespace sdr
         _attached_devices();
     }
 
-    void devices::remove_all_except(std::shared_ptr<device>& pdev)
+    void devices::remove_all_except(std::shared_ptr<Device>& pdev)
     {
         _devices.clear();
         _devices.push_back(pdev);
     }
 
-    const std::shared_ptr<sdr::device>& devices::operator[](size_t index) const
+    const std::shared_ptr<sdr::Device>& devices::operator[](size_t index) const
     {
         return _devices[index];
     }

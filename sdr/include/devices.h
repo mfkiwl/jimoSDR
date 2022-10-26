@@ -2,14 +2,14 @@
 
 #include <vector>
 #include <iterator>
-#include "device.h"
+#include "Device.h"
 
 namespace sdr
 {
     class devices
     {
         public:
-            using container=std::vector<std::shared_ptr<device>>;
+            using container=std::vector<std::shared_ptr<Device>>;
             using iterator = typename container::iterator;
             using const_iterator = typename container::const_iterator;
             devices();
@@ -24,8 +24,8 @@ namespace sdr
             void clear();
             size_t size() { return _devices.size(); }
             void refresh();
-            const std::shared_ptr<sdr::device>& operator[](size_t index) const;
-            void remove_all_except(std::shared_ptr<device>& pdev);
+            const std::shared_ptr<sdr::Device>& operator[](size_t index) const;
+            void remove_all_except(std::shared_ptr<Device>& pdev);
         private:
             void _attached_devices();
 

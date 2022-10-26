@@ -1,7 +1,7 @@
 #pragma once
 
 #include <xtd/xtd>
-#include "device.h"
+#include "Device.h"
 #include "device_properties.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
@@ -27,7 +27,7 @@ namespace jimo_sdr
             void _create_controls_panel();
 
             GuiNotifier m_notifier;
-            std::shared_ptr<sdr::device> _device;
+            std::shared_ptr<sdr::Device> _device;
             xtd::forms::vertical_layout_panel _vlp;
             xtd::forms::horizontal_layout_panel _controls_panel;
             xtd::forms::horizontal_layout_panel _main_panel;

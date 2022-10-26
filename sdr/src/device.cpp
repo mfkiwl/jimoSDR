@@ -1,13 +1,13 @@
-#include "device.h"
+#include "Device.h"
 
 namespace sdr
 {
-    device::device(const SoapySDR::Kwargs& kwargs) : _properties(kwargs)
+    Device::Device(const SoapySDR::Kwargs& kwargs) : _properties(kwargs)
     {
         _device = SoapySDR::Device::make(kwargs);
     }
 
-    device::~device() noexcept
+    Device::~Device() noexcept
     {
         if (_device != nullptr)
         {
@@ -16,7 +16,7 @@ namespace sdr
         }
     }
 
-    const std::string device::operator[](const std::string& key) const
+    const std::string Device::operator[](const std::string& key) const
     { 
         if(_properties.find(key) != _properties.cend())
         {
@@ -28,49 +28,49 @@ namespace sdr
         }
     }
 
-    const std::string device::driver_key() const
+    const std::string Device::driver_key() const
     {
         return _device->getDriverKey();
     }
 
-    const std::string device::hardware_key() const
+    const std::string Device::hardware_key() const
     {
         return _device->getHardwareKey();
     }
 
-    const std::map<std::string, std::string> device::hardware_info() const
+    const std::map<std::string, std::string> Device::hardware_info() const
     {
         return _device->getHardwareInfo();
     }
 
-    const std::string device::frontend_mapping(const direction dir) const
+    const std::string Device::frontend_mapping(const direction dir) const
     {
         return _device->getFrontendMapping(static_cast<int>(dir));
     }
 
-    size_t device::number_of_channels(const direction dir) const
+    size_t Device::number_of_channels(const direction dir) const
     {
         return _device->getNumChannels(static_cast<int>(dir));
     }
 
-    std::map<std::string, std::string> device::channel_info(const direction dir, 
+    std::map<std::string, std::string> Device::channel_info(const direction dir, 
                 const size_t channel) const
     {
         return _device->getChannelInfo(static_cast<int>(dir), channel);
     }
 
-    bool device::full_duplex(const direction dir, const size_t channel) const
+    bool Device::full_duplex(const direction dir, const size_t channel) const
     {
         return _device->getFullDuplex(static_cast<int>(dir), channel);
     }
 
-    const std::vector<std::string> device::stream_formats(const direction dir,
+    const std::vector<std::string> Device::stream_formats(const direction dir,
                 const size_t channel) const
     {
         return _device->getStreamFormats(static_cast<int>(dir), channel);
     }
 
-    const std::tuple<std::string, double> device::native_stream_format(
+    const std::tuple<std::string, double> Device::native_stream_format(
                 const direction dir, const size_t channel) const
     {
         double fullScale;
@@ -79,7 +79,7 @@ namespace sdr
         return std::make_tuple(format, fullScale);
     }
 
-    std::vector<sdr_arg_info> device::stream_args_info(const direction dir,
+    std::vector<sdr_arg_info> Device::stream_args_info(const direction dir,
                 const size_t channel) const
     {
         std::vector<sdr_arg_info> infos;
@@ -92,18 +92,18 @@ namespace sdr
         return infos;
     }
 
-    double device::sample_rate(const direction dir, const size_t channel) const
+    double Device::sample_rate(const direction dir, const size_t channel) const
     {
         return _device->getSampleRate(static_cast<int>(dir), channel);
     }
 
-    void device::sample_rate(const direction dir, const size_t channel,
+    void Device::sample_rate(const direction dir, const size_t channel,
                 const double rate)
     {
         _device->setSampleRate(static_cast<int>(dir), channel, rate);
     }
 
-    std::vector<double> device::sample_rates(const direction dir,
+    std::vector<double> Device::sample_rates(const direction dir,
                 const size_t channel) const
     {
         if (_device != nullptr)
@@ -116,22 +116,22 @@ namespace sdr
         }
     }
 
-    std::vector<std::string> device::gpio_banks() const
+    std::vector<std::string> Device::gpio_banks() const
     {
         return _device->listGPIOBanks();
     }
 
-    std::vector<std::string> device::register_interfaces() const
+    std::vector<std::string> Device::register_interfaces() const
     {
         return _device->listRegisterInterfaces();
     }
 
-    double device::center_frequency(const direction dir, const size_t channel) const
+    double Device::center_frequency(const direction dir, const size_t channel) const
     {
         return _device->getFrequency(static_cast<int>(dir), channel);
     }
 
-    void device::center_frequency(const direction dir, const size_t channel, const double frequency)
+    void Device::center_frequency(const direction dir, const size_t channel, const double frequency)
     {
         _device->setFrequency(static_cast<int>(dir), channel, frequency);
     }

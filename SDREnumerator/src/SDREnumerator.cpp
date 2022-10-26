@@ -96,52 +96,52 @@ int main()
         cout << "    Hardware Info:\n";
         print::print_string_map(dev->hardware_info(), 8);
         cout << "    RX Frontend Mapping: " 
-            << dev->frontend_mapping(device::direction::rx) << '\n';
-        auto number_of_rx_channels = dev->number_of_channels(device::direction::rx);
+            << dev->frontend_mapping(Device::direction::rx) << '\n';
+        auto number_of_rx_channels = dev->number_of_channels(Device::direction::rx);
         cout << "    Number of RX Channels: "
              << number_of_rx_channels << '\n';
         for(size_t channel = 0; channel <number_of_rx_channels; ++channel)
         {
             cout << "    RX Channel Info for Channel " << channel << ":\n";
-            auto channel_info = dev->channel_info(device::direction::rx, channel);
+            auto channel_info = dev->channel_info(Device::direction::rx, channel);
             print::print_string_map(channel_info, 8);
-            cout << (dev->full_duplex(device::direction::rx, channel)
+            cout << (dev->full_duplex(Device::direction::rx, channel)
                 ? "        Full Duplex\n" : "        Half Duplex\n");
-            const auto stream_formats = dev->stream_formats(device::direction::rx, channel);
+            const auto stream_formats = dev->stream_formats(Device::direction::rx, channel);
             cout << "        Stream Formats:\n";
             print::print_strings(stream_formats, 12);
             auto [format, fullScale] = dev->native_stream_format(
-                device::direction::rx, channel);
+                Device::direction::rx, channel);
             cout << "        Native Stream Format:\n";
             cout << "            Format:" << format <<'\n';
             cout << "            Full scale: " << fullScale << '\n';
-            print::print_stream_args_info(dev->stream_args_info(device::direction::rx,
+            print::print_stream_args_info(dev->stream_args_info(Device::direction::rx,
                 channel), 12);
-            double center_frequency = dev->center_frequency(device::direction::rx, channel);
+            double center_frequency = dev->center_frequency(Device::direction::rx, channel);
             cout << "        Center Frequency = " << center_frequency << '\n';
-            dev->center_frequency(device::direction::rx, channel, 50'000'000);
+            dev->center_frequency(Device::direction::rx, channel, 50'000'000);
             cout << "        Setting center frequency to 50 MHz. Center frequency is now ";
-            cout << dev->center_frequency(device::direction::rx, channel) << '\n';
-            dev->center_frequency(device::direction::rx, channel, center_frequency);
+            cout << dev->center_frequency(Device::direction::rx, channel) << '\n';
+            dev->center_frequency(Device::direction::rx, channel, center_frequency);
             cout << "Resetting center frequency to " << center_frequency << ". Center_frequency is ";
-            cout << dev->center_frequency(device::direction::rx, channel) << '\n';
+            cout << dev->center_frequency(Device::direction::rx, channel) << '\n';
             // Setting a center_frequency before getting sample rates prevents "PLL not locked" message,
             // at least for RTLSDRs
             cout << "        Sample Rates:\n";
-            auto rates = dev->sample_rates(device::direction::rx, channel);
+            auto rates = dev->sample_rates(Device::direction::rx, channel);
             for(auto rate : rates)
             {
                 cout << "            " << rate << '\n';
             }
             cout << "        Current Sample Rate: " << dev->sample_rate(
-                device::direction::rx, channel) << '\n';
+                Device::direction::rx, channel) << '\n';
             cout << "        Exercise device::sample_rate:\n";
             for(auto rate : rates)
             {
                 cout << "            Setting sample rate to: " << rate;
-                dev->sample_rate(device::direction::rx, channel, rate);
+                dev->sample_rate(Device::direction::rx, channel, rate);
                 cout << " Sample rate is now: " << dev->sample_rate(
-                    device::direction::rx, channel) << '\n';
+                    Device::direction::rx, channel) << '\n';
             }
             cout << "    GPIO Banks:\n";
             print::print_strings(dev->gpio_banks(), 8);

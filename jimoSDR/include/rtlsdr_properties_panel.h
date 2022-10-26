@@ -1,7 +1,7 @@
 #pragma once
 
 #include <xtd/xtd>
-#include "device.h"
+#include "Device.h"
 #include "device_properties.h"
 
 namespace jimo_sdr

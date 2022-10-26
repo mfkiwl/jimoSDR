@@ -63,7 +63,7 @@ namespace jimo_sdr
                     ReceiverAction action = m_queue.front();
                     m_queue.pop();
                     lock.unlock();
-                    std::shared_ptr<sdr::device> device;
+                    std::shared_ptr<sdr::Device> device;
                     switch (action.task)
                     {
                         case ReceiverTask::getReceivers:
@@ -71,24 +71,24 @@ namespace jimo_sdr
                             break;
                         case ReceiverTask::getDriverKey:
                             {
-                                device = any_cast<std::shared_ptr<sdr::device>>(action.m_data);
+                                device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
                                 std::string key = device->driver_key();
                                 std::invoke(action.callback, key);
                             }
                             break;
                         case ReceiverTask::getSampleRates:
                             {
-                                device = any_cast<std::shared_ptr<sdr::device>>(action.m_data);
+                                device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
                                 std::vector<double> rates = device->sample_rates(
-                                    sdr::device::direction::rx, 0);
+                                    sdr::Device::direction::rx, 0);
                                 std::invoke(action.callback, rates);
                             }
                             break;
                         case ReceiverTask::getCurrentSampleRate:
                             {
-                                device = any_cast<std::shared_ptr<sdr::device>>(action.m_data);
+                                device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
                                 double rate = device->sample_rate(
-                                    sdr::device::direction::rx, 0);
+                                    sdr::Device::direction::rx, 0);
                                 std::invoke(action.callback, rate);
                             }
                             break;

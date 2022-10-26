@@ -4,11 +4,11 @@ find_package(SoapySDR REQUIRED)
 
 add_library(sdr
     SHARED 
-    src/device.cpp
-    src/devices.cpp
+    src/Device.cpp
+    src/Devices.cpp
     src/types.cpp
-    include/device.h
-    include/devices.h
+    include/Device.h
+    include/Devices.h
     include/types.h)
 
     target_include_directories(sdr

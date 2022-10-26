@@ -10,7 +10,7 @@
 
 namespace sdr
 {
-    class device
+    class Device
     {
         public:
             enum class direction
@@ -19,13 +19,13 @@ namespace sdr
                 tx = SOAPY_SDR_TX
             };
 
-            device() = delete;
-            device(const SoapySDR::Kwargs& kwargs);
-            device(const device&) = delete;
-            device(device&&) = delete;
-            ~device() noexcept; 
-            device& operator=(const device&) = delete;
-            device&& operator=(device&&) = delete;
+            Device() = delete;
+            Device(const SoapySDR::Kwargs& kwargs);
+            Device(const Device&) = delete;
+            Device(Device&&) = delete;
+            ~Device() noexcept; 
+            Device& operator=(const Device&) = delete;
+            Device&& operator=(Device&&) = delete;
             const std::string operator[](const std::string& key) const;
             operator std::map<std::string, std::string>() { return _properties; }
             const std::string driver_key() const;

@@ -129,9 +129,9 @@ namespace jimo_sdr
             {
                 m_sources.selected_index(0);
             }
-            else if (m_deviceProps.device() != nullptr)
+            else if (m_deviceProps.Device() != nullptr)
             {
-                std::string deviceLabel = "RTL: " + (*m_deviceProps.device())["serial"];
+                std::string deviceLabel = "RTL: " + (*m_deviceProps.Device())["serial"];
                 auto items = m_sources.items();
                 auto end_it = items.cend();
                 auto it = find(items.cbegin(), end_it, list_control::item(deviceLabel));
