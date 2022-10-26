@@ -27,7 +27,7 @@ namespace sdr
             Device& operator=(const Device&) = delete;
             Device&& operator=(Device&&) = delete;
             const std::string operator[](const std::string& key) const;
-            operator std::map<std::string, std::string>() { return _properties; }
+            operator std::map<std::string, std::string>() { return m_properties; }
             const std::string GetDriverKey() const;
             const std::string GetHardwareKey() const;
             const std::map<std::string, std::string> GetHardwareInfo() const;
@@ -52,7 +52,7 @@ namespace sdr
             std::vector<std::string> ListGPIOBanks() const;
             std::vector<std::string> ListRegisterInterfaces() const;
         private:
-            std::map<std::string, std::string> _properties;
-            SoapySDR::Device* _device;
+            std::map<std::string, std::string> m_properties;
+            SoapySDR::Device* m_device;
     };
 }

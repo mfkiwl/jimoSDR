@@ -2,25 +2,25 @@
 
 namespace sdr
 {
-    Device::Device(const SoapySDR::Kwargs& kwargs) : _properties(kwargs)
+    Device::Device(const SoapySDR::Kwargs& kwargs) : m_properties(kwargs)
     {
-        _device = SoapySDR::Device::make(kwargs);
+        m_device = SoapySDR::Device::make(kwargs);
     }
 
     Device::~Device() noexcept
     {
-        if (_device != nullptr)
+        if (m_device != nullptr)
         {
-            SoapySDR::Device::unmake(_device);
-            _device = nullptr;
+            SoapySDR::Device::unmake(m_device);
+            m_device = nullptr;
         }
     }
 
     const std::string Device::operator[](const std::string& key) const
     { 
-        if(_properties.find(key) != _properties.cend())
+        if(m_properties.find(key) != m_properties.cend())
         {
-            return _properties.at(key);
+            return m_properties.at(key);
         }
         else
         {
@@ -30,51 +30,51 @@ namespace sdr
 
     const std::string Device::GetDriverKey() const
     {
-        return _device->getDriverKey();
+        return m_device->getDriverKey();
     }
 
     const std::string Device::GetHardwareKey() const
     {
-        return _device->getHardwareKey();
+        return m_device->getHardwareKey();
     }
 
     const std::map<std::string, std::string> Device::GetHardwareInfo() const
     {
-        return _device->getHardwareInfo();
+        return m_device->getHardwareInfo();
     }
 
     const std::string Device::GetFrontendMapping(const direction dir) const
     {
-        return _device->getFrontendMapping(static_cast<int>(dir));
+        return m_device->getFrontendMapping(static_cast<int>(dir));
     }
 
     size_t Device::GetNumberOfChannels(const direction dir) const
     {
-        return _device->getNumChannels(static_cast<int>(dir));
+        return m_device->getNumChannels(static_cast<int>(dir));
     }
 
     std::map<std::string, std::string> Device::GetChannelInfo(const direction dir, 
                 const size_t channel) const
     {
-        return _device->getChannelInfo(static_cast<int>(dir), channel);
+        return m_device->getChannelInfo(static_cast<int>(dir), channel);
     }
 
     bool Device::GetFullDuplex(const direction dir, const size_t channel) const
     {
-        return _device->getFullDuplex(static_cast<int>(dir), channel);
+        return m_device->getFullDuplex(static_cast<int>(dir), channel);
     }
 
     const std::vector<std::string> Device::GetStreamFormats(const direction dir,
                 const size_t channel) const
     {
-        return _device->getStreamFormats(static_cast<int>(dir), channel);
+        return m_device->getStreamFormats(static_cast<int>(dir), channel);
     }
 
     const std::tuple<std::string, double> Device::GetNativeStreamFormat(
                 const direction dir, const size_t channel) const
     {
         double fullScale;
-        auto format = _device->getNativeStreamFormat(static_cast<int>(dir), channel,
+        auto format = m_device->getNativeStreamFormat(static_cast<int>(dir), channel,
             fullScale);
         return std::make_tuple(format, fullScale);
     }
@@ -83,7 +83,7 @@ namespace sdr
                 const size_t channel) const
     {
         std::vector<sdr_arg_info> infos;
-        std::vector<SoapySDR::ArgInfo> soapy_infos = _device->getStreamArgsInfo(
+        std::vector<SoapySDR::ArgInfo> soapy_infos = m_device->getStreamArgsInfo(
             static_cast<int>(dir), channel);
         for(auto& soapy_info : soapy_infos)
         {
@@ -94,21 +94,21 @@ namespace sdr
 
     double Device::GetSampleRate(const direction dir, const size_t channel) const
     {
-        return _device->getSampleRate(static_cast<int>(dir), channel);
+        return m_device->getSampleRate(static_cast<int>(dir), channel);
     }
 
     void Device::GetSampleRate(const direction dir, const size_t channel,
                 const double rate)
     {
-        _device->setSampleRate(static_cast<int>(dir), channel, rate);
+        m_device->setSampleRate(static_cast<int>(dir), channel, rate);
     }
 
     std::vector<double> Device::GetSampleRates(const direction dir,
                 const size_t channel) const
     {
-        if (_device != nullptr)
+        if (m_device != nullptr)
         {
-            return _device->listSampleRates(static_cast<int>(dir), channel);
+            return m_device->listSampleRates(static_cast<int>(dir), channel);
         }
         else 
         {
@@ -118,21 +118,21 @@ namespace sdr
 
     std::vector<std::string> Device::ListGPIOBanks() const
     {
-        return _device->listGPIOBanks();
+        return m_device->listGPIOBanks();
     }
 
     std::vector<std::string> Device::ListRegisterInterfaces() const
     {
-        return _device->listRegisterInterfaces();
+        return m_device->listRegisterInterfaces();
     }
 
     double Device::GetCenterFrequency(const direction dir, const size_t channel) const
     {
-        return _device->getFrequency(static_cast<int>(dir), channel);
+        return m_device->getFrequency(static_cast<int>(dir), channel);
     }
 
     void Device::SetCenterFrequency(const direction dir, const size_t channel, const double frequency)
     {
-        _device->setFrequency(static_cast<int>(dir), channel, frequency);
+        m_device->setFrequency(static_cast<int>(dir), channel, frequency);
     }
 }
