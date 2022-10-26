@@ -128,7 +128,7 @@ int main()
             // Setting a center_frequency before getting sample rates prevents "PLL not locked" message,
             // at least for RTLSDRs
             cout << "        Sample Rates:\n";
-            auto rates = dev->sample_rates(Device::direction::rx, channel);
+            auto rates = dev->GetSampleRates(Device::direction::rx, channel);
             for(auto rate : rates)
             {
                 cout << "            " << rate << '\n';

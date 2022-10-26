@@ -31,7 +31,7 @@ namespace jimo_sdr
 
     void rtlsdr_properties_panel::_populate_sample_rate_combo_box()
     {
-        auto rates = _dev_props.Device()->sample_rates(sdr::Device::direction::rx, 0);
+        auto rates = _dev_props.Device()->GetSampleRates(sdr::Device::direction::rx, 0);
         _sample_rate_combo_box.items().clear();
         std::transform(rates.cbegin(), rates.cend(), std::back_inserter(_sample_rate_combo_box.items()),
             [] (double rate) {

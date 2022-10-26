@@ -103,7 +103,7 @@ namespace sdr
         _device->setSampleRate(static_cast<int>(dir), channel, rate);
     }
 
-    std::vector<double> Device::sample_rates(const direction dir,
+    std::vector<double> Device::GetSampleRates(const direction dir,
                 const size_t channel) const
     {
         if (_device != nullptr)

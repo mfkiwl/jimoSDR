@@ -79,7 +79,7 @@ namespace jimo_sdr
                         case ReceiverTask::getSampleRates:
                             {
                                 device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
-                                std::vector<double> rates = device->sample_rates(
+                                std::vector<double> rates = device->GetSampleRates(
                                     sdr::Device::direction::rx, 0);
                                 std::invoke(action.callback, rates);
                             }
