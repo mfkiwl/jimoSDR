@@ -38,7 +38,7 @@ namespace jimo_sdr
                     std::stringstream ss;
                     ss << rate / 1'000'000 << " MHz";
                     return ss.str(); });
-        auto current_rate = _dev_props.Device()->sample_rate(sdr::Device::direction::rx, 0);
+        auto current_rate = _dev_props.Device()->GetSampleRate(sdr::Device::direction::rx, 0);
         std::stringstream ss;
         ss << current_rate / 1'000'000 << " MHz";
         std::string rate = ss.str();

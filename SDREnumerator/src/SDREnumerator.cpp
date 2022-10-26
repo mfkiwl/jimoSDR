@@ -133,14 +133,14 @@ int main()
             {
                 cout << "            " << rate << '\n';
             }
-            cout << "        Current Sample Rate: " << dev->sample_rate(
+            cout << "        Current Sample Rate: " << dev->GetSampleRate(
                 Device::direction::rx, channel) << '\n';
             cout << "        Exercise device::sample_rate:\n";
             for(auto rate : rates)
             {
                 cout << "            Setting sample rate to: " << rate;
                 dev->sample_rate(Device::direction::rx, channel, rate);
-                cout << " Sample rate is now: " << dev->sample_rate(
+                cout << " Sample rate is now: " << dev->GetSampleRate(
                     Device::direction::rx, channel) << '\n';
             }
             cout << "    GPIO Banks:\n";

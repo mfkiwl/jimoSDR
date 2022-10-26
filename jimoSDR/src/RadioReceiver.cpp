@@ -87,7 +87,7 @@ namespace jimo_sdr
                         case ReceiverTask::getCurrentSampleRate:
                             {
                                 device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
-                                double rate = device->sample_rate(
+                                double rate = device->GetSampleRate(
                                     sdr::Device::direction::rx, 0);
                                 std::invoke(action.callback, rate);
                             }

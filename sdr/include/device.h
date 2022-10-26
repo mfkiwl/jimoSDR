@@ -44,7 +44,7 @@ namespace sdr
                 const size_t channel) const;
             double GetCenterFrequency(const direction dir, const size_t channel) const;
             void SetCenterFrequency(const direction dir, const size_t channel, const double frequency);
-            double sample_rate(const direction dir, const size_t channel) const;
+            double GetSampleRate(const direction dir, const size_t channel) const;
             void sample_rate(const direction dir, const size_t channel,
                 const double rate);
             std::vector<double> sample_rates(const direction dir,
