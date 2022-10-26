@@ -94,7 +94,7 @@ int main()
         cout << "    DriverKey: " << dev->DriverKey() << '\n';
         cout << "    HardwareKey: " << dev->HardwareKey() << '\n';
         cout << "    Hardware Info:\n";
-        print::print_string_map(dev->hardware_info(), 8);
+        print::print_string_map(dev->GetHardwareInfo(), 8);
         cout << "    RX Frontend Mapping: " 
             << dev->frontend_mapping(Device::direction::rx) << '\n';
         auto number_of_rx_channels = dev->number_of_channels(Device::direction::rx);

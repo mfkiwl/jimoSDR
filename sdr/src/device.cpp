@@ -38,7 +38,7 @@ namespace sdr
         return _device->getHardwareKey();
     }
 
-    const std::map<std::string, std::string> Device::hardware_info() const
+    const std::map<std::string, std::string> Device::GetHardwareInfo() const
     {
         return _device->getHardwareInfo();
     }
