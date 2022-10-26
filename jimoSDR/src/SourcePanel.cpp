@@ -52,7 +52,7 @@ namespace jimo_sdr
 
         m_sampleRates.dock(dock_style::right);
         m_sampleRates.width(propertiesPanelWidth / 2);
-        m_sampleRates.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SamplingModeValueChanged);
+        m_sampleRates.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SampleRatesValueChanged);
 
         m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
         m_sampleRatesPanel.width(propertiesPanelWidth);
@@ -64,6 +64,8 @@ namespace jimo_sdr
         m_samplingModes.dock(dock_style::right);
         m_samplingModes.width(propertiesPanelWidth / 2);
         m_samplingModes.items().push_back_range(sampling_mode::names());
+        m_samplingModes.selected_index(static_cast<size_t>(m_deviceProps.sampling_mode().mode()));
+
 
         m_samplingModePanel << m_samplingModeLabel << m_samplingModes;
 
@@ -196,7 +198,7 @@ namespace jimo_sdr
         }
     }
 
-    void SourcePanel::SamplingModeValueChanged(xtd::object& sender, const xtd::event_args& e)
+    void SourcePanel::SampleRatesValueChanged(xtd::object& sender, const xtd::event_args& e)
     {
         std::stringstream ss(m_sampleRates.selected_item().to_string());
         double rate;
