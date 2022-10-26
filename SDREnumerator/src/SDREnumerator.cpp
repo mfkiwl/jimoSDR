@@ -107,7 +107,7 @@ int main()
             print::print_string_map(channel_info, 8);
             cout << (dev->GetFullDuplex(Device::direction::rx, channel)
                 ? "        Full Duplex\n" : "        Half Duplex\n");
-            const auto stream_formats = dev->stream_formats(Device::direction::rx, channel);
+            const auto stream_formats = dev->GetStreamFormats(Device::direction::rx, channel);
             cout << "        Stream Formats:\n";
             print::print_strings(stream_formats, 12);
             auto [format, fullScale] = dev->native_stream_format(
