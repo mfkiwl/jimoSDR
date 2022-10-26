@@ -38,7 +38,7 @@ namespace sdr
             bool GetFullDuplex(const direction dir, const size_t channel) const;
             const std::vector<std::string> GetStreamFormats(const direction dir,
                 const size_t channel) const;
-            const std::tuple<std::string, double> native_stream_format(
+            const std::tuple<std::string, double> GetNativeStreamFormat(
                 const direction dir, const size_t channel) const;
             std::vector<sdr_arg_info> stream_args_info(const direction dir,
                 const size_t channel) const;
