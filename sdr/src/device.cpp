@@ -131,7 +131,7 @@ namespace sdr
         return _device->getFrequency(static_cast<int>(dir), channel);
     }
 
-    void Device::center_frequency(const direction dir, const size_t channel, const double frequency)
+    void Device::SetCenterFrequency(const direction dir, const size_t channel, const double frequency)
     {
         _device->setFrequency(static_cast<int>(dir), channel, frequency);
     }

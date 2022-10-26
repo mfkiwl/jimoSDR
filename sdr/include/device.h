@@ -43,7 +43,7 @@ namespace sdr
             std::vector<sdr_arg_info> GetStreamArgsInfo(const direction dir,
                 const size_t channel) const;
             double GetCenterFrequency(const direction dir, const size_t channel) const;
-            void center_frequency(const direction dir, const size_t channel, const double frequency);
+            void SetCenterFrequency(const direction dir, const size_t channel, const double frequency);
             double sample_rate(const direction dir, const size_t channel) const;
             void sample_rate(const direction dir, const size_t channel,
                 const double rate);
