@@ -1,13 +1,11 @@
 #include "Devices.h"
 #include <iostream>
-#ifdef _WIN32
-    #include <Windows.h>
-#else
-    #include <unistd.h>
-#endif
+#include <chrono>
+#include <thread>
 
 using namespace std;
 using namespace sdr;
+using namespace std::chrono_literals;
 
 class print
 {
@@ -151,7 +149,7 @@ int main()
          }
     }
     cout << "In next 5 seconds, add or remove receivers\n";
-    usleep(5000000);
+    std::this_thread::sleep_for(5s);
     devs.refresh();
     cout << "After refresh, number of devices = " << devs.size() << '\n';
     return EXIT_SUCCESS;
