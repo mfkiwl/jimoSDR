@@ -43,7 +43,7 @@ namespace sdr
         return _device->getHardwareInfo();
     }
 
-    const std::string Device::frontend_mapping(const direction dir) const
+    const std::string Device::GetFrontendMapping(const direction dir) const
     {
         return _device->getFrontendMapping(static_cast<int>(dir));
     }
