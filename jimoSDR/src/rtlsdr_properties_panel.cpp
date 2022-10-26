@@ -58,6 +58,6 @@ namespace jimo_sdr
         ss >> rate;
         rate *= 1'000'000.;
         _dev_props.sample_rate(rate);
-        _dev_props.Device()->sample_rate(sdr::Device::direction::rx, 0, rate);
+        _dev_props.Device()->GetSampleRate(sdr::Device::direction::rx, 0, rate);
     }
 }

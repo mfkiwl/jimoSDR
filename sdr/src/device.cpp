@@ -97,7 +97,7 @@ namespace sdr
         return _device->getSampleRate(static_cast<int>(dir), channel);
     }
 
-    void Device::sample_rate(const direction dir, const size_t channel,
+    void Device::GetSampleRate(const direction dir, const size_t channel,
                 const double rate)
     {
         _device->setSampleRate(static_cast<int>(dir), channel, rate);
