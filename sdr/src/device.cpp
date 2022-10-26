@@ -121,7 +121,7 @@ namespace sdr
         return _device->listGPIOBanks();
     }
 
-    std::vector<std::string> Device::register_interfaces() const
+    std::vector<std::string> Device::ListRegisterInterfaces() const
     {
         return _device->listRegisterInterfaces();
     }

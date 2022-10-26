@@ -50,7 +50,7 @@ namespace sdr
             std::vector<double> GetSampleRates(const direction dir,
                 const size_t channel) const;
             std::vector<std::string> ListGPIOBanks() const;
-            std::vector<std::string> register_interfaces() const;
+            std::vector<std::string> ListRegisterInterfaces() const;
         private:
             std::map<std::string, std::string> _properties;
             SoapySDR::Device* _device;
