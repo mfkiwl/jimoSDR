@@ -49,7 +49,7 @@ namespace sdr
                 const double rate);
             std::vector<double> GetSampleRates(const direction dir,
                 const size_t channel) const;
-            std::vector<std::string> gpio_banks() const;
+            std::vector<std::string> ListGPIOBanks() const;
             std::vector<std::string> register_interfaces() const;
         private:
             std::map<std::string, std::string> _properties;

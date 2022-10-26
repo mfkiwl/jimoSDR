@@ -144,7 +144,7 @@ int main()
                     Device::direction::rx, channel) << '\n';
             }
             cout << "    GPIO Banks:\n";
-            print::print_strings(dev->gpio_banks(), 8);
+            print::print_strings(dev->ListGPIOBanks(), 8);
 
             cout << "    Register Interfaces:\n";
             print::print_strings(dev->register_interfaces(), 8);

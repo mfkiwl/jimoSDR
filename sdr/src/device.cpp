@@ -116,7 +116,7 @@ namespace sdr
         }
     }
 
-    std::vector<std::string> Device::gpio_banks() const
+    std::vector<std::string> Device::ListGPIOBanks() const
     {
         return _device->listGPIOBanks();
     }
