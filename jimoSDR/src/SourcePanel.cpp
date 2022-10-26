@@ -196,6 +196,7 @@ namespace jimo_sdr
         if (it != end_it)
         {
             m_sampleRates.selected_item(*it);
+            m_deviceProps.sample_rate(currentRate);
         }
     }
 
