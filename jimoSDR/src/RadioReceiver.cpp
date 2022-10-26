@@ -72,7 +72,7 @@ namespace jimo_sdr
                         case ReceiverTask::getDriverKey:
                             {
                                 device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
-                                std::string key = device->DriverKey();
+                                std::string key = device->GetDriverKey();
                                 std::invoke(action.callback, key);
                             }
                             break;
