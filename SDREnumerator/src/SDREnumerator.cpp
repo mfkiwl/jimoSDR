@@ -91,7 +91,7 @@ int main()
     {
         cout << "SDR = " << (*dev)["label"] << '\n';    
         print::print_string_map(*dev, 4);
-        cout << "    driver_key: " << dev->driver_key() << '\n';
+        cout << "    DriverKey: " << dev->DriverKey() << '\n';
         cout << "    hardware_key: " << dev->hardware_key() << '\n';
         cout << "    Hardware Info:\n";
         print::print_string_map(dev->hardware_info(), 8);
