@@ -105,7 +105,7 @@ int main()
             cout << "    RX Channel Info for Channel " << channel << ":\n";
             auto channel_info = dev->GetChannelInfo(Device::direction::rx, channel);
             print::print_string_map(channel_info, 8);
-            cout << (dev->full_duplex(Device::direction::rx, channel)
+            cout << (dev->GetFullDuplex(Device::direction::rx, channel)
                 ? "        Full Duplex\n" : "        Half Duplex\n");
             const auto stream_formats = dev->stream_formats(Device::direction::rx, channel);
             cout << "        Stream Formats:\n";

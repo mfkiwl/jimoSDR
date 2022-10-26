@@ -59,7 +59,7 @@ namespace sdr
         return _device->getChannelInfo(static_cast<int>(dir), channel);
     }
 
-    bool Device::full_duplex(const direction dir, const size_t channel) const
+    bool Device::GetFullDuplex(const direction dir, const size_t channel) const
     {
         return _device->getFullDuplex(static_cast<int>(dir), channel);
     }
