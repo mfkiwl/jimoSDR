@@ -79,7 +79,7 @@ namespace sdr
         return std::make_tuple(format, fullScale);
     }
 
-    std::vector<sdr_arg_info> Device::stream_args_info(const direction dir,
+    std::vector<sdr_arg_info> Device::GetStreamArgsInfo(const direction dir,
                 const size_t channel) const
     {
         std::vector<sdr_arg_info> infos;

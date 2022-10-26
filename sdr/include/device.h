@@ -40,7 +40,7 @@ namespace sdr
                 const size_t channel) const;
             const std::tuple<std::string, double> GetNativeStreamFormat(
                 const direction dir, const size_t channel) const;
-            std::vector<sdr_arg_info> stream_args_info(const direction dir,
+            std::vector<sdr_arg_info> GetStreamArgsInfo(const direction dir,
                 const size_t channel) const;
             double center_frequency(const direction dir, const size_t channel) const;
             void center_frequency(const direction dir, const size_t channel, const double frequency);

@@ -115,7 +115,7 @@ int main()
             cout << "        Native Stream Format:\n";
             cout << "            Format:" << format <<'\n';
             cout << "            Full scale: " << fullScale << '\n';
-            print::print_stream_args_info(dev->stream_args_info(Device::direction::rx,
+            print::print_stream_args_info(dev->GetStreamArgsInfo(Device::direction::rx,
                 channel), 12);
             double center_frequency = dev->center_frequency(Device::direction::rx, channel);
             cout << "        Center Frequency = " << center_frequency << '\n';
