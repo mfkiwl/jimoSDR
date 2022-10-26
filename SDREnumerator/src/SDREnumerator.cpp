@@ -103,7 +103,7 @@ int main()
         for(size_t channel = 0; channel <number_of_rx_channels; ++channel)
         {
             cout << "    RX Channel Info for Channel " << channel << ":\n";
-            auto channel_info = dev->channel_info(Device::direction::rx, channel);
+            auto channel_info = dev->GetChannelInfo(Device::direction::rx, channel);
             print::print_string_map(channel_info, 8);
             cout << (dev->full_duplex(Device::direction::rx, channel)
                 ? "        Full Duplex\n" : "        Half Duplex\n");

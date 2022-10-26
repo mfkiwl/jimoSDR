@@ -33,7 +33,7 @@ namespace sdr
             const std::map<std::string, std::string> GetHardwareInfo() const;
             const std::string GetFrontendMapping(const direction dir) const;
             size_t GetNumberOfChannels(const direction dir) const;
-            std::map<std::string, std::string> channel_info(const direction dir, 
+            std::map<std::string, std::string> GetChannelInfo(const direction dir, 
                 const size_t channel) const;
             bool full_duplex(const direction dir, const size_t channel) const;
             const std::vector<std::string> stream_formats(const direction dir,
