@@ -28,8 +28,8 @@ namespace sdr
             Device&& operator=(Device&&) = delete;
             const std::string operator[](const std::string& key) const;
             operator std::map<std::string, std::string>() { return _properties; }
-            const std::string DriverKey() const;
-            const std::string HardwareKey() const;
+            const std::string GetDriverKey() const;
+            const std::string GetHardwareKey() const;
             const std::map<std::string, std::string> GetHardwareInfo() const;
             const std::string frontend_mapping(const direction dir) const;
             size_t number_of_channels(const direction dir) const;

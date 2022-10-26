@@ -91,8 +91,8 @@ int main()
     {
         cout << "SDR = " << (*dev)["label"] << '\n';    
         print::print_string_map(*dev, 4);
-        cout << "    DriverKey: " << dev->DriverKey() << '\n';
-        cout << "    HardwareKey: " << dev->HardwareKey() << '\n';
+        cout << "    DriverKey: " << dev->GetDriverKey() << '\n';
+        cout << "    HardwareKey: " << dev->GetHardwareKey() << '\n';
         cout << "    Hardware Info:\n";
         print::print_string_map(dev->GetHardwareInfo(), 8);
         cout << "    RX Frontend Mapping: " 
