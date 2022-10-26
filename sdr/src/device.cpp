@@ -48,7 +48,7 @@ namespace sdr
         return _device->getFrontendMapping(static_cast<int>(dir));
     }
 
-    size_t Device::number_of_channels(const direction dir) const
+    size_t Device::GetNumberOfChannels(const direction dir) const
     {
         return _device->getNumChannels(static_cast<int>(dir));
     }

@@ -97,7 +97,7 @@ int main()
         print::print_string_map(dev->GetHardwareInfo(), 8);
         cout << "    RX Frontend Mapping: " 
             << dev->GetFrontendMapping(Device::direction::rx) << '\n';
-        auto number_of_rx_channels = dev->number_of_channels(Device::direction::rx);
+        auto number_of_rx_channels = dev->GetNumberOfChannels(Device::direction::rx);
         cout << "    Number of RX Channels: "
              << number_of_rx_channels << '\n';
         for(size_t channel = 0; channel <number_of_rx_channels; ++channel)
