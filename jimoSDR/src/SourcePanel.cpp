@@ -65,7 +65,8 @@ namespace jimo_sdr
         m_samplingModes.width(propertiesPanelWidth / 2);
         m_samplingModes.items().push_back_range(sampling_mode::names());
         m_samplingModes.selected_index(static_cast<size_t>(m_deviceProps.sampling_mode().mode()));
-
+        m_samplingModes.selected_value_changed += 
+            xtd::event_handler(*this, &SourcePanel::SamplingModeValueChanged);
 
         m_samplingModePanel << m_samplingModeLabel << m_samplingModes;
 
@@ -204,7 +205,7 @@ namespace jimo_sdr
         double rate;
         ss >> rate;
         rate *= 1'000'000.;
-        if (m_deviceProps.sample_rate() != rate)
+        if (m_deviceProps.sample_rate() != 0. && m_deviceProps.sample_rate() != rate)
         {
             SetSampleRateData sampleRateData { m_deviceProps.Device(), rate };
             ReceiverAction setSampleRate({ ReceiverTask::setSampleRate,
@@ -244,5 +245,11 @@ namespace jimo_sdr
             }
             m_deviceProps.sample_rate(actualRate);
         }
+    }
+
+    void SourcePanel::SamplingModeValueChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        auto index = m_samplingModes.selected_index();
+        m_deviceProps.sampling_mode(static_cast<enum sampling_mode::mode>(index));
     }
 }

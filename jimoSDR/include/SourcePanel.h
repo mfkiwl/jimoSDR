@@ -15,6 +15,7 @@ namespace jimo_sdr
             void SourcesDropDown(xtd::object& sender, const xtd::event_args& e);
             void SourceValueChanged(xtd::object& sender, const xtd::event_args& e);
             void SampleRatesValueChanged(xtd::object& sender, const xtd::event_args& e);
+            void SamplingModeValueChanged(xtd::object& sender, const xtd::event_args& e);
             void GetReceivers();
             void GotReceivers(xtd::object& sender, const xtd::event_args& e);
             void GotSampleRates(xtd::object& sender, const xtd::event_args& e);
