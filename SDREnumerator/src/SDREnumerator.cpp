@@ -137,7 +137,7 @@ int main()
             for(auto rate : rates)
             {
                 cout << "            Setting sample rate to: " << rate;
-                dev->GetSampleRate(Device::direction::rx, channel, rate);
+                dev->SetSampleRate(Device::direction::rx, channel, rate);
                 cout << " Sample rate is now: " << dev->GetSampleRate(
                     Device::direction::rx, channel) << '\n';
             }

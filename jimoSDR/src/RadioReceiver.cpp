@@ -1,5 +1,7 @@
 #include "RadioReceiver.h"
 #include "Devices.h"
+#include "SetSampleRateData.h"
+#include "SetSampleRateEventArgs.h"
 #include <iostream>
 #include <chrono>
 
@@ -92,6 +94,16 @@ namespace jimo_sdr
                                 std::invoke(action.callback, rate);
                             }
                             break;
+                        case ReceiverTask::setSampleRate:
+                            {
+                                auto sampleRateData = any_cast<SetSampleRateData>(action.m_data);
+                                device = sampleRateData.m_device;
+                                auto rate = sampleRateData.m_rate;
+                                device->SetSampleRate(sdr::Device::direction::rx, 0, rate);
+                                double newRate = device->GetSampleRate(sdr::Device::direction::rx, 0);
+                                std::vector<std::any> rates = { rate, newRate };
+                                std::invoke(action.callback, rates );
+                            }
                     }
                 }
             }

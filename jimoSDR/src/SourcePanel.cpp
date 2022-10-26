@@ -6,6 +6,8 @@
 #include "GotDeviceDriverKeyEventArgs.h"
 #include "GotSampleRatesEventArgs.h"
 #include "GotCurrentSampleRateEventArgs.h"
+#include "SetSampleRateEventArgs.h"
+#include "SetSampleRateData.h"
 #include "exceptions.h"
 #include "sampling_mode.h"
 
@@ -25,6 +27,7 @@ namespace jimo_sdr
         m_notifier.gotReceivers += xtd::event_handler(*this, &SourcePanel::GotReceivers);
         m_notifier.gotSampleRates += xtd::event_handler(*this, &SourcePanel::GotSampleRates);
         m_notifier.gotCurrentSampleRate += xtd::event_handler(*this, &SourcePanel::GotCurrentSampleRate);
+        m_notifier.setSampleRate += xtd::event_handler(*this, &SourcePanel::SampleRateWasSet);
 
         m_deviceLabel.text("Device: ");
         m_deviceLabel.text_align(content_alignment::middle_right);
@@ -49,6 +52,7 @@ namespace jimo_sdr
 
         m_sampleRates.dock(dock_style::right);
         m_sampleRates.width(propertiesPanelWidth / 2);
+        m_sampleRates.selected_value_changed += xtd::event_handler(*this, &SourcePanel::SamplingModeValueChanged);
 
         m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
         m_sampleRatesPanel.width(propertiesPanelWidth);
@@ -189,6 +193,54 @@ namespace jimo_sdr
         if (it != end_it)
         {
             m_sampleRates.selected_item(*it);
+        }
+    }
+
+    void SourcePanel::SamplingModeValueChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        std::stringstream ss(m_sampleRates.selected_item().to_string());
+        double rate;
+        ss >> rate;
+        rate *= 1'000'000.;
+        if (m_deviceProps.sample_rate() != rate)
+        {
+            SetSampleRateData sampleRateData { m_deviceProps.Device(), rate };
+            ReceiverAction setSampleRate({ ReceiverTask::setSampleRate,
+                std::bind(&GuiNotifier::NotifySetSampleRate, &m_notifier, _1), sampleRateData });
+            RadioReceiver::GetInstance().QueueTask(setSampleRate);            
+        }
+    }
+
+    void SourcePanel::SampleRateWasSet(xtd::object& sender, const xtd::event_args& e)
+    {
+        const auto& args = dynamic_cast<const SetSampleRateEventArgs&>(e);
+        auto requestedRate = args.RequestedRate();
+        auto actualRate = args.ActualRate();
+        if (requestedRate != actualRate)
+        {
+            std::stringstream ss;
+            ss << "Sampling rate change error";
+            ss << "While attempting to set the requested sample rate of " << requestedRate;
+            ss << "the actual rate was set to " << actualRate;
+            ss << "Do you want to continue with the actual rate?";
+            ss << R"(Click "Yes" to continue, and "No" to terminate the program)";
+    
+            dialog_result close = xtd::forms::message_box::show(*this, 
+                ss.str(), 
+                "Sampling rate change error",
+                xtd::forms::message_box_buttons::yes_no, 
+                xtd::forms::message_box_icon::warning);
+            if (close == xtd::forms::dialog_result::no)
+            {
+                auto parent = this->parent();
+                while (parent.has_value() && parent->get().name() != "MainForm")
+                {
+                    parent = parent->get().parent();
+                }
+                form& mainForm = dynamic_cast<form&>(parent->get());
+                mainForm.close();
+            }
+            m_deviceProps.sample_rate(actualRate);
         }
     }
 }

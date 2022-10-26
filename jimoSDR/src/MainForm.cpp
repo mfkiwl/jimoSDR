@@ -11,6 +11,7 @@ namespace jimo_sdr
         :m_notifier(*this), _props_panel(*this, m_deviceProps, m_notifier), _center_frequency_display(10)
     {
         text("jimoSDR");
+        name("MainForm");
         size({mainFormDefaultWidth, mainFormDefaultHeight});
         minimum_size({mainFormMinimumWidth, mainFormMinimumHeight});
         start_position(xtd::forms::form_start_position::center_screen);

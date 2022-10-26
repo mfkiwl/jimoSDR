@@ -1,5 +1,6 @@
 #include <xtd/xtd>
 #include "GuiNotifier.h"
+#include "SetSampleRateEventArgs.h"
 
 using namespace std::placeholders;
 
@@ -35,6 +36,14 @@ namespace jimo_sdr
         gotCurrentSampleRate.invoke(*this, e);
     }
 
+    void GuiNotifier::OnSetSampleRate(const std::vector<std::any>& args)
+    {
+        auto requestedRate = any_cast<double>(args[0]);
+        auto actualRate = any_cast<double>(args[1]);
+        SetSampleRateEventArgs e(requestedRate, actualRate);
+        setSampleRate.invoke(*this, e);
+    }
+
     void GuiNotifier::NotifyGotReceivers(const std::any devices)
     {
         std::vector<std::any> args;
@@ -61,5 +70,11 @@ namespace jimo_sdr
         std::vector<std::any> args;
         args.push_back(rate);
         m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotCurrentSampleRate }, args);
+    }
+
+    void GuiNotifier::NotifySetSampleRate(const std::any rates)
+    {
+        std::vector<std::any> args = any_cast<const std::vector<std::any>>(rates);
+        m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnSetSampleRate }, args);
     }
 }

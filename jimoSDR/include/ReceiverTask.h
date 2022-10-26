@@ -11,5 +11,6 @@ namespace jimo_sdr
         getDriverKey,           // get device driver key
         getSampleRates,         // get sample rates
         getCurrentSampleRate,   // get the current sample rate
+        setSampleRate,          // set the sample rate
     };
 }

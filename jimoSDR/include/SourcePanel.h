@@ -14,10 +14,12 @@ namespace jimo_sdr
         private:
             void SourcesDropDown(xtd::object& sender, const xtd::event_args& e);
             void SourceValueChanged(xtd::object& sender, const xtd::event_args& e);
+            void SamplingModeValueChanged(xtd::object& sender, const xtd::event_args& e);
             void GetReceivers();
             void GotReceivers(xtd::object& sender, const xtd::event_args& e);
             void GotSampleRates(xtd::object& sender, const xtd::event_args& e);
             void GotCurrentSampleRate(xtd::object& sender, const xtd::event_args& e);
+            void SampleRateWasSet(xtd::object& sender, const xtd::event_args& e);
             xtd::forms::label m_panelLabel;
             xtd::forms::horizontal_layout_panel m_devicePanel;
             xtd::forms::label m_deviceLabel;
