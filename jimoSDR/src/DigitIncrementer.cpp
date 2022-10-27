@@ -41,10 +41,10 @@ namespace jimo_sdr
         *this << upper_panel_ << lower_panel_ << digit_;
         digit_.location(digit_origin);
         
-        size_changed += &DigitIncrementer::digit_incrementer_size_changed;
-        digit_.mouse_move += &DigitIncrementer::mouse_moved;
-        digit_.mouse_click += &DigitIncrementer::mouse_clicked;
-        mouse_leave += &DigitIncrementer::mouse_left;
+        size_changed += &DigitIncrementer::DigitIncrementerSizeChanged;
+        digit_.mouse_move += &DigitIncrementer::MouseMoved;
+        digit_.mouse_click += &DigitIncrementer::MouseClicked;
+        mouse_leave += &DigitIncrementer::MouseLeft;
    }
 
     DigitIncrementer::DigitIncrementer(xtd::forms::control& parent)
@@ -56,13 +56,13 @@ namespace jimo_sdr
     DigitIncrementer::DigitIncrementer(int32_t value)
         : DigitIncrementer()
     {
-        this->value(value);
+        this->Value(value);
     }
 
     DigitIncrementer::DigitIncrementer(xtd::forms::control& parent, int32_t value)
         : DigitIncrementer(parent)
     {
-        this->value(value);
+        this->Value(value);
     }
 
     const xtd::ustring& DigitIncrementer::text() const
@@ -79,7 +79,7 @@ namespace jimo_sdr
             if(value >= 0 && value <= 9)
             {
                 digit_.text(text);
-                on_value_changed(xtd::event_args::empty);
+                OnValueChanged(xtd::event_args::empty);
                 return *this;
             }
         }
@@ -139,14 +139,14 @@ namespace jimo_sdr
         return dynamic_cast<DigitIncrementer&>(ctrl);
     }
 
-    void DigitIncrementer::digit_incrementer_size_changed(xtd::object& sender, const xtd::event_args&)
+    void DigitIncrementer::DigitIncrementerSizeChanged(xtd::object& sender, const xtd::event_args&)
     {
         DigitIncrementer& incr = dynamic_cast<DigitIncrementer&>(sender);
-        incr.update_upper_lower_panels();
-        incr.change_font_size_to_fit_control();
+        incr.UpdateUpperLowerPanels();
+        incr.ChangeFontSizeToFitControl();
     }
 
-    void DigitIncrementer::change_font_size_to_fit_control()
+    void DigitIncrementer::ChangeFontSizeToFitControl()
     {
         const xtd::drawing::font& old_font = font();
         auto em_size = (old_font.size() * size().height()) / old_size_.height();
@@ -154,7 +154,7 @@ namespace jimo_sdr
         digit_.font(new_font);
     }
 
-    void DigitIncrementer::update_upper_lower_panels() noexcept
+    void DigitIncrementer::UpdateUpperLowerPanels() noexcept
     {
         upper_panel_.size( {size().width(), size().height() / 2})
             .location( {0, 0});
@@ -162,7 +162,7 @@ namespace jimo_sdr
             .location( {0, lower_panel_.height()});
     }
 
-    int32_t DigitIncrementer::value() const noexcept
+    int32_t DigitIncrementer::Value() const noexcept
     {
         std::stringstream ss(text());
         int32_t value;
@@ -170,7 +170,7 @@ namespace jimo_sdr
         return value;
     }
 
-    DigitIncrementer& DigitIncrementer::value(int32_t new_value)
+    DigitIncrementer& DigitIncrementer::Value(int32_t new_value)
     {
         std::stringstream ss;
         ss << new_value;
@@ -178,18 +178,18 @@ namespace jimo_sdr
         return *this;
     }
 
-    void DigitIncrementer::mouse_moved(xtd::object& sender, const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::MouseMoved(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
         control& ctrl = dynamic_cast<control&>(sender);
         auto& parent = ctrl.parent()->get();
         auto& incr = dynamic_cast<DigitIncrementer&>(parent);
-        incr.highlight_upper_or_lower(e);
+        incr.HighlightUpperOrLower(e);
     }
 
     // Go back through parent controls until we find one whose background color is not transparent.
     // Use that color to determine the background color for the upper or lower panel while the mouse
     // cursor is over it.
-    void DigitIncrementer::highlight_upper_or_lower(const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::HighlightUpperOrLower(const xtd::forms::mouse_event_args& e)
     {
 
         xtd::drawing::color panel_background;
@@ -221,61 +221,61 @@ namespace jimo_sdr
         }
     }
 
-    void DigitIncrementer::mouse_left(xtd::object& sender, const xtd::event_args& e)
+    void DigitIncrementer::MouseLeft(xtd::object& sender, const xtd::event_args& e)
     {
         auto& incr = dynamic_cast<DigitIncrementer&>(sender);
-        incr.remove_highlight();
+        incr.RemoveHighlight();
     }
     
-    void DigitIncrementer::remove_highlight()
+    void DigitIncrementer::RemoveHighlight()
     {
         upper_panel_.back_color(xtd::drawing::color::transparent);
         lower_panel_.back_color(xtd::drawing::color::transparent);
     }
 
-    void DigitIncrementer::mouse_clicked(xtd::object& sender, const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::MouseClicked(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
         control& ctrl = dynamic_cast<control&>(sender);
         auto& parent = ctrl.parent()->get();
         auto& incr = dynamic_cast<DigitIncrementer&>(parent);
-        incr.increment_decrement_based_on_cursor_position(e);
+        incr.IncrementDecrementBasedOnCursorPosition(e);
     }
 
-    void DigitIncrementer::increment_decrement_based_on_cursor_position(const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::IncrementDecrementBasedOnCursorPosition(const xtd::forms::mouse_event_args& e)
     {
         auto upper_panel_bounds = upper_panel_.bounds();
-        upper_panel_bounds.contains(e.location()) ? increment() : decrement();
+        upper_panel_bounds.contains(e.location()) ? Increment() : Decrement();
    }
     
-    void DigitIncrementer::increment()
+    void DigitIncrementer::Increment()
     {
-        auto new_value = value();
+        auto new_value = Value();
         if (++new_value > 9)
         {
-            value(0);
-            on_roll_over(xtd::event_args::empty);
+            Value(0);
+            OnRollOver(xtd::event_args::empty);
         }
         else
         {
-            value(new_value);
+            Value(new_value);
         }
     }
 
-    void DigitIncrementer::decrement()
+    void DigitIncrementer::Decrement()
     {
-        auto new_value = value();
+        auto new_value = Value();
         if (--new_value < 0)
         {
-            value(9);
-            on_roll_under(xtd::event_args::empty);
+            Value(9);
+            OnRollUnder(xtd::event_args::empty);
         }
         else
         {
-            value(new_value);
+            Value(new_value);
         }
     }
 
-    void DigitIncrementer::on_value_changed(const event_args& e)
+    void DigitIncrementer::OnValueChanged(const event_args& e)
     {
         xtd::event_handler handler = value_changed;
         if (!handler.is_empty())
@@ -284,7 +284,7 @@ namespace jimo_sdr
         }
     }
 
-    void DigitIncrementer::on_roll_over(const event_args& e)
+    void DigitIncrementer::OnRollOver(const event_args& e)
     {
         xtd::event_handler handler = rolled_over;
         if (!handler.is_empty())
@@ -293,7 +293,7 @@ namespace jimo_sdr
         }
     }
 
-    void DigitIncrementer::on_roll_under(const event_args& e)
+    void DigitIncrementer::OnRollUnder(const event_args& e)
     {
         xtd::event_handler handler = rolled_under;
         if (!handler.is_empty())

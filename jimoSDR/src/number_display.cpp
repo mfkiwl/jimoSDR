@@ -116,14 +116,14 @@ namespace jimo_sdr
         {
             char val = ss.str()[index];
             int32_t digit = std::atoi(&val);
-            digits_incrementers_[index]->value(digit);
+            digits_incrementers_[index]->Value(digit);
         }
         std::cout << decimals_incrementers_.size() << '\n';
         for (size_t index = 0; index < decimals_incrementers_.size(); ++index)
         {
             char val = ss.str()[width - index - 1];
             int32_t decimal = std::atoi(&val);
-            decimals_incrementers_[decimals_incrementers_.size() - index - 1]->value(decimal);
+            decimals_incrementers_[decimals_incrementers_.size() - index - 1]->Value(decimal);
         }
     }
 }
