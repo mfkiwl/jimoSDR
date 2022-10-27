@@ -4,39 +4,39 @@
 
 namespace jimo_sdr
 {
-    class digit_incrementer : public xtd::forms::panel
+    class DigitIncrementer : public xtd::forms::panel
     {
         public:
-            digit_incrementer();
-            digit_incrementer(xtd::forms::control& parent);
-            digit_incrementer(int32_t value);
-            digit_incrementer(xtd::forms::control& parent, int32_t value);
+            DigitIncrementer();
+            DigitIncrementer(xtd::forms::control& parent);
+            DigitIncrementer(int32_t value);
+            DigitIncrementer(xtd::forms::control& parent, int32_t value);
 
-            digit_incrementer(const digit_incrementer&) = delete;
-            digit_incrementer(digit_incrementer&&) = delete;
-            digit_incrementer& operator=(const digit_incrementer&) = delete;
-            digit_incrementer& operator=(digit_incrementer&&) = delete;
+            DigitIncrementer(const DigitIncrementer&) = delete;
+            DigitIncrementer(DigitIncrementer&&) = delete;
+            DigitIncrementer& operator=(const DigitIncrementer&) = delete;
+            DigitIncrementer& operator=(DigitIncrementer&&) = delete;
             virtual xtd::drawing::font font() const override;
-            virtual digit_incrementer& font(const xtd::drawing::font& font) override;
+            virtual DigitIncrementer& font(const xtd::drawing::font& font) override;
             virtual int32_t height() const override;
-            virtual digit_incrementer& height(int32_t height) override;
+            virtual DigitIncrementer& height(int32_t height) override;
             virtual xtd::drawing::size size() const override;
-            virtual digit_incrementer& size(const xtd::drawing::size& size) override;
+            virtual DigitIncrementer& size(const xtd::drawing::size& size) override;
             virtual const xtd::ustring& text() const override;
-            virtual digit_incrementer& text(const xtd::ustring& value) override;
+            virtual DigitIncrementer& text(const xtd::ustring& value) override;
             virtual int32_t value() const noexcept;
-            digit_incrementer& value(int32_t new_value);
+            DigitIncrementer& value(int32_t new_value);
             virtual int32_t width() const override;
-            virtual digit_incrementer& width(int32_t width) override;
+            virtual DigitIncrementer& width(int32_t width) override;
 
             virtual void increment();
             virtual void decrement();
             virtual xtd::ustring to_string() const noexcept override;
-            friend std::ostream& operator <<(std::ostream& out, const digit_incrementer& incrementer);
+            friend std::ostream& operator <<(std::ostream& out, const DigitIncrementer& incrementer);
 
-            xtd::event<digit_incrementer, xtd::event_handler> value_changed;
-            xtd::event<digit_incrementer, xtd::event_handler> rolled_over;
-            xtd::event<digit_incrementer, xtd::event_handler> rolled_under;
+            xtd::event<DigitIncrementer, xtd::event_handler> value_changed;
+            xtd::event<DigitIncrementer, xtd::event_handler> rolled_over;
+            xtd::event<DigitIncrementer, xtd::event_handler> rolled_under;
         protected:
             virtual void change_font_size_to_fit_control();
             static void digit_incrementer_size_changed(xtd::object& sender, const xtd::event_args& e);

@@ -40,7 +40,7 @@ namespace jimo_sdr
         digits_incrementers_.clear();
         for (uint32_t digits = 0; digits < number_of_digits; ++digits)
         {
-            digits_incrementers_.push_back(std::make_unique<digit_incrementer>());
+            digits_incrementers_.push_back(std::make_unique<DigitIncrementer>());
         }
         create_controls();
         return *this;
@@ -65,7 +65,7 @@ namespace jimo_sdr
 
         for (uint32_t decimals = 0; decimals < number_of_decimals; ++decimals)
         {
-            decimals_incrementers_.push_back(std::make_unique<digit_incrementer>());
+            decimals_incrementers_.push_back(std::make_unique<DigitIncrementer>());
         }
         create_controls();
         return *this;

@@ -1,4 +1,4 @@
-#include "digit_incrementer.h"
+#include "DigitIncrementer.h"
 #include "ControlSizes.h"
 #include <sstream>
 
@@ -13,7 +13,8 @@ namespace jimo_sdr
     const xtd::drawing::point upper_panel_origin(digit_origin);
     const xtd::forms::padding margin_size(0);
     const xtd::forms::padding padding_size(0);
-    digit_incrementer::digit_incrementer()
+
+    DigitIncrementer::DigitIncrementer()
     {
         margin(margin_size);
         padding(padding_size);
@@ -40,36 +41,36 @@ namespace jimo_sdr
         *this << upper_panel_ << lower_panel_ << digit_;
         digit_.location(digit_origin);
         
-        size_changed += &digit_incrementer::digit_incrementer_size_changed;
-        digit_.mouse_move += &digit_incrementer::mouse_moved;
-        digit_.mouse_click += &digit_incrementer::mouse_clicked;
-        mouse_leave += &digit_incrementer::mouse_left;
+        size_changed += &DigitIncrementer::digit_incrementer_size_changed;
+        digit_.mouse_move += &DigitIncrementer::mouse_moved;
+        digit_.mouse_click += &DigitIncrementer::mouse_clicked;
+        mouse_leave += &DigitIncrementer::mouse_left;
    }
 
-    digit_incrementer::digit_incrementer(xtd::forms::control& parent)
-        : digit_incrementer()
+    DigitIncrementer::DigitIncrementer(xtd::forms::control& parent)
+        : DigitIncrementer()
     {
         parent << *this;
     }
 
-    digit_incrementer::digit_incrementer(int32_t value)
-        : digit_incrementer()
+    DigitIncrementer::DigitIncrementer(int32_t value)
+        : DigitIncrementer()
     {
         this->value(value);
     }
 
-    digit_incrementer::digit_incrementer(xtd::forms::control& parent, int32_t value)
-        : digit_incrementer(parent)
+    DigitIncrementer::DigitIncrementer(xtd::forms::control& parent, int32_t value)
+        : DigitIncrementer(parent)
     {
         this->value(value);
     }
 
-    const xtd::ustring& digit_incrementer::text() const
+    const xtd::ustring& DigitIncrementer::text() const
     {
         return digit_.text();
     }
 
-    digit_incrementer& digit_incrementer::text(const xtd::ustring& text)
+    DigitIncrementer& DigitIncrementer::text(const xtd::ustring& text)
     {
         int32_t value;
         bool parsed = try_parse<int32_t>(text, value);
@@ -89,12 +90,12 @@ namespace jimo_sdr
         throw xtd::argument_out_of_range_exception(ss.str(), frame);
     }
 
-    xtd::drawing::font digit_incrementer::font() const
+    xtd::drawing::font DigitIncrementer::font() const
     {
         return digit_.font();
     }
 
-    digit_incrementer& digit_incrementer::font(const xtd::drawing::font& font)
+    DigitIncrementer& DigitIncrementer::font(const xtd::drawing::font& font)
     {
         auto old_font = digit_.font();
         xtd::drawing::font new_font(font.name(), old_font.size(), old_font.unit());
@@ -102,12 +103,12 @@ namespace jimo_sdr
         return *this;
     }
 
-    xtd::drawing::size digit_incrementer::size() const
+    xtd::drawing::size DigitIncrementer::size() const
     {
         return panel::size();
     }
 
-    digit_incrementer& digit_incrementer::size(const xtd::drawing::size& new_size)
+    DigitIncrementer& DigitIncrementer::size(const xtd::drawing::size& new_size)
     {
         old_size_ = size();
         xtd::drawing::size sz = new_size;
@@ -135,17 +136,17 @@ namespace jimo_sdr
         }
         digit_.size(sz);
         auto& ctrl = panel::size(sz);
-        return dynamic_cast<digit_incrementer&>(ctrl);
+        return dynamic_cast<DigitIncrementer&>(ctrl);
     }
 
-    void digit_incrementer::digit_incrementer_size_changed(xtd::object& sender, const xtd::event_args&)
+    void DigitIncrementer::digit_incrementer_size_changed(xtd::object& sender, const xtd::event_args&)
     {
-        digit_incrementer& incr = dynamic_cast<digit_incrementer&>(sender);
+        DigitIncrementer& incr = dynamic_cast<DigitIncrementer&>(sender);
         incr.update_upper_lower_panels();
         incr.change_font_size_to_fit_control();
     }
 
-    void digit_incrementer::change_font_size_to_fit_control()
+    void DigitIncrementer::change_font_size_to_fit_control()
     {
         const xtd::drawing::font& old_font = font();
         auto em_size = (old_font.size() * size().height()) / old_size_.height();
@@ -153,7 +154,7 @@ namespace jimo_sdr
         digit_.font(new_font);
     }
 
-    void digit_incrementer::update_upper_lower_panels() noexcept
+    void DigitIncrementer::update_upper_lower_panels() noexcept
     {
         upper_panel_.size( {size().width(), size().height() / 2})
             .location( {0, 0});
@@ -161,7 +162,7 @@ namespace jimo_sdr
             .location( {0, lower_panel_.height()});
     }
 
-    int32_t digit_incrementer::value() const noexcept
+    int32_t DigitIncrementer::value() const noexcept
     {
         std::stringstream ss(text());
         int32_t value;
@@ -169,7 +170,7 @@ namespace jimo_sdr
         return value;
     }
 
-    digit_incrementer& digit_incrementer::value(int32_t new_value)
+    DigitIncrementer& DigitIncrementer::value(int32_t new_value)
     {
         std::stringstream ss;
         ss << new_value;
@@ -177,18 +178,18 @@ namespace jimo_sdr
         return *this;
     }
 
-    void digit_incrementer::mouse_moved(xtd::object& sender, const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::mouse_moved(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
         control& ctrl = dynamic_cast<control&>(sender);
         auto& parent = ctrl.parent()->get();
-        auto& incr = dynamic_cast<digit_incrementer&>(parent);
+        auto& incr = dynamic_cast<DigitIncrementer&>(parent);
         incr.highlight_upper_or_lower(e);
     }
 
     // Go back through parent controls until we find one whose background color is not transparent.
     // Use that color to determine the background color for the upper or lower panel while the mouse
     // cursor is over it.
-    void digit_incrementer::highlight_upper_or_lower(const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::highlight_upper_or_lower(const xtd::forms::mouse_event_args& e)
     {
 
         xtd::drawing::color panel_background;
@@ -220,33 +221,33 @@ namespace jimo_sdr
         }
     }
 
-    void digit_incrementer::mouse_left(xtd::object& sender, const xtd::event_args& e)
+    void DigitIncrementer::mouse_left(xtd::object& sender, const xtd::event_args& e)
     {
-        auto& incr = dynamic_cast<digit_incrementer&>(sender);
+        auto& incr = dynamic_cast<DigitIncrementer&>(sender);
         incr.remove_highlight();
     }
     
-    void digit_incrementer::remove_highlight()
+    void DigitIncrementer::remove_highlight()
     {
         upper_panel_.back_color(xtd::drawing::color::transparent);
         lower_panel_.back_color(xtd::drawing::color::transparent);
     }
 
-    void digit_incrementer::mouse_clicked(xtd::object& sender, const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::mouse_clicked(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
         control& ctrl = dynamic_cast<control&>(sender);
         auto& parent = ctrl.parent()->get();
-        auto& incr = dynamic_cast<digit_incrementer&>(parent);
+        auto& incr = dynamic_cast<DigitIncrementer&>(parent);
         incr.increment_decrement_based_on_cursor_position(e);
     }
 
-    void digit_incrementer::increment_decrement_based_on_cursor_position(const xtd::forms::mouse_event_args& e)
+    void DigitIncrementer::increment_decrement_based_on_cursor_position(const xtd::forms::mouse_event_args& e)
     {
         auto upper_panel_bounds = upper_panel_.bounds();
         upper_panel_bounds.contains(e.location()) ? increment() : decrement();
    }
     
-    void digit_incrementer::increment()
+    void DigitIncrementer::increment()
     {
         auto new_value = value();
         if (++new_value > 9)
@@ -260,7 +261,7 @@ namespace jimo_sdr
         }
     }
 
-    void digit_incrementer::decrement()
+    void DigitIncrementer::decrement()
     {
         auto new_value = value();
         if (--new_value < 0)
@@ -274,7 +275,7 @@ namespace jimo_sdr
         }
     }
 
-    void digit_incrementer::on_value_changed(const event_args& e)
+    void DigitIncrementer::on_value_changed(const event_args& e)
     {
         xtd::event_handler handler = value_changed;
         if (!handler.is_empty())
@@ -283,7 +284,7 @@ namespace jimo_sdr
         }
     }
 
-    void digit_incrementer::on_roll_over(const event_args& e)
+    void DigitIncrementer::on_roll_over(const event_args& e)
     {
         xtd::event_handler handler = rolled_over;
         if (!handler.is_empty())
@@ -292,7 +293,7 @@ namespace jimo_sdr
         }
     }
 
-    void digit_incrementer::on_roll_under(const event_args& e)
+    void DigitIncrementer::on_roll_under(const event_args& e)
     {
         xtd::event_handler handler = rolled_under;
         if (!handler.is_empty())
@@ -301,12 +302,12 @@ namespace jimo_sdr
         }
     }
 
-    int32_t digit_incrementer::height() const 
+    int32_t DigitIncrementer::height() const 
     {
         return control::height();
     }
 
-    digit_incrementer& digit_incrementer::height(int32_t height)
+    DigitIncrementer& DigitIncrementer::height(int32_t height)
     {
         xtd::drawing::size minimum = minimum_size();
         int32_t width = (height * minimum.width()) / minimum.height();
@@ -315,12 +316,12 @@ namespace jimo_sdr
         return *this;
     }
 
-    int32_t digit_incrementer::width() const 
+    int32_t DigitIncrementer::width() const 
     {
         return control::width();
     }
 
-    digit_incrementer& digit_incrementer::width(int32_t width)
+    DigitIncrementer& DigitIncrementer::width(int32_t width)
     {
         xtd::drawing::size minimum = minimum_size();
         int32_t height = (width * minimum.height()) / minimum.width();
@@ -329,12 +330,12 @@ namespace jimo_sdr
         return *this;
     }
 
-    xtd::ustring digit_incrementer::to_string() const noexcept
+    xtd::ustring DigitIncrementer::to_string() const noexcept
     {
         return xtd::ustring::format("digit_incrementer value: {}", text());
     }
 
-    std::ostream& operator <<(std::ostream& out, const digit_incrementer& incrementer)
+    std::ostream& operator <<(std::ostream& out, const DigitIncrementer& incrementer)
     {
         out << incrementer.to_string();
         return out;

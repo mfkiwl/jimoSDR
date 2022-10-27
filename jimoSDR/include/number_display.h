@@ -1,6 +1,6 @@
 /// @copyright Copyright © 2022 Jim Orcheson. Available under the MIT License.
 #pragma once
-#include "digit_incrementer.h"
+#include "DigitIncrementer.h"
 
 namespace jimo_sdr
 {
@@ -19,8 +19,8 @@ namespace jimo_sdr
         protected:
             virtual void create_controls();
         private:
-            std::vector<std::unique_ptr<digit_incrementer>> digits_incrementers_;
-            std::vector<std::unique_ptr<digit_incrementer>> decimals_incrementers_; 
+            std::vector<std::unique_ptr<DigitIncrementer>> digits_incrementers_;
+            std::vector<std::unique_ptr<DigitIncrementer>> decimals_incrementers_; 
             xtd::forms::label decimal_point;
     };
 }
