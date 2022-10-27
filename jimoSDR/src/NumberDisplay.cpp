@@ -118,7 +118,6 @@ namespace jimo_sdr
             int32_t digit = std::atoi(&val);
             digits_incrementers_[index]->Value(digit);
         }
-        std::cout << decimals_incrementers_.size() << '\n';
         for (size_t index = 0; index < decimals_incrementers_.size(); ++index)
         {
             char val = ss.str()[width - index - 1];
