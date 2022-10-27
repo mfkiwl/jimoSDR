@@ -18,9 +18,9 @@ namespace jimo_sdr
         start_position(xtd::forms::form_start_position::center_screen);
         m_notifier.gotCenterFrequency += xtd::event_handler(*this, &MainForm::GotCenterFrequency);
 
-        _create_controls_panel();
-        create_properties_panel();
-        create_right_panel();
+        CreateControlsPanel();
+        CreatePropertiesPanel();
+        CreateRightPanel();
         _main_panel << _props_panel << _right_panel;
         _main_panel.control_layout_style(_props_panel, {propertiesPanelWidth,
             size_type::absolute, true});
@@ -51,14 +51,14 @@ namespace jimo_sdr
         e.cancel(close == xtd::forms::dialog_result::no);
     }
 
-    void MainForm::create_properties_panel()
+    void MainForm::CreatePropertiesPanel()
     {
         _props_panel.location({0, 0});
         _props_panel.size({propertiesPanelWidth, client_size().height()});
         _props_panel.back_color(color::light_gray);
     }
 
-    void MainForm::create_right_panel()
+    void MainForm::CreateRightPanel()
     {
         auto& main_form_client_rect = client_size();
         auto left_panel_size = _props_panel.size();
@@ -70,7 +70,7 @@ namespace jimo_sdr
             anchor_styles:: bottom | anchor_styles::left);
     }
 
-    void MainForm::_create_controls_panel()
+    void MainForm::CreateControlsPanel()
     {
         _controls_panel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);

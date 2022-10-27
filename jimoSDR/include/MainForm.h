@@ -23,9 +23,9 @@ namespace jimo_sdr
             void on_form_closing(xtd::forms::form_closing_event_args& e) override;
        private:
             void GotCenterFrequency(xtd::object& sender, const xtd::event_args& e);
-            void create_properties_panel();
-            void create_right_panel();
-            void _create_controls_panel();
+            void CreatePropertiesPanel();
+            void CreateRightPanel();
+            void CreateControlsPanel();
 
             GuiNotifier m_notifier;
             std::shared_ptr<sdr::Device> _device;
