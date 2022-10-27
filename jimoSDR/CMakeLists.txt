@@ -12,7 +12,7 @@ add_executable(jimoSDR
     src/device_properties.cpp
     src/sampling_mode.cpp
     src/DigitIncrementer.cpp
-    src/number_display.cpp
+    src/NumberDisplay.cpp
     src/RadioReceiver.cpp
     src/SourcePanel.cpp
     src/GuiNotifier.cpp
@@ -24,7 +24,7 @@ add_executable(jimoSDR
     include/exceptions.h
     include/sampling_mode.h
     include/DigitIncrementer.h
-    include/number_display.h
+    include/NumberDisplay.h
     include/ReceiverAction.h
     include/ReceiverTask.h
     include/RadioReceiver.h

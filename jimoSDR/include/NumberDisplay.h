@@ -4,17 +4,17 @@
 
 namespace jimo_sdr
 {
-    class number_display : public xtd::forms::panel
+    class NumberDisplay : public xtd::forms::panel
     {
         public:
-            number_display();
-            number_display(uint32_t number_of_digits);
-            number_display(uint32_t number_of_digits, uint32_t number_of_decimals);
+            NumberDisplay();
+            NumberDisplay(uint32_t number_of_digits);
+            NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals);
             virtual uint32_t decimals() const noexcept;
-            virtual number_display& decimals(uint32_t number_of_decimals);
+            virtual NumberDisplay& decimals(uint32_t number_of_decimals);
             virtual uint32_t digits() const noexcept;
             /// @brief Set the number of digits.
-            virtual number_display& digits(uint32_t number_of_digits);
+            virtual NumberDisplay& digits(uint32_t number_of_digits);
             virtual void SetValue(double value) noexcept;
         protected:
             virtual void create_controls();

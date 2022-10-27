@@ -5,7 +5,7 @@
 #include "device_properties.h"
 #include "properties_panel.h"
 #include "user_draw_buttons.h"
-#include "number_display.h"
+#include "NumberDisplay.h"
 #include "ReceiverAction.h"
 #include "RadioReceiver.h"
 
@@ -36,7 +36,7 @@ namespace jimo_sdr
             xtd::forms::panel _right_panel;
             properties_button _props_button;
             xtd::forms::label _center_frequency_label;
-            number_display m_centerFrequencyDisplay;
+            NumberDisplay m_centerFrequencyDisplay;
 
             device_properties m_deviceProps;
    };

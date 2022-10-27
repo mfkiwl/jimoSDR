@@ -1,4 +1,4 @@
-#include "number_display.h"
+#include "NumberDisplay.h"
 #include <sstream>
 #include <string>
 
@@ -7,11 +7,11 @@ namespace jimo_sdr
     constexpr uint32_t maximum_number_of_digits = 15;
     constexpr uint32_t maximum_number_of_decimals = 3;
 
-    number_display::number_display() : number_display(0, 0) {}
+    NumberDisplay::NumberDisplay() : NumberDisplay(0, 0) {}
 
-    number_display::number_display(uint32_t number_of_digits) : number_display(number_of_digits, 0) {}
+    NumberDisplay::NumberDisplay(uint32_t number_of_digits) : NumberDisplay(number_of_digits, 0) {}
     
-    number_display::number_display(uint32_t number_of_digits, uint32_t number_of_decimals)
+    NumberDisplay::NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals)
     {
         decimal_point.text(".");
         decimal_point.width(3);
@@ -22,12 +22,12 @@ namespace jimo_sdr
     }
 
 
-    uint32_t number_display::digits() const noexcept
+    uint32_t NumberDisplay::digits() const noexcept
     {
         return digits_incrementers_.size();
     }
 
-    number_display& number_display::digits(uint32_t number_of_digits)
+    NumberDisplay& NumberDisplay::digits(uint32_t number_of_digits)
     {
         if (number_of_digits > maximum_number_of_digits)
         {
@@ -46,12 +46,12 @@ namespace jimo_sdr
         return *this;
     }
 
-    uint32_t number_display::decimals() const noexcept
+    uint32_t NumberDisplay::decimals() const noexcept
     {
         return decimals_incrementers_.size();
     }
 
-    number_display& number_display::decimals(uint32_t number_of_decimals)
+    NumberDisplay& NumberDisplay::decimals(uint32_t number_of_decimals)
     {
         if (number_of_decimals > maximum_number_of_decimals)
         {
@@ -71,7 +71,7 @@ namespace jimo_sdr
         return *this;
     }
 
-    void number_display::create_controls()
+    void NumberDisplay::create_controls()
     {
         controls().clear();
         int32_t x_pos = 0;
@@ -96,7 +96,7 @@ namespace jimo_sdr
         }
     }
 
-    void number_display::SetValue(double value) noexcept
+    void NumberDisplay::SetValue(double value) noexcept
     {
         value += 0.123;
         std::stringstream ss;
