@@ -10,14 +10,13 @@ namespace jimo_sdr
             NumberDisplay();
             NumberDisplay(uint32_t number_of_digits);
             NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals);
-            virtual uint32_t decimals() const noexcept;
-            virtual NumberDisplay& decimals(uint32_t number_of_decimals);
-            virtual uint32_t digits() const noexcept;
-            /// @brief Set the number of digits.
-            virtual NumberDisplay& digits(uint32_t number_of_digits);
+            virtual uint32_t Decimals() const noexcept;
+            virtual NumberDisplay& Decimals(uint32_t number_of_decimals);
+            virtual uint32_t Digits() const noexcept;
+            virtual NumberDisplay& Digits(uint32_t number_of_digits);
             virtual void SetValue(double value) noexcept;
         protected:
-            virtual void create_controls();
+            virtual void CreateControls();
         private:
             std::vector<std::unique_ptr<DigitIncrementer>> digits_incrementers_;
             std::vector<std::unique_ptr<DigitIncrementer>> decimals_incrementers_; 

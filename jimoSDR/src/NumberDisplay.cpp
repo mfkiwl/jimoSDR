@@ -17,17 +17,17 @@ namespace jimo_sdr
         decimal_point.width(3);
         decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
         decimal_point.back_color(xtd::drawing::color::transparent);
-        digits(number_of_digits);
-        decimals(number_of_decimals);
+        Digits(number_of_digits);
+        Decimals(number_of_decimals);
     }
 
 
-    uint32_t NumberDisplay::digits() const noexcept
+    uint32_t NumberDisplay::Digits() const noexcept
     {
         return digits_incrementers_.size();
     }
 
-    NumberDisplay& NumberDisplay::digits(uint32_t number_of_digits)
+    NumberDisplay& NumberDisplay::Digits(uint32_t number_of_digits)
     {
         if (number_of_digits > maximum_number_of_digits)
         {
@@ -42,16 +42,16 @@ namespace jimo_sdr
         {
             digits_incrementers_.push_back(std::make_unique<DigitIncrementer>());
         }
-        create_controls();
+        CreateControls();
         return *this;
     }
 
-    uint32_t NumberDisplay::decimals() const noexcept
+    uint32_t NumberDisplay::Decimals() const noexcept
     {
         return decimals_incrementers_.size();
     }
 
-    NumberDisplay& NumberDisplay::decimals(uint32_t number_of_decimals)
+    NumberDisplay& NumberDisplay::Decimals(uint32_t number_of_decimals)
     {
         if (number_of_decimals > maximum_number_of_decimals)
         {
@@ -67,11 +67,11 @@ namespace jimo_sdr
         {
             decimals_incrementers_.push_back(std::make_unique<DigitIncrementer>());
         }
-        create_controls();
+        CreateControls();
         return *this;
     }
 
-    void NumberDisplay::create_controls()
+    void NumberDisplay::CreateControls()
     {
         controls().clear();
         int32_t x_pos = 0;
