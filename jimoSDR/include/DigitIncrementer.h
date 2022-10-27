@@ -51,9 +51,9 @@ namespace jimo_sdr
             virtual void RemoveHighlight();
             virtual void UpdateUpperLowerPanels() noexcept;
         private:
-            xtd::forms::label digit_;
-            xtd::forms::panel upper_panel_;
-            xtd::forms::panel lower_panel_;
-            xtd::drawing::size old_size_;
+            xtd::forms::label m_digit;
+            xtd::forms::panel m_upper_panel;
+            xtd::forms::panel m_lower_panel;
+            xtd::drawing::size m_old_size;
     };
 }
