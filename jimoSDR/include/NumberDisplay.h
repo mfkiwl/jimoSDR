@@ -18,8 +18,8 @@ namespace jimo_sdr
         protected:
             virtual void CreateControls();
         private:
-            std::vector<std::unique_ptr<DigitIncrementer>> digits_incrementers_;
-            std::vector<std::unique_ptr<DigitIncrementer>> decimals_incrementers_; 
+            std::vector<std::unique_ptr<DigitIncrementer>> m_digitsIncrementers;
+            std::vector<std::unique_ptr<DigitIncrementer>> m_decimalsIncrementers; 
             xtd::forms::label decimal_point;
     };
 }

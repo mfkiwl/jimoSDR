@@ -24,7 +24,7 @@ namespace jimo_sdr
 
     uint32_t NumberDisplay::Digits() const noexcept
     {
-        return digits_incrementers_.size();
+        return m_digitsIncrementers.size();
     }
 
     NumberDisplay& NumberDisplay::Digits(uint32_t number_of_digits)
@@ -37,10 +37,10 @@ namespace jimo_sdr
             xtd::diagnostics::stack_frame frame;
             throw xtd::argument_out_of_range_exception(ss.str(), frame);
         }
-        digits_incrementers_.clear();
+        m_digitsIncrementers.clear();
         for (uint32_t digits = 0; digits < number_of_digits; ++digits)
         {
-            digits_incrementers_.push_back(std::make_unique<DigitIncrementer>());
+            m_digitsIncrementers.push_back(std::make_unique<DigitIncrementer>());
         }
         CreateControls();
         return *this;
@@ -48,7 +48,7 @@ namespace jimo_sdr
 
     uint32_t NumberDisplay::Decimals() const noexcept
     {
-        return decimals_incrementers_.size();
+        return m_decimalsIncrementers.size();
     }
 
     NumberDisplay& NumberDisplay::Decimals(uint32_t number_of_decimals)
@@ -61,11 +61,11 @@ namespace jimo_sdr
             xtd::diagnostics::stack_frame frame;
             throw xtd::argument_out_of_range_exception(ss.str(), frame);
         }
-        decimals_incrementers_.clear();
+        m_decimalsIncrementers.clear();
 
         for (uint32_t decimals = 0; decimals < number_of_decimals; ++decimals)
         {
-            decimals_incrementers_.push_back(std::make_unique<DigitIncrementer>());
+            m_decimalsIncrementers.push_back(std::make_unique<DigitIncrementer>());
         }
         CreateControls();
         return *this;
@@ -75,19 +75,19 @@ namespace jimo_sdr
     {
         controls().clear();
         int32_t x_pos = 0;
-        for (auto& digit : digits_incrementers_)
+        for (auto& digit : m_digitsIncrementers)
         {
             digit->location( {x_pos, 0} );
             x_pos += digit->width()+ 1;
             controls().push_back(*digit);
         }
-        if (decimals_incrementers_.size() > 0)
+        if (m_decimalsIncrementers.size() > 0)
         {
-            decimal_point.height(decimals_incrementers_[0]->height());
+            decimal_point.height(m_decimalsIncrementers[0]->height());
             controls().push_back(decimal_point);
             decimal_point.location( {x_pos, 0} );
             x_pos += decimal_point.width();
-            for(auto& decimal : decimals_incrementers_)
+            for(auto& decimal : m_decimalsIncrementers)
             {
                 decimal->location( {x_pos, 0} );
                 x_pos += decimal->width() + 1;
@@ -101,28 +101,28 @@ namespace jimo_sdr
         value += 0.123;
         std::stringstream ss;
         ss.setf(std::ios::fixed, std::ios::floatfield);
-        ss.precision(decimals_incrementers_.size());
+        ss.precision(m_decimalsIncrementers.size());
         ss.fill('0');
-        std::streamsize width = digits_incrementers_.size();
-        if (decimals_incrementers_.size() > 0)
+        std::streamsize width = m_digitsIncrementers.size();
+        if (m_decimalsIncrementers.size() > 0)
         {
             // 1 is needed for decimal point
-            width += decimals_incrementers_.size() + 1;
+            width += m_decimalsIncrementers.size() + 1;
         }
         ss.width(width);
         ss << value;
 
-        for (int32_t index = digits_incrementers_.size() - 1; index >= 0; --index)
+        for (int32_t index = m_digitsIncrementers.size() - 1; index >= 0; --index)
         {
             char val = ss.str()[index];
             int32_t digit = std::atoi(&val);
-            digits_incrementers_[index]->Value(digit);
+            m_digitsIncrementers[index]->Value(digit);
         }
-        for (size_t index = 0; index < decimals_incrementers_.size(); ++index)
+        for (size_t index = 0; index < m_decimalsIncrementers.size(); ++index)
         {
             char val = ss.str()[width - index - 1];
             int32_t decimal = std::atoi(&val);
-            decimals_incrementers_[decimals_incrementers_.size() - index - 1]->Value(decimal);
+            m_decimalsIncrementers[m_decimalsIncrementers.size() - index - 1]->Value(decimal);
         }
     }
 }
