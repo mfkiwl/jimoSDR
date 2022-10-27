@@ -1,6 +1,7 @@
 #include <xtd/xtd>
 #include "GuiNotifier.h"
 #include "SetSampleRateEventArgs.h"
+#include "GotCenterFrequencyEventArgs.h"
 
 using namespace std::placeholders;
 
@@ -20,6 +21,13 @@ namespace jimo_sdr
         auto key = any_cast<std::string>(args[0]);
         GotDeviceDriverKeyEventArgs e(key);
         gotDriverKey.invoke(*this, e);
+    }
+
+    void GuiNotifier::OnGotCenterFrequency(const std::vector<std::any>& args)
+    {
+        auto frequency = any_cast<double>(args[0]);
+        GotCenterFrequencyEventArgs e(frequency);
+        gotCenterFrequency.invoke(*this, e);
     }
 
     void GuiNotifier::OnGotSampleRates(const std::vector<std::any>& args)
@@ -56,6 +64,13 @@ namespace jimo_sdr
         std::vector<std::any> args;
         args.push_back(key);
         m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotDeviceDriverKey }, args);
+    }
+
+    void GuiNotifier::NotifyGotCenterFrequency(const std::any frequency)
+    {
+        std::vector<std::any> args;
+        args.push_back(frequency);
+        m_synchronizer.begin_invoke({ *this, &GuiNotifier::OnGotCenterFrequency }, args);
     }
 
     void GuiNotifier::NotifyGotSampleRates(const std::any rates)

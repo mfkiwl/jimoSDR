@@ -1,4 +1,6 @@
 #include "number_display.h"
+#include <sstream>
+#include <string>
 
 namespace jimo_sdr
 {
@@ -11,12 +13,12 @@ namespace jimo_sdr
     
     number_display::number_display(uint32_t number_of_digits, uint32_t number_of_decimals)
     {
-        digits(number_of_digits);
-        decimals(number_of_decimals);
         decimal_point.text(".");
         decimal_point.width(3);
         decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
         decimal_point.back_color(xtd::drawing::color::transparent);
+        digits(number_of_digits);
+        decimals(number_of_decimals);
     }
 
 
@@ -76,21 +78,52 @@ namespace jimo_sdr
         for (auto& digit : digits_incrementers_)
         {
             digit->location( {x_pos, 0} );
-            x_pos += digit->width();
+            x_pos += digit->width()+ 1;
             controls().push_back(*digit);
         }
         if (decimals_incrementers_.size() > 0)
         {
             decimal_point.height(decimals_incrementers_[0]->height());
-            *this << decimal_point;
+            controls().push_back(decimal_point);
             decimal_point.location( {x_pos, 0} );
             x_pos += decimal_point.width();
             for(auto& decimal : decimals_incrementers_)
             {
                 decimal->location( {x_pos, 0} );
-                x_pos += decimal->width();
+                x_pos += decimal->width() + 1;
                 controls().push_back(*decimal);
             }
+        }
+    }
+
+    void number_display::SetValue(double value) noexcept
+    {
+        value += 0.123;
+        std::stringstream ss;
+        ss.setf(std::ios::fixed, std::ios::floatfield);
+        ss.precision(decimals_incrementers_.size());
+        ss.fill('0');
+        std::streamsize width = digits_incrementers_.size();
+        if (decimals_incrementers_.size() > 0)
+        {
+            // 1 is needed for decimal point
+            width += decimals_incrementers_.size() + 1;
+        }
+        ss.width(width);
+        ss << value;
+
+        for (int32_t index = digits_incrementers_.size() - 1; index >= 0; --index)
+        {
+            char val = ss.str()[index];
+            int32_t digit = std::atoi(&val);
+            digits_incrementers_[index]->value(digit);
+        }
+        std::cout << decimals_incrementers_.size() << '\n';
+        for (size_t index = 0; index < decimals_incrementers_.size(); ++index)
+        {
+            char val = ss.str()[width - index - 1];
+            int32_t decimal = std::atoi(&val);
+            decimals_incrementers_[decimals_incrementers_.size() - index - 1]->value(decimal);
         }
     }
 }

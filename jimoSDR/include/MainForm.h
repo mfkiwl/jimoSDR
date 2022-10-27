@@ -22,6 +22,7 @@ namespace jimo_sdr
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) override;
        private:
+            void GotCenterFrequency(xtd::object& sender, const xtd::event_args& e);
             void create_properties_panel();
             void create_right_panel();
             void _create_controls_panel();
@@ -35,7 +36,7 @@ namespace jimo_sdr
             xtd::forms::panel _right_panel;
             properties_button _props_button;
             xtd::forms::label _center_frequency_label;
-            number_display _center_frequency_display;
+            number_display m_centerFrequencyDisplay;
 
             device_properties m_deviceProps;
    };

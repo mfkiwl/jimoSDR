@@ -158,6 +158,9 @@ namespace jimo_sdr
         {
             m_deviceProps.clear();
             m_deviceProps.device(m_devices[index]);
+            ReceiverAction getCenterFrequency({ ReceiverTask::getCenterFrequency,
+                std::bind(&GuiNotifier::NotifyGotCenterFrequency, &m_notifier, _1), m_devices[index]} );
+            RadioReceiver::GetInstance().QueueTask(getCenterFrequency);
             ReceiverAction getSampleRates({ ReceiverTask::getSampleRates,
                 std::bind(&GuiNotifier::NotifyGotSampleRates, &m_notifier, _1), m_devices[index]} );
             RadioReceiver::GetInstance().QueueTask(getSampleRates);

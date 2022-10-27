@@ -14,7 +14,8 @@ namespace jimo_sdr
             virtual number_display& decimals(uint32_t number_of_decimals);
             virtual uint32_t digits() const noexcept;
             /// @brief Set the number of digits.
-             virtual number_display& digits(uint32_t number_of_digits);
+            virtual number_display& digits(uint32_t number_of_digits);
+            virtual void SetValue(double value) noexcept;
         protected:
             virtual void create_controls();
         private:

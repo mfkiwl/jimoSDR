@@ -1,5 +1,6 @@
 #include "MainForm.h"
 #include "ControlSizes.h"
+#include "GotCenterFrequencyEventArgs.h"
 
 using namespace xtd;
 using namespace xtd::forms;
@@ -8,13 +9,14 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     MainForm::MainForm()
-        :m_notifier(*this), _props_panel(*this, m_deviceProps, m_notifier), _center_frequency_display(10)
+        :m_notifier(*this), _props_panel(*this, m_deviceProps, m_notifier), m_centerFrequencyDisplay(10,3)
     {
         text("jimoSDR");
         name("MainForm");
         size({mainFormDefaultWidth, mainFormDefaultHeight});
         minimum_size({mainFormMinimumWidth, mainFormMinimumHeight});
         start_position(xtd::forms::form_start_position::center_screen);
+        m_notifier.gotCenterFrequency += xtd::event_handler(*this, &MainForm::GotCenterFrequency);
 
         _create_controls_panel();
         create_properties_panel();
@@ -77,10 +79,17 @@ namespace jimo_sdr
         _center_frequency_label.text_align(content_alignment::middle_center);
         _center_frequency_label.fore_color(drawing::color::white);
         _center_frequency_label.size( {20, 35} );
-        _controls_panel << _props_button << _center_frequency_label << _center_frequency_display;
+        _controls_panel << _props_button << _center_frequency_label << m_centerFrequencyDisplay;
         _props_button.size( {_props_button.height(), _props_button.height()} );
         _controls_panel.control_layout_style(_props_button,
             {_props_button.width(),size_type::absolute, true});
         _controls_panel.padding(1);        
+    }
+
+    void MainForm::GotCenterFrequency(xtd::object& sender, const xtd::event_args& e)
+    {
+        const GotCenterFrequencyEventArgs& args = dynamic_cast<const GotCenterFrequencyEventArgs&>(e);
+        m_deviceProps.CenterFrequency(args.CenterFrequency());
+        m_centerFrequencyDisplay.SetValue(args.CenterFrequency());
     }
 }

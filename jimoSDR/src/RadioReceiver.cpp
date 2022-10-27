@@ -78,6 +78,14 @@ namespace jimo_sdr
                                 std::invoke(action.callback, key);
                             }
                             break;
+                        case ReceiverTask::getCenterFrequency:
+                            {
+                                device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
+                                double frequency = device->GetCenterFrequency(
+                                    sdr::Device::direction::rx, 0);
+                                std::invoke(action.callback, frequency);
+                            }
+                            break;
                         case ReceiverTask::getSampleRates:
                             {
                                 device = any_cast<std::shared_ptr<sdr::Device>>(action.m_data);
