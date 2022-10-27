@@ -9,7 +9,8 @@ using namespace xtd::drawing;
 namespace jimo_sdr
 {
     MainForm::MainForm()
-        :m_notifier(*this), _props_panel(*this, m_deviceProps, m_notifier), m_centerFrequencyDisplay(10,3)
+        : m_notifier(*this), m_propertiesPanel(*this, m_deviceProperties, m_notifier), 
+          m_centerFrequencyDisplay(10,3)
     {
         text("jimoSDR");
         name("MainForm");
@@ -21,25 +22,25 @@ namespace jimo_sdr
         CreateControlsPanel();
         CreatePropertiesPanel();
         CreateRightPanel();
-        _main_panel << _props_panel << _right_panel;
-        _main_panel.control_layout_style(_props_panel, {propertiesPanelWidth,
+        m_leftRightPanel << m_propertiesPanel << m_rightPanel;
+        m_leftRightPanel.control_layout_style(m_propertiesPanel, {propertiesPanelWidth,
             size_type::absolute, true});
-        _main_panel.control_layout_style(_right_panel, {size_type::auto_size,
+        m_leftRightPanel.control_layout_style(m_rightPanel, {size_type::auto_size,
             true});
-        _vlp.anchor(anchor_styles::left | anchor_styles::right
+        m_mainPanel.anchor(anchor_styles::left | anchor_styles::right
             | anchor_styles::bottom);
-        _vlp.back_color(color::black);
-        _vlp << _controls_panel << _main_panel;
+        m_mainPanel.back_color(color::black);
+        m_mainPanel << m_controlsPanel << m_leftRightPanel;
         // these properties must be set after _controls_panel is
-        // added to _vlp
-         _props_button.height(35);
-        _vlp.control_layout_style(_controls_panel, {_props_button.height(),
+        // added to m_mainPanel
+         m_propertiesButton.height(35);
+        m_mainPanel.control_layout_style(m_controlsPanel, {m_propertiesButton.height(),
             size_type::absolute, true});
-        _vlp.control_layout_style(_main_panel, {size_type::auto_size,
+        m_mainPanel.control_layout_style(m_leftRightPanel, {size_type::auto_size,
             true});
-        _vlp.width(client_size().width());
-        _vlp.height(client_size().height());
-        *this << _vlp;
+        m_mainPanel.width(client_size().width());
+        m_mainPanel.height(client_size().height());
+        *this << m_mainPanel;
     }
 
     void MainForm::on_form_closing(xtd::forms::form_closing_event_args& e)
@@ -53,43 +54,43 @@ namespace jimo_sdr
 
     void MainForm::CreatePropertiesPanel()
     {
-        _props_panel.location({0, 0});
-        _props_panel.size({propertiesPanelWidth, client_size().height()});
-        _props_panel.back_color(color::light_gray);
+        m_propertiesPanel.location({0, 0});
+        m_propertiesPanel.size({propertiesPanelWidth, client_size().height()});
+        m_propertiesPanel.back_color(color::light_gray);
     }
 
     void MainForm::CreateRightPanel()
     {
         auto& main_form_client_rect = client_size();
-        auto left_panel_size = _props_panel.size();
-        _right_panel.location({left_panel_size.width(), 0});
-        _right_panel.size({main_form_client_rect.width() - left_panel_size.width(),
+        auto left_panel_size = m_propertiesPanel.size();
+        m_rightPanel.location({left_panel_size.width(), 0});
+        m_rightPanel.size({main_form_client_rect.width() - left_panel_size.width(),
             main_form_client_rect.height()});
-        _right_panel.back_color(color::black);
-        _right_panel.anchor(anchor_styles::top | anchor_styles::right | 
+        m_rightPanel.back_color(color::black);
+        m_rightPanel.anchor(anchor_styles::top | anchor_styles::right | 
             anchor_styles:: bottom | anchor_styles::left);
     }
 
     void MainForm::CreateControlsPanel()
     {
-        _controls_panel.anchor(anchor_styles::left | anchor_styles::top
+        m_controlsPanel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);
-        _controls_panel.back_color(drawing::color::black);
-        _center_frequency_label.text("Center:");
-        _center_frequency_label.text_align(content_alignment::middle_center);
-        _center_frequency_label.fore_color(drawing::color::white);
-        _center_frequency_label.size( {20, 35} );
-        _controls_panel << _props_button << _center_frequency_label << m_centerFrequencyDisplay;
-        _props_button.size( {_props_button.height(), _props_button.height()} );
-        _controls_panel.control_layout_style(_props_button,
-            {_props_button.width(),size_type::absolute, true});
-        _controls_panel.padding(1);        
+        m_controlsPanel.back_color(drawing::color::black);
+        m_centerFrequencyLabel.text("Center:");
+        m_centerFrequencyLabel.text_align(content_alignment::middle_center);
+        m_centerFrequencyLabel.fore_color(drawing::color::white);
+        m_centerFrequencyLabel.size( {20, 35} );
+        m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
+        m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
+        m_controlsPanel.control_layout_style(m_propertiesButton,
+            {m_propertiesButton.width(),size_type::absolute, true});
+        m_controlsPanel.padding(1);        
     }
 
     void MainForm::GotCenterFrequency(xtd::object& sender, const xtd::event_args& e)
     {
         const GotCenterFrequencyEventArgs& args = dynamic_cast<const GotCenterFrequencyEventArgs&>(e);
-        m_deviceProps.CenterFrequency(args.CenterFrequency());
+        m_deviceProperties.CenterFrequency(args.CenterFrequency());
         m_centerFrequencyDisplay.SetValue(args.CenterFrequency());
     }
 }

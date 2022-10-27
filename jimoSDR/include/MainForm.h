@@ -28,15 +28,15 @@ namespace jimo_sdr
             void CreateControlsPanel();
 
             GuiNotifier m_notifier;
-            xtd::forms::vertical_layout_panel _vlp;
-            xtd::forms::horizontal_layout_panel _controls_panel;
-            xtd::forms::horizontal_layout_panel _main_panel;
-            properties_panel _props_panel;
-            xtd::forms::panel _right_panel;
-            properties_button _props_button;
-            xtd::forms::label _center_frequency_label;
+            xtd::forms::vertical_layout_panel m_mainPanel;
+            xtd::forms::horizontal_layout_panel m_controlsPanel;
+            xtd::forms::horizontal_layout_panel m_leftRightPanel;
+            properties_panel m_propertiesPanel;
+            xtd::forms::panel m_rightPanel;
+            properties_button m_propertiesButton;
+            xtd::forms::label m_centerFrequencyLabel;
             NumberDisplay m_centerFrequencyDisplay;
 
-            device_properties m_deviceProps;
+            device_properties m_deviceProperties;
    };
 }
