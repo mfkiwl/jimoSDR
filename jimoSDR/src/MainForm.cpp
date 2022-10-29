@@ -31,7 +31,7 @@ namespace jimo_sdr
             | anchor_styles::bottom);
         m_mainPanel.back_color(color::black);
         m_mainPanel << m_controlsPanel << m_leftRightPanel;
-        // these properties must be set after _controls_panel is
+        // these properties must be set after m_controlsPanel is
         // added to m_mainPanel
          m_propertiesButton.height(35);
         m_mainPanel.control_layout_style(m_controlsPanel, {m_propertiesButton.height(),
