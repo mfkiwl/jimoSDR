@@ -10,7 +10,7 @@ namespace jimo_sdr
 {
     MainForm::MainForm()
         : m_notifier(*this), m_propertiesPanel(*this, m_deviceProperties, m_notifier), 
-          m_centerFrequencyDisplay(10,3)
+          m_centerFrequencyDisplay(10)
     {
         text("jimoSDR");
         name("MainForm");
@@ -79,11 +79,14 @@ namespace jimo_sdr
         m_centerFrequencyLabel.text("Center:");
         m_centerFrequencyLabel.text_align(content_alignment::middle_center);
         m_centerFrequencyLabel.fore_color(drawing::color::white);
-        m_centerFrequencyLabel.size( {20, 35} );
+       m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
+        m_centerFrequencyDisplay.back_color(xtd::drawing::color::light_blue);
         m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
         m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
         m_controlsPanel.control_layout_style(m_propertiesButton,
             {m_propertiesButton.width(),size_type::absolute, true});
+        m_controlsPanel.control_layout_style(m_centerFrequencyDisplay,
+            { m_centerFrequencyDisplay.width(), size_type::absolute, true });
         m_controlsPanel.padding(1);        
     }
 

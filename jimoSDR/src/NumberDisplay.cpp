@@ -1,4 +1,5 @@
 #include "NumberDisplay.h"
+#include "ControlSizes.h"
 #include <sstream>
 #include <string>
 
@@ -6,6 +7,8 @@ namespace jimo_sdr
 {
     constexpr uint32_t maximum_number_of_digits = 15;
     constexpr uint32_t maximum_number_of_decimals = 3;
+    constexpr uint32_t decimalPointWidth = 3;
+    constexpr uint32_t incrementerSeparatorWidth = 1;
 
     NumberDisplay::NumberDisplay() : NumberDisplay(0, 0) {}
 
@@ -14,7 +17,7 @@ namespace jimo_sdr
     NumberDisplay::NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals)
     {
         decimal_point.text(".");
-        decimal_point.width(3);
+        decimal_point.width(decimalPointWidth);
         decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
         decimal_point.back_color(xtd::drawing::color::transparent);
         Digits(number_of_digits);
@@ -78,7 +81,7 @@ namespace jimo_sdr
         for (auto& digit : m_digitsIncrementers)
         {
             digit->location( {x_pos, 0} );
-            x_pos += digit->width()+ 1;
+            x_pos += digit->width()+ incrementerSeparatorWidth;
             controls().push_back(*digit);
         }
         if (m_decimalsIncrementers.size() > 0)
@@ -90,7 +93,7 @@ namespace jimo_sdr
             for(auto& decimal : m_decimalsIncrementers)
             {
                 decimal->location( {x_pos, 0} );
-                x_pos += decimal->width() + 1;
+                x_pos += decimal->width() + incrementerSeparatorWidth;
                 controls().push_back(*decimal);
             }
         }
@@ -107,7 +110,7 @@ namespace jimo_sdr
         if (m_decimalsIncrementers.size() > 0)
         {
             // 1 is needed for decimal point
-            width += m_decimalsIncrementers.size() + 1;
+            width += m_decimalsIncrementers.size() + incrementerSeparatorWidth;
         }
         ss.width(width);
         ss << value;
@@ -124,5 +127,53 @@ namespace jimo_sdr
             int32_t decimal = std::atoi(&val);
             m_decimalsIncrementers[m_decimalsIncrementers.size() - index - 1]->Value(decimal);
         }
+    }
+
+    NumberDisplay& NumberDisplay::height(int32_t newHeight)
+    {
+        auto newWidth = (newHeight * digitIncrementerMinimumWidth) / digitIncrementerMinimumHeight; 
+        if (newHeight < digitIncrementerMinimumHeight)
+        {
+            newHeight = digitIncrementerMinimumHeight;
+            newWidth = digitIncrementerMinimumWidth;
+        }
+        else if (newHeight > digitIncrementerMaximumHeight)
+        {
+            newHeight = digitIncrementerMaximumHeight;
+            newWidth = digitIncrementerMaximumWidth;
+        }
+        int32_t xPos = 0;
+        int32_t yPos = (controlsPanelHeight - newHeight) / 2;
+        for (auto& digit : m_digitsIncrementers)
+        {
+            digit->size({ newWidth, newHeight });
+            digit->location({ xPos, yPos });
+            xPos += newWidth + incrementerSeparatorWidth;
+        }
+        if (m_decimalsIncrementers.size() > 0)
+        {
+            decimal_point.height(newHeight);
+            decimal_point.location({ xPos, yPos });
+            xPos += decimal_point.width();
+            for (auto& decimal : m_decimalsIncrementers)
+            {
+                decimal->size({ newWidth, newHeight });
+                decimal->location({ xPos, yPos });
+                xPos += newWidth + incrementerSeparatorWidth;
+            }
+        }
+        return *this;
+    }
+
+    int32_t NumberDisplay::width() const noexcept
+    {
+        int32_t width = m_digitsIncrementers.size() * 
+            (m_digitsIncrementers[0]->width() + incrementerSeparatorWidth);
+        if (m_decimalsIncrementers.size() > 0)
+        {
+            width += decimalPointWidth + m_decimalsIncrementers.size() *
+                (m_decimalsIncrementers.size() + incrementerSeparatorWidth);
+        }
+        return width;
     }
 }
