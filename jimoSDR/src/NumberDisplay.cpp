@@ -17,9 +17,9 @@ namespace jimo_sdr
     NumberDisplay::NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals)
     {
         back_color(xtd::drawing::color::black);
-        decimal_point.text(".");
-        decimal_point.width(decimalPointWidth);
-        decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
+        m_decimalPoint.text(".");
+        m_decimalPoint.width(decimalPointWidth);
+        m_decimalPoint.text_align(xtd::forms::content_alignment::bottom_center);
         Digits(number_of_digits);
         Decimals(number_of_decimals);
     }
@@ -86,10 +86,10 @@ namespace jimo_sdr
         }
         if (m_decimalsIncrementers.size() > 0)
         {
-            decimal_point.height(m_decimalsIncrementers[0]->height());
-            controls().push_back(decimal_point);
-            decimal_point.location( {x_pos, 0} );
-            x_pos += decimal_point.width();
+            m_decimalPoint.height(m_decimalsIncrementers[0]->height());
+            controls().push_back(m_decimalPoint);
+            m_decimalPoint.location( {x_pos, 0} );
+            x_pos += m_decimalPoint.width();
             for(auto& decimal : m_decimalsIncrementers)
             {
                 decimal->location( {x_pos, 0} );
@@ -152,9 +152,9 @@ namespace jimo_sdr
         }
         if (m_decimalsIncrementers.size() > 0)
         {
-            decimal_point.height(newHeight);
-            decimal_point.location({ xPos, yPos });
-            xPos += decimal_point.width();
+            m_decimalPoint.height(newHeight);
+            m_decimalPoint.location({ xPos, yPos });
+            xPos += m_decimalPoint.width();
             for (auto& decimal : m_decimalsIncrementers)
             {
                 decimal->size({ newWidth, newHeight });
@@ -187,7 +187,7 @@ namespace jimo_sdr
         {
             digit->fore_color(foreColor);
         }
-        decimal_point.fore_color(foreColor);
+        m_decimalPoint.fore_color(foreColor);
         for (auto& decimal : m_decimalsIncrementers)
         {
             decimal->fore_color(foreColor);
@@ -201,7 +201,7 @@ namespace jimo_sdr
         {
             digit->back_color(backColor);
         }
-        decimal_point.back_color(backColor);
+        m_decimalPoint.back_color(backColor);
         for (auto& decimal : m_decimalsIncrementers)
         {
             decimal->back_color(backColor);
