@@ -2,6 +2,8 @@
 #include "ControlSizes.h"
 #include "GotCenterFrequencyEventArgs.h"
 
+const xtd::drawing::color controlsPanelColor = xtd::drawing::color::black;
+
 using namespace xtd;
 using namespace xtd::forms;
 using namespace xtd::drawing;
@@ -29,11 +31,12 @@ namespace jimo_sdr
             true});
         m_mainPanel.anchor(anchor_styles::left | anchor_styles::right
             | anchor_styles::bottom);
-        m_mainPanel.back_color(color::black);
+        m_rightPanel.back_color(color::gray);
+        m_propertiesPanel.back_color(color::from_argb(0XFF303030));
         m_mainPanel << m_controlsPanel << m_leftRightPanel;
         // these properties must be set after m_controlsPanel is
         // added to m_mainPanel
-         m_propertiesButton.height(35);
+        m_propertiesButton.height(35);
         m_mainPanel.control_layout_style(m_controlsPanel, {m_propertiesButton.height(),
             size_type::absolute, true});
         m_mainPanel.control_layout_style(m_leftRightPanel, {size_type::auto_size,
@@ -75,19 +78,22 @@ namespace jimo_sdr
     {
         m_controlsPanel.anchor(anchor_styles::left | anchor_styles::top
             | anchor_styles::right);
-        m_controlsPanel.back_color(drawing::color::black);
+        m_controlsPanel.back_color(color::black);
         m_centerFrequencyLabel.text("Center:");
         m_centerFrequencyLabel.text_align(content_alignment::middle_center);
+        m_centerFrequencyLabel.back_color(controlsPanelColor);
         m_centerFrequencyLabel.fore_color(drawing::color::white);
-       m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
-        m_centerFrequencyDisplay.back_color(xtd::drawing::color::light_blue);
+        m_centerFrequencyLabel.height(controlsPanelHeight);
+        m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
         m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
         m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
         m_controlsPanel.control_layout_style(m_propertiesButton,
             {m_propertiesButton.width(),size_type::absolute, true});
+        m_controlsPanel.control_layout_style(m_centerFrequencyLabel,
+            { 50, size_type::absolute, true });
         m_controlsPanel.control_layout_style(m_centerFrequencyDisplay,
             { m_centerFrequencyDisplay.width(), size_type::absolute, true });
-        m_controlsPanel.padding(1);        
+        m_controlsPanel.padding(1);    
     }
 
     void MainForm::GotCenterFrequency(xtd::object& sender, const xtd::event_args& e)

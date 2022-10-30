@@ -27,7 +27,8 @@ namespace jimo_sdr
         m_digit.text("0");
         m_digit.text_align(content_alignment::middle_center);
         m_digit.dock(xtd::forms::dock_style::fill);
-        m_digit.back_color(drawing::color::transparent);
+        m_digit.back_color(drawing::color::black);
+        m_digit.fore_color(drawing::color::white);
 
         m_upper_panel.size( {size().width(), size().height() / 2})
             .location(upper_panel_origin)
@@ -193,21 +194,7 @@ namespace jimo_sdr
     {
 
         xtd::drawing::color panel_background;
-        auto parent = this->parent();
-        auto background_color = (dynamic_cast<xtd::forms::control&>(parent.value().get())).back_color();
-        while (background_color == xtd::drawing::color::transparent)
-        {
-            parent = (dynamic_cast<xtd::forms::control&>(parent.value().get())).parent();
-            background_color = (dynamic_cast<xtd::forms::control&>(parent.value().get())).back_color();;
-        }
-        if (background_color.is_dark())
-        {
-            panel_background = xtd::drawing::color::from_argb(63, xtd::drawing::color::white);
-        }
-        else
-        {
-            panel_background = xtd::drawing::color::from_argb(63, xtd::drawing::color::black);
-        }
+        panel_background = xtd::drawing::color::from_argb(255, xtd::drawing::color::red);
         auto upper_panel_bounds = m_upper_panel.bounds();
         if (upper_panel_bounds.contains(e.location()))
         {

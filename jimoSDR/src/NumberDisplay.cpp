@@ -16,10 +16,12 @@ namespace jimo_sdr
     
     NumberDisplay::NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals)
     {
+        back_color(xtd::drawing::color::black);
         decimal_point.text(".");
         decimal_point.width(decimalPointWidth);
         decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
-        decimal_point.back_color(xtd::drawing::color::transparent);
+        decimal_point.back_color(xtd::drawing::color::black);
+        decimal_point.fore_color(xtd::drawing::color::white);
         Digits(number_of_digits);
         Decimals(number_of_decimals);
     }
@@ -167,8 +169,12 @@ namespace jimo_sdr
 
     int32_t NumberDisplay::width() const noexcept
     {
-        int32_t width = m_digitsIncrementers.size() * 
-            (m_digitsIncrementers[0]->width() + incrementerSeparatorWidth);
+        int32_t width = 0; 
+        if (m_digitsIncrementers.size() > 0)
+        {
+            width += m_digitsIncrementers.size() * 
+                (m_digitsIncrementers[0]->width() + incrementerSeparatorWidth);
+        }
         if (m_decimalsIncrementers.size() > 0)
         {
             width += decimalPointWidth + m_decimalsIncrementers.size() *

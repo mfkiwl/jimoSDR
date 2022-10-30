@@ -15,7 +15,7 @@ namespace jimo_sdr
     constexpr int32_t controlsPanelHeight = 35;
 
     // Digit Incrementer
-    constexpr int32_t digitIncrementerMinimumWidth = 11;
+    constexpr int32_t digitIncrementerMinimumWidth = 7;
     constexpr int32_t digitIncrementerMinimumHeight = 16;
     constexpr int32_t digitIncrementerMaximumHeight = (controlsPanelHeight * 4) / 5;
     constexpr int32_t digitIncrementerMaximumWidth = (digitIncrementerMaximumHeight 
