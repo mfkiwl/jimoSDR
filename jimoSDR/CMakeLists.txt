@@ -16,7 +16,7 @@ add_executable(jimoSDR
     src/RadioReceiver.cpp
     src/SourcePanel.cpp
     src/GuiNotifier.cpp
-    include/ControlSizes.h
+    include/ControlProperties.h
     include/MainForm.h
     include/properties_panel.h
     include/user_draw_buttons.h

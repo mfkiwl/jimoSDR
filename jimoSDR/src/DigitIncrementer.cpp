@@ -1,5 +1,5 @@
 #include "DigitIncrementer.h"
-#include "ControlSizes.h"
+#include "ControlProperties.h"
 #include <sstream>
 
 using namespace xtd;

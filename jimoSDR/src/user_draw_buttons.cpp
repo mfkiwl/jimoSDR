@@ -1,5 +1,5 @@
 #include "user_draw_buttons.h"
-#include "ControlSizes.h"
+#include "ControlProperties.h"
 
 using namespace xtd::forms;
 using namespace xtd::drawing;

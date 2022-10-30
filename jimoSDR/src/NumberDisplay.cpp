@@ -1,5 +1,5 @@
 #include "NumberDisplay.h"
-#include "ControlSizes.h"
+#include "ControlProperties.h"
 #include <sstream>
 #include <string>
 

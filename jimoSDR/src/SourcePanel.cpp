@@ -1,5 +1,5 @@
 #include "SourcePanel.h"
-#include "ControlSizes.h"
+#include "ControlProperties.h"
 #include "ReceiverAction.h"
 #include "RadioReceiver.h"
 #include "GotReceiversEventArgs.h"

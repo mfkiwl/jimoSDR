@@ -1,5 +1,5 @@
 #include "MainForm.h"
-#include "ControlSizes.h"
+#include "ControlProperties.h"
 #include "GotCenterFrequencyEventArgs.h"
 
 const xtd::drawing::color controlsPanelColor = xtd::drawing::color::black;
