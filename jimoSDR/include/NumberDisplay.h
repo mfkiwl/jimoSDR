@@ -10,6 +10,8 @@ namespace jimo_sdr
             NumberDisplay();
             NumberDisplay(uint32_t number_of_digits);
             NumberDisplay(uint32_t number_of_digits, uint32_t number_of_decimals);
+            virtual NumberDisplay& back_color(const xtd::drawing::color& backColor) override;
+            virtual NumberDisplay& fore_color(const xtd::drawing::color& foreColor) override; 
             virtual NumberDisplay& height(int32_t newHeight) override;
             virtual int32_t width() const noexcept override;
             virtual uint32_t Decimals() const noexcept;

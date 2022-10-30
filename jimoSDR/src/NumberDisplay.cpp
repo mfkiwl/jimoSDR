@@ -20,8 +20,6 @@ namespace jimo_sdr
         decimal_point.text(".");
         decimal_point.width(decimalPointWidth);
         decimal_point.text_align(xtd::forms::content_alignment::bottom_center);
-        decimal_point.back_color(xtd::drawing::color::black);
-        decimal_point.fore_color(xtd::drawing::color::white);
         Digits(number_of_digits);
         Decimals(number_of_decimals);
     }
@@ -182,4 +180,32 @@ namespace jimo_sdr
         }
         return width;
     }
+
+    NumberDisplay& NumberDisplay::fore_color(const xtd::drawing::color& foreColor)
+    {
+        for (auto& digit : m_digitsIncrementers)
+        {
+            digit->fore_color(foreColor);
+        }
+        decimal_point.fore_color(foreColor);
+        for (auto& decimal : m_decimalsIncrementers)
+        {
+            decimal->fore_color(foreColor);
+        }
+        return *this;
+    }
+
+    NumberDisplay& NumberDisplay::back_color(const xtd::drawing::color& backColor)
+    {
+        for (auto& digit : m_digitsIncrementers)
+        {
+            digit->back_color(backColor);
+        }
+        decimal_point.back_color(backColor);
+        for (auto& decimal : m_decimalsIncrementers)
+        {
+            decimal->back_color(backColor);
+        }
+        return *this;
+    }   
 }

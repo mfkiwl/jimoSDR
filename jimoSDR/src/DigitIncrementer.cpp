@@ -25,8 +25,6 @@ namespace jimo_sdr
         size(minimum_client_size());
         text("0");
         text_align(content_alignment::middle_center);
-        back_color(drawing::color::black);
-        fore_color(drawing::color::white);
         
         size_changed += &DigitIncrementer::DigitIncrementerSizeChanged;
         mouse_move += &DigitIncrementer::MouseMoved;

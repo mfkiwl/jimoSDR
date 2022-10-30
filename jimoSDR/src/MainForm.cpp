@@ -81,10 +81,12 @@ namespace jimo_sdr
         m_controlsPanel.back_color(color::black);
         m_centerFrequencyLabel.text("Center:");
         m_centerFrequencyLabel.text_align(content_alignment::middle_center);
-        m_centerFrequencyLabel.back_color(controlsPanelColor);
+        m_centerFrequencyLabel.back_color(drawing::color::black);
         m_centerFrequencyLabel.fore_color(drawing::color::white);
         m_centerFrequencyLabel.height(controlsPanelHeight);
         m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
+        m_centerFrequencyDisplay.fore_color(drawing::color::white);
+        m_centerFrequencyDisplay.back_color(drawing::color::black);
         m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
         m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
         m_controlsPanel.control_layout_style(m_propertiesButton,
