@@ -4,7 +4,7 @@
 
 namespace jimo_sdr
 {
-    class DigitIncrementer : public xtd::forms::panel
+    class DigitIncrementer : public xtd::forms::label
     {
         public:
             DigitIncrementer();
@@ -16,8 +16,6 @@ namespace jimo_sdr
             DigitIncrementer(DigitIncrementer&&) = delete;
             DigitIncrementer& operator=(const DigitIncrementer&) = delete;
             DigitIncrementer& operator=(DigitIncrementer&&) = delete;
-            virtual xtd::drawing::font font() const override;
-            virtual DigitIncrementer& font(const xtd::drawing::font& font) override;
             virtual int32_t height() const override;
             virtual DigitIncrementer& height(int32_t height) override;
             virtual xtd::drawing::size size() const override;
@@ -40,20 +38,16 @@ namespace jimo_sdr
         protected:
             virtual void ChangeFontSizeToFitControl();
             static void DigitIncrementerSizeChanged(xtd::object& sender, const xtd::event_args& e);
-            virtual void HighlightUpperOrLower(const xtd::forms::mouse_event_args& e);
             virtual void IncrementDecrementBasedOnCursorPosition(const xtd::forms::mouse_event_args& e);
             static void MouseClicked(xtd::object& sender, const xtd::forms::mouse_event_args& e);
             static void MouseLeft(xtd::object& sender, const xtd::event_args& e);
             static void MouseMoved(xtd::object& sender, const xtd::forms::mouse_event_args& e);
+            virtual void on_paint(xtd::forms::paint_event_args& e) override;
             virtual void OnRollOver(const xtd::event_args& e);
             virtual void OnRollUnder(const xtd::event_args& e);
             virtual void OnValueChanged(const xtd::event_args& e);
-            virtual void RemoveHighlight();
-            virtual void UpdateUpperLowerPanels() noexcept;
         private:
-            xtd::forms::label m_digit;
-            xtd::forms::panel m_upper_panel;
-            xtd::forms::panel m_lower_panel;
             xtd::drawing::size m_old_size;
+            xtd::drawing::point m_mousePosition;
     };
 }

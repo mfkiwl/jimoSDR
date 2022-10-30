@@ -13,8 +13,9 @@ namespace jimo_sdr
     const xtd::drawing::point upper_panel_origin(digit_origin);
     const xtd::forms::padding margin_size(0);
     const xtd::forms::padding padding_size(0);
+    const xtd::drawing::color highlightColor(drawing::color::from_argb(0x80, drawing::color::white));
 
-    DigitIncrementer::DigitIncrementer()
+    DigitIncrementer::DigitIncrementer() : m_mousePosition(-1, -1)
     {
         margin(margin_size);
         padding(padding_size);
@@ -22,29 +23,14 @@ namespace jimo_sdr
         maximum_size(digit_incrementer_maximum_size);
         minimum_size(digit_incrementer_minimum_size);
         size(minimum_client_size());
-        m_digit.minimum_size(minimum_client_size());
-        m_digit.maximum_size(maximum_client_size());
-        m_digit.text("0");
-        m_digit.text_align(content_alignment::middle_center);
-        m_digit.dock(xtd::forms::dock_style::fill);
-        m_digit.back_color(drawing::color::black);
-        m_digit.fore_color(drawing::color::white);
-
-        m_upper_panel.size( {size().width(), size().height() / 2})
-            .location(upper_panel_origin)
-            .back_color(xtd::drawing::color::transparent);
-        m_lower_panel.size( {size().width(), height() - m_upper_panel.height()})
-            .location( {upper_panel_origin.x(), m_lower_panel.height()})
-            .back_color(xtd::drawing::color::transparent);
-        
-
-
-        *this << m_upper_panel << m_lower_panel << m_digit;
-        m_digit.location(digit_origin);
+        text("0");
+        text_align(content_alignment::middle_center);
+        back_color(drawing::color::black);
+        fore_color(drawing::color::white);
         
         size_changed += &DigitIncrementer::DigitIncrementerSizeChanged;
-        m_digit.mouse_move += &DigitIncrementer::MouseMoved;
-        m_digit.mouse_click += &DigitIncrementer::MouseClicked;
+        mouse_move += &DigitIncrementer::MouseMoved;
+        mouse_click += &DigitIncrementer::MouseClicked;
         mouse_leave += &DigitIncrementer::MouseLeft;
    }
 
@@ -68,7 +54,7 @@ namespace jimo_sdr
 
     const xtd::ustring& DigitIncrementer::text() const
     {
-        return m_digit.text();
+        return label::text();
     }
 
     DigitIncrementer& DigitIncrementer::text(const xtd::ustring& text)
@@ -79,7 +65,7 @@ namespace jimo_sdr
         {
             if(value >= 0 && value <= 9)
             {
-                m_digit.text(text);
+                label::text(text);
                 OnValueChanged(xtd::event_args::empty);
                 return *this;
             }
@@ -91,22 +77,9 @@ namespace jimo_sdr
         throw xtd::argument_out_of_range_exception(ss.str(), frame);
     }
 
-    xtd::drawing::font DigitIncrementer::font() const
-    {
-        return m_digit.font();
-    }
-
-    DigitIncrementer& DigitIncrementer::font(const xtd::drawing::font& font)
-    {
-        auto old_font = m_digit.font();
-        xtd::drawing::font new_font(font.name(), old_font.size(), old_font.unit());
-        m_digit.font(new_font);
-        return *this;
-    }
-
     xtd::drawing::size DigitIncrementer::size() const
     {
-        return panel::size();
+        return label::size();
     }
 
     DigitIncrementer& DigitIncrementer::size(const xtd::drawing::size& new_size)
@@ -135,15 +108,13 @@ namespace jimo_sdr
         {
             sz = h_size;
         }
-        m_digit.size(sz);
-        auto& ctrl = panel::size(sz);
-        return dynamic_cast<DigitIncrementer&>(ctrl);
+        label::size(sz);
+        return *this;
     }
 
     void DigitIncrementer::DigitIncrementerSizeChanged(xtd::object& sender, const xtd::event_args&)
     {
         DigitIncrementer& incr = dynamic_cast<DigitIncrementer&>(sender);
-        incr.UpdateUpperLowerPanels();
         incr.ChangeFontSizeToFitControl();
     }
 
@@ -152,15 +123,7 @@ namespace jimo_sdr
         const xtd::drawing::font& old_font = font();
         auto em_size = (old_font.size() * size().height()) / m_old_size.height();
         xtd::drawing::font new_font(old_font, em_size);
-        m_digit.font(new_font);
-    }
-
-    void DigitIncrementer::UpdateUpperLowerPanels() noexcept
-    {
-        m_upper_panel.size( {size().width(), size().height() / 2})
-            .location( {0, 0});
-        m_lower_panel.size( {size().width(), height() - m_upper_panel.height()})
-            .location( {0, m_lower_panel.height()});
+        font(new_font);
     }
 
     int32_t DigitIncrementer::Value() const noexcept
@@ -181,57 +144,31 @@ namespace jimo_sdr
 
     void DigitIncrementer::MouseMoved(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
-        control& ctrl = dynamic_cast<control&>(sender);
-        auto& parent = ctrl.parent()->get();
-        auto& incr = dynamic_cast<DigitIncrementer&>(parent);
-        incr.HighlightUpperOrLower(e);
-    }
-
-    // Go back through parent controls until we find one whose background color is not transparent.
-    // Use that color to determine the background color for the upper or lower panel while the mouse
-    // cursor is over it.
-    void DigitIncrementer::HighlightUpperOrLower(const xtd::forms::mouse_event_args& e)
-    {
-
-        xtd::drawing::color panel_background;
-        panel_background = xtd::drawing::color::from_argb(255, xtd::drawing::color::red);
-        auto upper_panel_bounds = m_upper_panel.bounds();
-        if (upper_panel_bounds.contains(e.location()))
-        {
-            m_upper_panel.back_color(panel_background);
-            m_lower_panel.back_color(xtd::drawing::color::transparent);
-        }
-        else
-        {
-            m_upper_panel.back_color(xtd::drawing::color::transparent);
-            m_lower_panel.back_color(panel_background);
-        }
+        auto& incr = dynamic_cast<DigitIncrementer&>(sender);
+        incr.m_mousePosition = e.location();
+        incr.invalidate();
+        incr.update();
     }
 
     void DigitIncrementer::MouseLeft(xtd::object& sender, const xtd::event_args& e)
     {
         auto& incr = dynamic_cast<DigitIncrementer&>(sender);
-        incr.RemoveHighlight();
-    }
-    
-    void DigitIncrementer::RemoveHighlight()
-    {
-        m_upper_panel.back_color(xtd::drawing::color::transparent);
-        m_lower_panel.back_color(xtd::drawing::color::transparent);
+        incr.m_mousePosition = { -1, -1 };
+        incr.invalidate();
+        incr.update();
     }
 
     void DigitIncrementer::MouseClicked(xtd::object& sender, const xtd::forms::mouse_event_args& e)
     {
-        control& ctrl = dynamic_cast<control&>(sender);
-        auto& parent = ctrl.parent()->get();
-        auto& incr = dynamic_cast<DigitIncrementer&>(parent);
+        auto& incr = dynamic_cast<DigitIncrementer&>(sender);
         incr.IncrementDecrementBasedOnCursorPosition(e);
     }
 
     void DigitIncrementer::IncrementDecrementBasedOnCursorPosition(const xtd::forms::mouse_event_args& e)
     {
-        auto upper_panel_bounds = m_upper_panel.bounds();
-        upper_panel_bounds.contains(e.location()) ? Increment() : Decrement();
+        drawing::rectangle incrementerBounds({ 0, 0 }, { bounds().width(), bounds().height() });
+        drawing::rectangle upperRectangle(0, 0, incrementerBounds.width(), incrementerBounds.height() / 2);
+        upperRectangle.contains(e.location()) ? Increment() : Decrement();
    }
     
     void DigitIncrementer::Increment()
@@ -328,4 +265,19 @@ namespace jimo_sdr
         return out;
     }
 
+    void DigitIncrementer::on_paint(xtd::forms::paint_event_args& e)
+    {
+        label::on_paint(e);
+        if (m_mousePosition != drawing::point(-1, -1))
+        {
+            drawing::rectangle incrementerBounds({ 0, 0 }, { bounds().width(), bounds().height() });
+            drawing::rectangle paintRect(0, 0, incrementerBounds.width(), incrementerBounds.height() / 2);
+            drawing::solid_brush brush(highlightColor);
+            if (!paintRect.contains(m_mousePosition))
+            {
+                paintRect.y(paintRect.height() + 1);
+            }
+            e.graphics().fill_rectangle(brush, paintRect);
+        }
+    }
 }
