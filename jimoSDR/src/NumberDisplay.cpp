@@ -178,7 +178,7 @@ namespace jimo_sdr
         if (m_decimalsIncrementers.size() > 0)
         {
             width += decimalPointWidth + m_decimalsIncrementers.size() *
-                (m_decimalsIncrementers.size() + incrementerSeparatorWidth);
+                (m_decimalsIncrementers[0]->width() + incrementerSeparatorWidth);
         }
         return width;
     }
