@@ -95,6 +95,7 @@ namespace jimo_sdr
             x_pos += digit->width()+ incrementerSeparatorWidth;
             controls().push_back(*digit);
         }
+        m_digitsIncrementers[0]->DoNotDecrementPastZero();
         if (m_decimalsIncrementers.size() > 0)
         {
             m_decimalPoint.height(m_decimalsIncrementers[0]->height());
@@ -296,10 +297,6 @@ namespace jimo_sdr
         {
             if (**iter == incrementer)
             {
-                if (((iter) == m_digitsIncrementers.crend() - 1) && ((*iter)->Value() == 0))
-                {
-                   return;
-                }
                 frequency -= pow(10., index);
                 frequencyUpdated = true;
                 break;

@@ -16,6 +16,7 @@ namespace jimo_sdr
             DigitIncrementer(DigitIncrementer&&) = delete;
             DigitIncrementer& operator=(const DigitIncrementer&) = delete;
             DigitIncrementer& operator=(DigitIncrementer&&) = delete;
+            inline void DoNotDecrementPastZero() { m_noDecrementPastZero = true; }
             virtual int32_t height() const override;
             virtual DigitIncrementer& height(int32_t height) override;
             virtual xtd::drawing::size size() const override;
@@ -45,5 +46,6 @@ namespace jimo_sdr
         private:
             xtd::drawing::size m_old_size;
             xtd::drawing::point m_mousePosition;
+            bool m_noDecrementPastZero;
     };
 }

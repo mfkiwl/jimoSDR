@@ -15,7 +15,7 @@ namespace jimo_sdr
     const xtd::forms::padding padding_size(0);
     const xtd::drawing::color highlightColor(drawing::color::from_argb(0x80, drawing::color::white));
 
-    DigitIncrementer::DigitIncrementer() : m_mousePosition(-1, -1)
+    DigitIncrementer::DigitIncrementer() : m_mousePosition(-1, -1), m_noDecrementPastZero(false)
     {
         margin(margin_size);
         padding(padding_size);
@@ -180,6 +180,10 @@ namespace jimo_sdr
 
     void DigitIncrementer::OnValueDecremented(const event_args& e)
     {
+        if (m_noDecrementPastZero && Value() == 0)
+        {
+            return;
+        }
         xtd::event_handler handler = valueDecremented;
         if (!handler.is_empty())
         {
@@ -237,6 +241,10 @@ namespace jimo_sdr
             if (!paintRect.contains(m_mousePosition))
             {
                 paintRect.y(paintRect.height() + 1);
+                if (m_noDecrementPastZero && Value() == 0)
+                { 
+                    return; 
+                }
             }
             e.graphics().fill_rectangle(brush, paintRect);
         }
