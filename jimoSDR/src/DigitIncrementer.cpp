@@ -64,7 +64,6 @@ namespace jimo_sdr
             if(value >= 0 && value <= 9)
             {
                 label::text(text);
-                OnValueChanged(xtd::event_args::empty);
                 return *this;
             }
         }
@@ -166,58 +165,22 @@ namespace jimo_sdr
     {
         drawing::rectangle incrementerBounds({ 0, 0 }, { bounds().width(), bounds().height() });
         drawing::rectangle upperRectangle(0, 0, incrementerBounds.width(), incrementerBounds.height() / 2);
-        upperRectangle.contains(e.location()) ? Increment() : Decrement();
+        upperRectangle.contains(e.location()) ? 
+            OnValueIncremented(event_args::empty) : OnValueDecremented(event_args::empty);
    }
     
-    void DigitIncrementer::Increment()
+    void DigitIncrementer::OnValueIncremented(const event_args& e)
     {
-        auto new_value = Value();
-        if (++new_value > 9)
-        {
-            Value(0);
-            OnRollOver(xtd::event_args::empty);
-        }
-        else
-        {
-            Value(new_value);
-        }
-    }
-
-    void DigitIncrementer::Decrement()
-    {
-        auto new_value = Value();
-        if (--new_value < 0)
-        {
-            Value(9);
-            OnRollUnder(xtd::event_args::empty);
-        }
-        else
-        {
-            Value(new_value);
-        }
-    }
-
-    void DigitIncrementer::OnValueChanged(const event_args& e)
-    {
-        xtd::event_handler handler = value_changed;
+        xtd::event_handler handler = valueIncremented;
         if (!handler.is_empty())
         {
             handler.invoke(*this, e);
         }
     }
 
-    void DigitIncrementer::OnRollOver(const event_args& e)
+    void DigitIncrementer::OnValueDecremented(const event_args& e)
     {
-        xtd::event_handler handler = rolled_over;
-        if (!handler.is_empty())
-        {
-            handler.invoke(*this, e);
-        }
-    }
-
-    void DigitIncrementer::OnRollUnder(const event_args& e)
-    {
-        xtd::event_handler handler = rolled_under;
+        xtd::event_handler handler = valueDecremented;
         if (!handler.is_empty())
         {
             handler.invoke(*this, e);

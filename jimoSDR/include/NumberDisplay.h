@@ -25,6 +25,8 @@ namespace jimo_sdr
         protected:
             virtual void CreateControls();
             virtual void OnValueChanged(const xtd::event_args& e);
+            virtual void OnValueIncremented(xtd::object& sender, const xtd::event_args& e);
+            virtual void OnValueDecremented(xtd::object& sender, const xtd::event_args& e);
         private:
             std::vector<std::unique_ptr<DigitIncrementer>> m_digitsIncrementers;
             std::vector<std::unique_ptr<DigitIncrementer>> m_decimalsIncrementers; 

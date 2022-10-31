@@ -27,14 +27,11 @@ namespace jimo_sdr
             virtual int32_t width() const override;
             virtual DigitIncrementer& width(int32_t width) override;
 
-            virtual void Increment();
-            virtual void Decrement();
             virtual xtd::ustring to_string() const noexcept override;
             friend std::ostream& operator <<(std::ostream& out, const DigitIncrementer& incrementer);
 
-            xtd::event<DigitIncrementer, xtd::event_handler> value_changed;
-            xtd::event<DigitIncrementer, xtd::event_handler> rolled_over;
-            xtd::event<DigitIncrementer, xtd::event_handler> rolled_under;
+            xtd::event<DigitIncrementer, xtd::event_handler> valueIncremented;
+            xtd::event<DigitIncrementer, xtd::event_handler> valueDecremented;
         protected:
             virtual void ChangeFontSizeToFitControl();
             static void DigitIncrementerSizeChanged(xtd::object& sender, const xtd::event_args& e);
@@ -43,9 +40,8 @@ namespace jimo_sdr
             static void MouseLeft(xtd::object& sender, const xtd::event_args& e);
             static void MouseMoved(xtd::object& sender, const xtd::forms::mouse_event_args& e);
             virtual void on_paint(xtd::forms::paint_event_args& e) override;
-            virtual void OnRollOver(const xtd::event_args& e);
-            virtual void OnRollUnder(const xtd::event_args& e);
-            virtual void OnValueChanged(const xtd::event_args& e);
+            virtual void OnValueIncremented(const xtd::event_args& e);
+            virtual void OnValueDecremented(const xtd::event_args& e);
         private:
             xtd::drawing::size m_old_size;
             xtd::drawing::point m_mousePosition;

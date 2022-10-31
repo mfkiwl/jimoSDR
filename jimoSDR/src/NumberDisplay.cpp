@@ -46,6 +46,11 @@ namespace jimo_sdr
         {
             m_digitsIncrementers.push_back(std::make_unique<DigitIncrementer>());
         }
+        for (auto& digit : m_digitsIncrementers)
+        {
+            digit->valueIncremented += xtd::event_handler(*this, &NumberDisplay::OnValueIncremented);
+            digit->valueDecremented += xtd::event_handler(*this, &NumberDisplay::OnValueDecremented);
+        }
         CreateControls();
         return *this;
     }
@@ -70,6 +75,11 @@ namespace jimo_sdr
         for (uint32_t decimals = 0; decimals < number_of_decimals; ++decimals)
         {
             m_decimalsIncrementers.push_back(std::make_unique<DigitIncrementer>());
+        }
+        for (auto& decimal : m_decimalsIncrementers)
+        {
+            decimal->valueIncremented += xtd::event_handler(*this, &NumberDisplay::OnValueIncremented);
+            decimal->valueDecremented += xtd::event_handler(*this, &NumberDisplay::OnValueDecremented);
         }
         CreateControls();
         return *this;
@@ -102,7 +112,6 @@ namespace jimo_sdr
 
     void NumberDisplay::SetValue(double value) noexcept
     {
-        value += 0.123;
         std::stringstream ss;
         ss.setf(std::ios::fixed, std::ios::floatfield);
         ss.precision(m_decimalsIncrementers.size());
@@ -236,4 +245,84 @@ namespace jimo_sdr
         double value = std::stod(ss.str());
         return value;
     }
+
+    void NumberDisplay::OnValueIncremented(xtd::object& sender, const xtd::event_args& e)
+    {
+        const DigitIncrementer& incrementer = dynamic_cast<const DigitIncrementer&>(sender);
+        auto frequency = GetValue();
+        double index = 0.;
+        bool frequencyUpdated = false;
+        for (auto iter = m_digitsIncrementers.crbegin(); iter != m_digitsIncrementers.crend(); ++iter )
+        {
+            if (**iter == incrementer)
+            {
+                frequency += pow(10., index);
+                frequencyUpdated = true;
+                break;
+            }
+            ++index;
+        }
+        if (!frequencyUpdated)
+        {
+            index = -1.;
+            for (auto iter = m_decimalsIncrementers.cbegin(); iter != m_decimalsIncrementers.cend(); ++iter)
+            {
+                if (**iter == incrementer)
+                {
+                    frequency += pow(10., index);
+                    frequencyUpdated = true;
+                    break;
+                }
+                --index;
+            }
+        }
+        if (frequencyUpdated)
+        {
+            SetValue(frequency);
+        }
+        else
+        {
+            // throw an exception
+        }
+    }
+
+        void NumberDisplay::OnValueDecremented(xtd::object& sender, const xtd::event_args& e)
+        {
+        const DigitIncrementer& incrementer = dynamic_cast<const DigitIncrementer&>(sender);
+        auto frequency = GetValue();
+        double index = 0.;
+        bool frequencyUpdated = false;
+        for (auto iter = m_digitsIncrementers.crbegin(); iter != m_digitsIncrementers.crend(); ++iter )
+        {
+            if (**iter == incrementer)
+            {
+                frequency -= pow(10., index);
+                frequencyUpdated = true;
+                break;
+            }
+            ++index;
+        }
+        if (!frequencyUpdated)
+        {
+            index = -1.;
+            for (auto iter = m_decimalsIncrementers.cbegin(); iter != m_decimalsIncrementers.cend(); ++iter)
+            {
+                if (**iter == incrementer)
+                {
+                    frequency -= pow(10., index);
+                    frequencyUpdated = true;
+                    break;
+                }
+                --index;
+            }
+        }
+        if (frequencyUpdated)
+        {
+            SetValue(frequency);
+        }
+        else
+        {
+            // throw an exception
+        }
+         }
 }
