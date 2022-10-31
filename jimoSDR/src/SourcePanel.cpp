@@ -56,6 +56,7 @@ namespace jimo_sdr
 
         m_sampleRatesPanel << m_sampleRatesLabel << m_sampleRates;
         m_sampleRatesPanel.width(propertiesPanelWidth);
+        m_sampleRatesPanel.enabled(false);
 
         m_samplingModeLabel.text("Sampling Mode: ");
         m_samplingModeLabel.text_align(content_alignment::middle_right);
@@ -65,6 +66,7 @@ namespace jimo_sdr
         m_samplingModes.width(propertiesPanelWidth / 2);
         m_samplingModes.items().push_back_range(sampling_mode::names());
         m_samplingModes.selected_index(static_cast<size_t>(m_deviceProps.sampling_mode().mode()));
+        m_samplingModes.enabled(false);
         m_samplingModes.selected_value_changed += 
             xtd::event_handler(*this, &SourcePanel::SamplingModeValueChanged);
 
@@ -177,6 +179,8 @@ namespace jimo_sdr
 
     void SourcePanel::OnSourceChanged()
     {
+        m_sampleRatesPanel.enabled(true);
+        m_samplingModes.enabled(true);
         xtd::event_handler handler = sourceChanged;
         if (!handler.is_empty())
         {
