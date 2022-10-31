@@ -296,6 +296,10 @@ namespace jimo_sdr
         {
             if (**iter == incrementer)
             {
+                if (((iter) == m_digitsIncrementers.crend() - 1) && ((*iter)->Value() == 0))
+                {
+                   return;
+                }
                 frequency -= pow(10., index);
                 frequencyUpdated = true;
                 break;
