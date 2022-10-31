@@ -36,6 +36,8 @@ add_executable(jimoSDR
     include/GuiNotifier.h
     include/SetSampleRateEventArgs.h
     include/SetSampleRateData.h
+    include/NumberDisplayValueChangedEventArgs.h
+    include/SetCenterFrequencyData.h
     )
 
 target_include_directories(jimoSDR

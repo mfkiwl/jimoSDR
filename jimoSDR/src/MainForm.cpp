@@ -1,6 +1,8 @@
 #include "MainForm.h"
 #include "ControlProperties.h"
 #include "GotCenterFrequencyEventArgs.h"
+#include "NumberDisplayValueChangedEventArgs.h"
+#include "SetCenterFrequencyData.h"
 
 const xtd::drawing::color controlsPanelColor = xtd::drawing::color::black;
 
@@ -87,6 +89,7 @@ namespace jimo_sdr
         m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
         m_centerFrequencyDisplay.fore_color(drawing::color::white);
         m_centerFrequencyDisplay.back_color(drawing::color::black);
+        m_centerFrequencyDisplay.valueChanged += xtd::event_handler(*this, &MainForm::OnCenterFrequencyChanged);
         m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
         m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
         m_controlsPanel.control_layout_style(m_propertiesButton,
@@ -103,5 +106,14 @@ namespace jimo_sdr
         const GotCenterFrequencyEventArgs& args = dynamic_cast<const GotCenterFrequencyEventArgs&>(e);
         m_deviceProperties.CenterFrequency(args.CenterFrequency());
         m_centerFrequencyDisplay.SetValue(args.CenterFrequency());
+    }
+
+    void MainForm::OnCenterFrequencyChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        const auto& args = dynamic_cast<const NumberDisplayValueChangedEventArgs&>(e);
+        SetCenterFrequencyData frequencyData { m_deviceProperties.Device(), args.Value() };
+        ReceiverAction setCenterFrequency({ ReceiverTask::setCenterFrequency,
+            nullptr, frequencyData} );
+        RadioReceiver::GetInstance().QueueTask(setCenterFrequency);
     }
 }

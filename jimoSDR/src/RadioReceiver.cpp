@@ -2,6 +2,7 @@
 #include "Devices.h"
 #include "SetSampleRateData.h"
 #include "SetSampleRateEventArgs.h"
+#include "SetCenterFrequencyData.h"
 #include <iostream>
 #include <chrono>
 
@@ -84,6 +85,14 @@ namespace jimo_sdr
                                 double frequency = device->GetCenterFrequency(
                                     sdr::Device::direction::rx, 0);
                                 std::invoke(action.callback, frequency);
+                            }
+                            break;
+                        case ReceiverTask::setCenterFrequency:
+                            {
+                                auto frequencyData = any_cast<SetCenterFrequencyData>(action.m_data);
+                                device = any_cast<std::shared_ptr<sdr::Device>>(frequencyData.m_device);
+                                device->SetCenterFrequency(
+                                    sdr::Device::direction::rx, 0, frequencyData.m_frequency);
                             }
                             break;
                         case ReceiverTask::getSampleRates:

@@ -19,8 +19,12 @@ namespace jimo_sdr
             virtual uint32_t Digits() const noexcept;
             virtual NumberDisplay& Digits(uint32_t number_of_digits);
             virtual void SetValue(double value) noexcept;
+            virtual double GetValue() const;
+
+            xtd::event<NumberDisplay, xtd::event_handler> valueChanged;
         protected:
             virtual void CreateControls();
+            virtual void OnValueChanged(const xtd::event_args& e);
         private:
             std::vector<std::unique_ptr<DigitIncrementer>> m_digitsIncrementers;
             std::vector<std::unique_ptr<DigitIncrementer>> m_decimalsIncrementers; 

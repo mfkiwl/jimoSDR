@@ -1,5 +1,6 @@
 #include "NumberDisplay.h"
 #include "ControlProperties.h"
+#include "NumberDisplayValueChangedEventArgs.h"
 #include <sstream>
 #include <string>
 
@@ -127,6 +128,7 @@ namespace jimo_sdr
             int32_t decimal = std::atoi(&val);
             m_decimalsIncrementers[m_decimalsIncrementers.size() - index - 1]->Value(decimal);
         }
+        OnValueChanged(xtd::event_args::empty);
     }
 
     NumberDisplay& NumberDisplay::height(int32_t newHeight)
@@ -207,5 +209,31 @@ namespace jimo_sdr
             decimal->back_color(backColor);
         }
         return *this;
-    }   
+    }
+
+    void NumberDisplay::OnValueChanged(const xtd::event_args& e)
+    {
+        xtd::event_handler handler = valueChanged;
+        if (!handler.is_empty())
+        {
+            NumberDisplayValueChangedEventArgs args(GetValue());
+            handler.invoke(*this, args);
+        }
+    }
+
+    double NumberDisplay::GetValue() const
+    {
+        std::stringstream ss;
+        for (auto& digit : m_digitsIncrementers)
+        {
+            ss << digit->Value();
+        }
+        ss << '.';
+        for (auto& decimal : m_decimalsIncrementers)
+        {
+            ss << decimal->Value();
+        }
+        double value = std::stod(ss.str());
+        return value;
+    }
 }

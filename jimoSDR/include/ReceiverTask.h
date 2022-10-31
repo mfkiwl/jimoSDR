@@ -10,6 +10,7 @@ namespace jimo_sdr
         getReceivers,           // get all attached receivers
         getDriverKey,           // get device driver key
         getCenterFrequency,     // get center frequency
+        setCenterFrequency,     // set center frequency
         getSampleRates,         // get sample rates
         getCurrentSampleRate,   // get the current sample rate
         setSampleRate,          // set the sample rate
