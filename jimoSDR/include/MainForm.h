@@ -23,6 +23,7 @@ namespace jimo_sdr
         protected:
             void on_form_closing(xtd::forms::form_closing_event_args& e) override;
             void OnCenterFrequencyChanged(xtd::object& sender, const xtd::event_args& e);
+            void OnSourceChanged(xtd::object& sender, const xtd::event_args& e);
        private:
             void GotCenterFrequency(xtd::object& sender, const xtd::event_args& e);
             void CreatePropertiesPanel();

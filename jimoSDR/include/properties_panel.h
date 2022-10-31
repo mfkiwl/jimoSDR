@@ -21,7 +21,9 @@ namespace jimo_sdr
         public:
             properties_panel(MainForm& frm, device_properties& deviceProps, GuiNotifier& notifier);
             void source(const std::string& src) noexcept;
+            xtd::event<properties_panel, xtd::event_handler> sourceChanged;
         private:
+            void OnSourceChanged(xtd::object& sender, const xtd::event_args& e);
             [[maybe_unused]]MainForm& _main_form;
             device_properties& m_deviceProps;
             SourcePanel m_sourcePanel;

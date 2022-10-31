@@ -62,6 +62,7 @@ namespace jimo_sdr
         m_propertiesPanel.location({0, 0});
         m_propertiesPanel.size({propertiesPanelWidth, client_size().height()});
         m_propertiesPanel.back_color(color::light_gray);
+        m_propertiesPanel.sourceChanged += xtd::event_handler(*this, &MainForm::OnSourceChanged);
     }
 
     void MainForm::CreateRightPanel()
@@ -89,6 +90,7 @@ namespace jimo_sdr
         m_centerFrequencyDisplay.height(digitIncrementerMaximumHeight);
         m_centerFrequencyDisplay.fore_color(drawing::color::white);
         m_centerFrequencyDisplay.back_color(drawing::color::black);
+        m_centerFrequencyDisplay.enabled(false);
         m_centerFrequencyDisplay.valueChanged += xtd::event_handler(*this, &MainForm::OnCenterFrequencyChanged);
         m_controlsPanel << m_propertiesButton << m_centerFrequencyLabel << m_centerFrequencyDisplay;
         m_propertiesButton.size( {m_propertiesButton.height(), m_propertiesButton.height()} );
@@ -115,5 +117,10 @@ namespace jimo_sdr
         ReceiverAction setCenterFrequency({ ReceiverTask::setCenterFrequency,
             nullptr, frequencyData} );
         RadioReceiver::GetInstance().QueueTask(setCenterFrequency);
+    }
+
+    void MainForm::OnSourceChanged(xtd::object& sender, const xtd::event_args& e)
+    {
+        m_centerFrequencyDisplay.enabled(true);
     }
 }

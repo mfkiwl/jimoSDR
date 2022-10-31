@@ -11,7 +11,9 @@ namespace jimo_sdr
     {
         public:
             SourcePanel(device_properties& deviceProps, GuiNotifier& notifier);
+            xtd::event<SourcePanel, xtd::event_handler> sourceChanged;
         private:
+            void OnSourceChanged();
             void SourcesDropDown(xtd::object& sender, const xtd::event_args& e);
             void SourceValueChanged(xtd::object& sender, const xtd::event_args& e);
             void SampleRatesValueChanged(xtd::object& sender, const xtd::event_args& e);

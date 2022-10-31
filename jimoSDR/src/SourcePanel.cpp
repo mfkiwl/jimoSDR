@@ -156,8 +156,10 @@ namespace jimo_sdr
         // if m_sources is empty, then index is invalid
         if (index >= 0 && index < m_devices.size())
         {
+
             m_deviceProps.clear();
             m_deviceProps.device(m_devices[index]);
+            OnSourceChanged();
             ReceiverAction getCenterFrequency({ ReceiverTask::getCenterFrequency,
                 std::bind(&GuiNotifier::NotifyGotCenterFrequency, &m_notifier, _1), m_devices[index]} );
             RadioReceiver::GetInstance().QueueTask(getCenterFrequency);
@@ -170,6 +172,15 @@ namespace jimo_sdr
                     std::bind(&GuiNotifier::NotifyGotCurrentSampleRate, &m_notifier, _1), m_devices[index] });
                 RadioReceiver::GetInstance().QueueTask(getCurrentSampleRate);
             }
+        }
+    }
+
+    void SourcePanel::OnSourceChanged()
+    {
+        xtd::event_handler handler = sourceChanged;
+        if (!handler.is_empty())
+        {
+            handler.invoke(*this, xtd::event_args::empty);
         }
     }
 
