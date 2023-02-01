@@ -4,7 +4,15 @@ A software defined radio receiver
 This project is in the very early stages of development. While the
 intention is to produce executables for Windows 10/11, Linux, and MacOS,
 I am currently developing on an Apple Silicon computer using Macos 12.5+.
-Therefore, I am only providing instructions for building on that system
+Therefore, I am only providing instructions for building on that system.
+
+# Status
+Work on this project is currently on hold while I work on two related projects:
+* [jimo](https://github.com/jimorc/jimo), a library of utility classes.
+* [design guidelines](https://github.com/jimorc/design_guidelines), a set of desing and coding guidelines.
+
+The `jimo` library provides functionality that will be used in `jimoSDR`, and `design_guidelines` will be followd in `jimoSDR` and all of
+my future projects. These projects are in different stages of completion.
 
 # Building jimoSDR
 
